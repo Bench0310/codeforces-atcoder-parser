@@ -1,6 +1,8 @@
 from imports import *
-import get_input
+import input_output
 import contest_info
 
-print(contest_info.contest_exists(get_input.get_contest()))
-#print(requests.get('https://codeforces.com/contest/1300/problems').text)
+contest_id=input_output.get_contest()
+if(contest_info.contest_exists(contest_id)==0):
+    input_output.message_contest_does_not_exist()
+    exit()
