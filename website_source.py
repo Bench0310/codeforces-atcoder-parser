@@ -5,7 +5,7 @@ contest_data_source=None
 
 def get_source(url):
     r=requests.get(url)
-    while(!r.ok):
+    while(not r):
         print('Codeforces not responding, retrying now!')
         r=requests.get(url)
     return r.text
@@ -19,5 +19,5 @@ def get_contest_list():
 def get_contest_data(contest_id):
     global contest_data_source
     if(contest_data_source==None):
-        contest_data_source=get_source('https://codeforces.com/contest/{contest_id}/problems')
+        contest_data_source=get_source(f'https://codeforces.com/contest/{contest_id}/problems')
     return contest_data_source
