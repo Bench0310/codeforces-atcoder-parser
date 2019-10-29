@@ -16,8 +16,10 @@ colors={
 
 def printf(message,color='white',bold=0):
     if(not color in colors): raise Exception(f'{color} does not name a color')
+    print(colors['end'],end='')
     print(colors[color]+(colors['bold'] if bold else '')+message+colors['end'],end='')
 
-def set_color(color):
+def set_color(color='white',bold=0):
     if(not color in colors): raise Exception(f'{color} does not name a color')
-    print(colors[color],end='')
+    print(colors['end'],end='')
+    print(colors[color]+(colors['bold'] if bold else ''),end='')

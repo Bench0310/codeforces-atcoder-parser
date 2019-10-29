@@ -10,3 +10,9 @@ def create_file(path,content):
     f=open(path,'w+')
     f.write(content)
     f.close()
+
+def read_file(path):
+    f=open(path,'r')
+    temp=f.read()
+    f.close()
+    return temp

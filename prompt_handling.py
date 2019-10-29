@@ -1,10 +1,43 @@
-from output_setup import printf
+from output_setup import printf,set_color
 import strings
 
+def prompt_newline(num):
+    for i in range(num):
+        print('')
+
 def prompt_contest_id():
-    print(strings.message_enter_contest_number)
-    return int(input())
+    printf(strings.message_enter_contest_number)
+    set_color('yellow')
+    contest_id=int(input())
+    set_color('white')
+    return contest_id
 
 def prompt_contest_does_not_exist():
     print(strings.message_contest_does_not_exist)
     exit()
+
+def prompt_succesful_parsing():
+    print(strings.message_successful_parsing)
+
+def prompt_problem_index_checker():
+    printf(strings.message_problem_index)
+    set_color('cyan',1)
+    temp=input()
+    set_color('white')
+    return temp
+
+def prompt_unrecognized_problem_index(problem_index_checker):
+    print(problem_index_checker+strings.message_unrecognized_problem_index)
+
+def prompt_test_status(sample_test,status):
+    printf('[Test #'+f'{sample_test:02d}'+'] ',bold=1)
+    if(status=='OK'):
+        printf('OK\n','green',1)
+    else:
+        printf('WA\n','red',1)
+
+def prompt_output_comparison(sample_test_output,sample_test_answer):
+    printf('Received:\n','blue',1)
+    printf(sample_test_output)
+    printf('Expected:\n','blue',1)
+    printf(sample_test_answer)
