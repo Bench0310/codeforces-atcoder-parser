@@ -6,8 +6,9 @@ import strings
 import prompt_handling
 import contest_create
 import checker
+import path_maker
 
-contest_id=prompt_handling.prompt_contest_id();
+contest_id=prompt_handling.prompt_contest_id()
 if(not contest_info.contest_exists(contest_id)):
     prompt_handling.prompt_contest_does_not_exist()
 
@@ -15,7 +16,7 @@ contest_info.get_problems(contest_id)
 problem_index=contest_info.problem_index
 problem_name=contest_info.problem_name
 
-if(not file_management.file_exists(strings.path+str(contest_id))):
+if(not file_management.file_exists(path_maker.path_contest(contest_id))):
     contest_create.create_contest(contest_id)
 
 prompt_handling.prompt_succesful_parsing()

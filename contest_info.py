@@ -7,7 +7,6 @@ problem_name=[]
 sample_test_in=[]
 sample_test_out=[]
 
-
 def contest_exists(contest_id):
     contest_list_source=website_source.get_contest_list()
     return (contest_list_source.find(strings.contest_id_one+str(contest_id))!=-1)

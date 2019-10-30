@@ -1,5 +1,6 @@
 import requests
 import strings
+import prompt_handling
 
 contest_list_source=None
 contest_data_source=None
@@ -7,7 +8,7 @@ contest_data_source=None
 def get_source(url):
     r=requests.get(url)
     while(not r):
-        print(strings.message_not_responding)
+        prompt_handling.prompt_codeforces_not_responding()
         r=requests.get(url)
     return r.text
 

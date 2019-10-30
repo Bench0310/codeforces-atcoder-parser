@@ -16,8 +16,11 @@ def prompt_contest_does_not_exist():
     print(strings.message_contest_does_not_exist)
     exit()
 
+def prompt_codeforces_not_responding():
+    printf(strings.message_codeforces_not_responding+'\n','red')
+
 def prompt_succesful_parsing():
-    print(strings.message_successful_parsing)
+    printf(strings.message_successful_parsing+'\n','green')
 
 def prompt_problem_index_checker():
     printf(strings.message_problem_index)
