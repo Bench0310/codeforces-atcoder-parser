@@ -3,9 +3,14 @@ import contest_info
 path='C:\\Bench\\CodeHub\\Codeforces'
 delim='\\'
 
-problem_index=contest_info.problem_index
-problem_name=contest_info.problem_name
+problem_index=[]
+problem_name=[]
 
+def init():
+    global problem_index
+    global problem_name
+    problem_index=contest_info.problem_index
+    problem_name=contest_info.problem_name
 
 def path_contest(contest_id):
     return path+delim+str(contest_id)
@@ -34,8 +39,26 @@ def path_checker(contest_id):
 def path_checker_cmd(contest_id,i):
     return path_checker(contest_id)+delim+'_'+problem_index[i]+'.cmd'
 
+def path_checker_cmd_problem_index(contest_id,i,j):
+    return path_checker(contest_id)+delim+'_'+problem_index[i]+'_'+f'{j:02d}'+'.cmd'
+
 def path_checker_exe(contest_id,i):
     return path_checker(contest_id)+delim+problem_index[i]+'.exe'
 
 def path_checker_output(contest_id,i,j):
     return path_checker(contest_id)+delim+problem_index[i]+'_'+f'{j:02d}'+'_'+'output'+'.txt'
+
+def path_temp(contest_id):
+    return path_contest(contest_id)+delim+'temp'
+
+def path_temp_cmd(contest_id):
+    return path_temp(contest_id)+delim+'cbopenener'+'.cmd'
+
+def path_temp_problem_index(contest_id):
+    return path_temp(contest_id)+delim+'problem_index'+'.txt'
+
+def path_temp_problem_name(contest_id):
+    return path_temp(contest_id)+delim+'problem_name'+'.txt'
+
+def path_temp_sample_test_num(contest_id):
+    return path_temp(contest_id)+delim+'sample_test_num'+'.txt'

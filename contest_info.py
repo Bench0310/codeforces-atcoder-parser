@@ -1,17 +1,20 @@
 import website_source
 import strings
+import file_management
+import path_maker
 
 problem_source_index=[]
 problem_index=[]
 problem_name=[]
 sample_test_in=[]
 sample_test_out=[]
+sample_test_num=[]
 
 def contest_exists(contest_id):
     contest_list_source=website_source.get_contest_list()
     return (contest_list_source.find(strings.contest_id_one+str(contest_id))!=-1)
 
-def get_problems(contest_id):
+def get_problems_online(contest_id):
     contest_data_source=website_source.get_contest_data(contest_id)
     global problem_source_index
     global problem_index
@@ -42,3 +45,12 @@ def get_problems(contest_id):
             sample_index=contest_data_source.find(strings.sample_test_left,sample_index_right)
         sample_test_in.append(sample_in)
         sample_test_out.append(sample_out)
+        sample_test_num.append(len(sample_in))
+
+def get_problems_offline(contest_id):
+    global problem_index
+    global problem_name
+    global sample_test_num
+    problem_index=file_management.read_file(path_maker.path_temp_problem_index(contest_id)).split('\n')
+    problem_name=file_management.read_file(path_maker.path_temp_problem_name(contest_id)).split('\n')
+    sample_test_num=list(map(int,file_management.read_file(path_maker.path_temp_sample_test_num(contest_id)).split('\n')))

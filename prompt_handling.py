@@ -22,18 +22,28 @@ def prompt_codeforces_not_responding():
 def prompt_succesful_parsing():
     printf(strings.message_successful_parsing+'\n','green')
 
+def prompt_already_parsed():
+    printf(strings.message_already_parsed+'\n','magenta')
+
+def prompt_optional_cbopener():
+    printf(strings.message_optional_cbopener,'magenta',1)
+    temp=input().upper()
+    return (temp=='Y')
+
 def prompt_problem_index_checker():
     printf(strings.message_problem_index)
     set_color('cyan',1)
-    temp=input()
+    temp=input().upper()
     set_color('white')
     return temp
 
 def prompt_unrecognized_problem_index(problem_index_checker):
     print(problem_index_checker+strings.message_unrecognized_problem_index)
 
-def prompt_test_status(sample_test,status):
+def prompt_test(sample_test):
     printf('[Test #'+f'{sample_test:02d}'+'] ',bold=1)
+
+def prompt_test_status(status):
     if(status=='OK'):
         printf('OK\n','green',1)
     else:
