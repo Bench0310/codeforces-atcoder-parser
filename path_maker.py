@@ -1,4 +1,5 @@
 import contest_info
+import string_manip
 
 path='C:\\Bench\\CodeHub\\Codeforces'
 delim='\\'
@@ -28,10 +29,10 @@ def path_io(contest_id):
     return path_contest(contest_id)+delim+'IO'
 
 def path_io_in(contest_id,i,j):
-    return path_io(contest_id)+delim+problem_index[i]+'_'+f'{j:02d}'+'.in'
+    return path_io(contest_id)+delim+problem_index[i]+'_'+string_manip.k_digit(j,2)+'.in'
 
 def path_io_out(contest_id,i,j):
-    return path_io(contest_id)+delim+problem_index[i]+'_'+f'{j:02d}'+'.out'
+    return path_io(contest_id)+delim+problem_index[i]+'_'+string_manip.k_digit(j,2)+'.out'
 
 def path_checker(contest_id):
     return path_contest(contest_id)+delim+'Checker'
@@ -40,13 +41,13 @@ def path_checker_cmd(contest_id,i):
     return path_checker(contest_id)+delim+'_'+problem_index[i]+'.cmd'
 
 def path_checker_cmd_problem_index(contest_id,i,j):
-    return path_checker(contest_id)+delim+'_'+problem_index[i]+'_'+f'{j:02d}'+'.cmd'
+    return path_checker(contest_id)+delim+'_'+problem_index[i]+'_'+string_manip.k_digit(j,2)+'.cmd'
 
 def path_checker_exe(contest_id,i):
     return path_checker(contest_id)+delim+problem_index[i]+'.exe'
 
 def path_checker_output(contest_id,i,j):
-    return path_checker(contest_id)+delim+problem_index[i]+'_'+f'{j:02d}'+'_'+'output'+'.txt'
+    return path_checker(contest_id)+delim+problem_index[i]+'_'+string_manip.k_digit(j,2)+'_'+'output'+'.txt'
 
 def path_temp(contest_id):
     return path_contest(contest_id)+delim+'temp'

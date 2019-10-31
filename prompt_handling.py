@@ -1,5 +1,6 @@
 from output_setup import printf,set_color
 import strings
+import string_manip
 
 def prompt_newline(num):
     for i in range(num):
@@ -33,7 +34,7 @@ def prompt_optional_cbopener():
 def prompt_problem_index_checker():
     printf(strings.message_problem_index)
     set_color('cyan',1)
-    temp=input().upper()
+    temp=input()
     set_color('white')
     return temp
 
@@ -41,7 +42,7 @@ def prompt_unrecognized_problem_index(problem_index_checker):
     print(problem_index_checker+strings.message_unrecognized_problem_index)
 
 def prompt_test(sample_test):
-    printf('[Test #'+f'{sample_test:02d}'+'] ',bold=1)
+    printf('[Test #'+string_manip.k_digit(sample_test,2)+'] ',bold=1)
 
 def prompt_test_status(status):
     if(status=='OK'):
