@@ -37,7 +37,7 @@ prompt_handling.prompt_newline(1)
 
 problem_index=contest_info.problem_index
 last_valid=0
-commands=[strings.command_path,strings.command_exit]
+commands=[strings.command_path,strings.command_cls,strings.command_exit]
 
 while(1):
     problem_index_checker=prompt_handling.prompt_problem_index_checker()
@@ -47,6 +47,8 @@ while(1):
     elif(problem_index_checker in commands):
         if(problem_index_checker==strings.command_path):
             system_action.copy_to_clipboard(path_maker.path_problem_main(contest_id,last_valid))
+        elif(problem_index_checker==strings.command_cls):
+            system_action.clear_screen()
         elif(problem_index_checker==strings.command_exit):
             break
     else:
