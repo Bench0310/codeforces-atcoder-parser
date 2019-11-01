@@ -24,6 +24,7 @@ def problem_checker(contest_id,i):
         sample_test_output=file_management.read_file(path_maker.path_checker_output(contest_id,i,j+1))
         sample_test_answer=file_management.read_file(path_maker.path_io_out(contest_id,i,j+1))
         sample_test_output=sample_test_output.replace(' \n','\n')
+        sample_test_answer=sample_test_answer.replace(' \n','\n')
         if(sample_test_output==sample_test_answer):
             prompt_handling.prompt_test_status('OK')
         else:
