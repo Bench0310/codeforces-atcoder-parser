@@ -2,6 +2,7 @@ import website_source
 import strings
 import file_management
 import path_maker
+import string_manip
 
 problem_source_index=[]
 problem_index=[]
@@ -36,12 +37,16 @@ def get_problems_online(contest_id):
         sample_out=[]
         sample_index=problem_source_index[-1]
         while(sample_index<source_index or (source_index==-1 and sample_index!=-1)):
-            sample_index_left=contest_data_source.find(strings.sample_test_left,sample_index)+len(strings.sample_test_left)+len('\n')
+            sample_index_left=contest_data_source.find(strings.sample_test_left,sample_index)+len(strings.sample_test_left)
             sample_index_right=contest_data_source.find(strings.sample_test_right,sample_index_left)
-            sample_in.append(contest_data_source[sample_index_left:sample_index_right])
-            sample_index_left=contest_data_source.find(strings.sample_test_left,sample_index_right)+len(strings.sample_test_left)+len('\n')
+            sample_in_string=contest_data_source[sample_index_left:sample_index_right]
+            sample_in_string=sample_in_string.replace(strings.sample_test_newline,'\n')
+            sample_in.append(string_manip.beautify_sample(sample_in_string))
+            sample_index_left=contest_data_source.find(strings.sample_test_left,sample_index_right)+len(strings.sample_test_left)
             sample_index_right=contest_data_source.find(strings.sample_test_right,sample_index_left)
-            sample_out.append(contest_data_source[sample_index_left:sample_index_right])
+            sample_out_string=contest_data_source[sample_index_left:sample_index_right]
+            sample_out_string=sample_out_string.replace(strings.sample_test_newline,'\n')
+            sample_out.append(string_manip.beautify_sample(sample_out_string))
             sample_index=contest_data_source.find(strings.sample_test_left,sample_index_right)
         sample_test_in.append(sample_in)
         sample_test_out.append(sample_out)
