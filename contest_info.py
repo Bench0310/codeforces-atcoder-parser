@@ -40,12 +40,10 @@ def get_problems_online(contest_id):
             sample_index_left=contest_data_source.find(strings.sample_test_left,sample_index)+len(strings.sample_test_left)
             sample_index_right=contest_data_source.find(strings.sample_test_right,sample_index_left)
             sample_in_string=contest_data_source[sample_index_left:sample_index_right]
-            sample_in_string=sample_in_string.replace(strings.sample_test_newline,'\n')
             sample_in.append(string_manip.beautify_sample(sample_in_string))
             sample_index_left=contest_data_source.find(strings.sample_test_left,sample_index_right)+len(strings.sample_test_left)
             sample_index_right=contest_data_source.find(strings.sample_test_right,sample_index_left)
             sample_out_string=contest_data_source[sample_index_left:sample_index_right]
-            sample_out_string=sample_out_string.replace(strings.sample_test_newline,'\n')
             sample_out.append(string_manip.beautify_sample(sample_out_string))
             sample_index=contest_data_source.find(strings.sample_test_left,sample_index_right)
         sample_test_in.append(sample_in)
