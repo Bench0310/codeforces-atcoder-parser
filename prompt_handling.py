@@ -47,7 +47,9 @@ def prompt_test(sample_test):
 def prompt_test_status(status):
     if(status=='OK'):
         printf('OK\n','green',1)
-    else:
+    elif(status=='TLE'):
+        printf('TLE\n','yellow')
+    elif(status=='WA'):
         printf('WA\n','red',1)
 
 def prompt_output_comparison(sample_test_output,sample_test_answer):

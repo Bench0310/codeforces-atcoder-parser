@@ -20,14 +20,16 @@ def problem_checker(contest_id,i):
     system_action.run_batch(path_maker.path_checker_cmd(contest_id,i))
     for j in range(sample_test_num[i]):
         prompt_handling.prompt_test(j+1)
-        system_action.run_batch(path_maker.path_checker_cmd_problem_index(contest_id,i,j+1))
-        sample_test_output=file_management.read_file(path_maker.path_checker_output(contest_id,i,j+1))
-        sample_test_answer=file_management.read_file(path_maker.path_io_out(contest_id,i,j+1))
-        sample_test_output=sample_test_output.replace(' \n','\n')
-        sample_test_answer=sample_test_answer.replace(' \n','\n')
-        if(sample_test_output==sample_test_answer):
-            prompt_handling.prompt_test_status('OK')
+        if(system_action.run_batch_timeout(path_maker.path_checker_cmd_problem_index(contest_id,i,j+1),problem_index[i]+'.exe')==False):
+            prompt_handling.prompt_test_status('TLE')
         else:
-            prompt_handling.prompt_test_status('WA')
-            prompt_handling.prompt_output_comparison(sample_test_output,sample_test_answer)
+            sample_test_output=file_management.read_file(path_maker.path_checker_output(contest_id,i,j+1))
+            sample_test_answer=file_management.read_file(path_maker.path_io_out(contest_id,i,j+1))
+            sample_test_output=sample_test_output.replace(' \n','\n')
+            sample_test_answer=sample_test_answer.replace(' \n','\n')
+            if(sample_test_output==sample_test_answer):
+                prompt_handling.prompt_test_status('OK')
+            else:
+                prompt_handling.prompt_test_status('WA')
+                prompt_handling.prompt_output_comparison(sample_test_output,sample_test_answer)
     prompt_handling.prompt_newline(2)
