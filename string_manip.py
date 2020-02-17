@@ -15,4 +15,5 @@ def beautify_sample(s):
     while(len(s) and s[-1]=='\n'):
         s=s[:-1]
     s+='\n'
+    s=s.replace(' \n','\n')
     return s

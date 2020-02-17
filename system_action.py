@@ -4,7 +4,7 @@ import os
 def run_batch(path):
     subprocess.call(path)
 
-def run_batch_timeout(path,process_name,tl=2):
+def run_batch_timeout(path,process_name,tl):
     try:
         subprocess.call(path,timeout=tl)
         return 1

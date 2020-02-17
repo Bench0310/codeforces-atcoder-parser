@@ -1,20 +1,8 @@
-import contest_info
 import path_maker
 import string_manip
+import name_maker
 
-problem_index=[]
-problem_name=[]
-sample_test_num=[]
-
-def init():
-    global problem_index
-    global problem_name
-    global sample_test_num
-    problem_index=contest_info.problem_index
-    problem_name=contest_info.problem_name
-    sample_test_num=contest_info.sample_test_num
-
-def code_main():
+def code_cpp():
     temp=('#include <bits/stdc++.h>\n'
           '\n'
           'using namespace std;\n'
@@ -26,38 +14,53 @@ def code_main():
           '}\n')
     return temp
 
-def code_cmd(contest_id,i):
+def code_cmd_compile(self,tp):
     temp='@echo off\n'
-    temp+='cd '+string_manip.quotify(path_maker.path_checker(contest_id))+'\n'
-    temp+='g++ -std=c++11 -Wl,--stack,268435456 -Wall -Wextra -O3 -o '+string_manip.quotify(path_maker.path_checker_exe(contest_id,i))+' '+string_manip.quotify(path_maker.path_problem_main(contest_id,i))+'\n'
+    temp+='cd '+string_manip.quotify(path_maker.path_checker(self))+'\n'
+    temp+='g++ -std=c++17 -Wl,--stack,268435456 -Wall -Wextra -O3 -o '+string_manip.quotify(path_maker.path_checker_exe(self,tp))+' '+string_manip.quotify(path_maker.path_problem_cpp(self,tp))+'\n'
     return temp
 
-def code_cmd_problem_index(contest_id,i,j):
+def code_cmd_test(self,j):
     temp='@echo off\n'
-    temp+=string_manip.quotify(path_maker.path_checker_exe(contest_id,i))+' < '+string_manip.quotify(path_maker.path_io_in(contest_id,i,j))+' > '+string_manip.quotify(path_maker.path_checker_output(contest_id,i,j))+'\n'
+    temp+=string_manip.quotify(path_maker.path_checker_exe(self,'main'))+' < '+string_manip.quotify(path_maker.path_io_in(self,j))+' > '+string_manip.quotify(path_maker.path_checker_output(self,j))+'\n'
     return temp
 
-def code_cbp(contest_id,i):
+def code_cmd_bf(self):
+    temp='@echo off\n'
+    temp+=string_manip.quotify(path_maker.path_checker_exe(self,'bf'))+' < '+string_manip.quotify(path_maker.path_checker_stressin(self))+' > '+string_manip.quotify(path_maker.path_checker_stressout(self))+'\n'
+    return temp
+
+def code_cmd_gen(self):
+    temp='@echo off\n'
+    temp+=string_manip.quotify(path_maker.path_checker_exe(self,'gen'))+' > '+string_manip.quotify(path_maker.path_checker_stressin(self))+'\n'
+    return temp
+
+def code_cmd_stresstest(self):
+    temp='@echo off\n'
+    temp+=string_manip.quotify(path_maker.path_checker_exe(self,'main'))+' < '+string_manip.quotify(path_maker.path_checker_stressin(self))+' > '+string_manip.quotify(path_maker.path_checker_stressoutput(self))+'\n'
+    return temp
+
+def code_cbp(self,tp):
     temp=('<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>\n'
           '<CodeBlocks_project_file>\n'
           '	<FileVersion major="1" minor="6" />\n'
           '	<Project>\n'
-          '		<Option title="'+str(contest_id)+problem_index[i]+' '+problem_name[i]+'" />\n'
+          '		<Option title="'+name_maker.name_problem_cbp(self,tp)+'" />\n'
           '		<Option pch_mode="2" />\n'
           '		<Option compiler="gcc" />\n'
           '		<Build>\n'
           '			<Target title="Debug">\n'
-          '				<Option output="bin/Debug/'+str(contest_id)+problem_index[i]+' '+problem_name[i]+'" prefix_auto="1" extension_auto="1" />\n'
+          '				<Option output="bin/Debug/'+name_maker.name_problem_cbp(self,tp)+'" prefix_auto="1" extension_auto="1" />\n'
           '				<Option object_output="obj/Debug/" />\n'
           '				<Option type="1" />\n'
           '				<Option compiler="gcc" />\n'
           '				<Compiler>\n'
-          '					<Add option="-std=c++11" />\n'
+          '					<Add option="-std=c++17" />\n'
           '					<Add option="-g" />\n'
           '				</Compiler>\n'
           '			</Target>\n'
           '			<Target title="Release">\n'
-          '				<Option output="bin/Release/'+str(contest_id)+problem_index[i]+' '+problem_name[i]+'" prefix_auto="1" extension_auto="1" />\n'
+          '				<Option output="bin/Release/'+name_maker.name_problem_cbp(self,tp)+'" prefix_auto="1" extension_auto="1" />\n'
           '				<Option object_output="obj/Release/" />\n'
           '				<Option type="1" />\n'
           '				<Option compiler="gcc" />\n'
@@ -73,7 +76,7 @@ def code_cbp(contest_id,i):
           '			<Add option="-Wall" />\n'
           '			<Add option="-fexceptions" />\n'
           '		</Compiler>\n'
-          '		<Unit filename="main.cpp" />\n'
+          '		<Unit filename="'+name_maker.name_problem_cpp(self,tp)+'" />\n'
           '		<Extensions>\n'
           '			<code_completion />\n'
           '			<envvars />\n'
@@ -83,29 +86,26 @@ def code_cbp(contest_id,i):
           '</CodeBlocks_project_file>\n')
     return temp
 
-def code_problem_index():
+def code_problem_index(contest):
     temp=''
-    for i in range(len(problem_index)):
-        temp+=problem_index[i]+'\n'
+    for self in contest:
+        temp+=self.contest_id+' '+self.problem_index+'\n'
     temp=temp[:-1]
     return temp
 
-def code_problem_name():
+def code_problem_name(contest):
     temp=''
-    for i in range(len(problem_name)):
-        temp+=problem_name[i]+'\n'
+    for self in contest:
+        temp+=self.problem_name+'\n'
     temp=temp[:-1]
     return temp
 
-def code_sample_test_num():
-    temp=''
-    for i in range(len(sample_test_num)):
-        temp+=str(sample_test_num[i])+'\n'
-    temp=temp[:-1]
-    return temp
-
-def code_cb_opener(contest_id):
+def code_cpp_opener(self,tp):
     temp='@echo off\n'
-    for i in range(len(problem_index)):
-        temp+=string_manip.quotify(path_maker.path_problem_cbp(contest_id,i))+'\n'
+    temp+=string_manip.quotify(path_maker.path_problem_cpp(self,tp))+'\n'
+    return temp
+
+def code_cbp_opener(self,tp):
+    temp='@echo off\n'
+    temp+=string_manip.quotify(path_maker.path_problem_cbp(self,tp))+'\n'
     return temp

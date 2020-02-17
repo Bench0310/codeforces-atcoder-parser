@@ -1,0 +1,14 @@
+<id>
+input <id>
+main <id>
+bf <id>
+gen <id>
+debug main/bf/gen <id>
+add <id>
+rm <id> <num>
+rmrange <id> <l> <r>
+tl <id> <tl>
+stress <id> <num>
+path
+cls
+exit
