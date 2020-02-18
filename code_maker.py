@@ -14,32 +14,6 @@ def code_cpp():
           '}\n')
     return temp
 
-def code_cmd_compile(self,tp):
-    temp='@echo off\n'
-    temp+='cd '+string_manip.quotify(path_maker.path_checker(self))+'\n'
-    temp+='g++ -std=c++17 -Wl,--stack,268435456 -Wall -Wextra -O3 -o '+string_manip.quotify(path_maker.path_checker_exe(self,tp))+' '+string_manip.quotify(path_maker.path_problem_cpp(self,tp))+'\n'
-    return temp
-
-def code_cmd_test(self,j):
-    temp='@echo off\n'
-    temp+=string_manip.quotify(path_maker.path_checker_exe(self,'main'))+' < '+string_manip.quotify(path_maker.path_io_in(self,j))+' > '+string_manip.quotify(path_maker.path_checker_output(self,j))+'\n'
-    return temp
-
-def code_cmd_bf(self):
-    temp='@echo off\n'
-    temp+=string_manip.quotify(path_maker.path_checker_exe(self,'bf'))+' < '+string_manip.quotify(path_maker.path_checker_stressin(self))+' > '+string_manip.quotify(path_maker.path_checker_stressout(self))+'\n'
-    return temp
-
-def code_cmd_gen(self):
-    temp='@echo off\n'
-    temp+=string_manip.quotify(path_maker.path_checker_exe(self,'gen'))+' > '+string_manip.quotify(path_maker.path_checker_stressin(self))+'\n'
-    return temp
-
-def code_cmd_stresstest(self):
-    temp='@echo off\n'
-    temp+=string_manip.quotify(path_maker.path_checker_exe(self,'main'))+' < '+string_manip.quotify(path_maker.path_checker_stressin(self))+' > '+string_manip.quotify(path_maker.path_checker_stressoutput(self))+'\n'
-    return temp
-
 def code_cbp(self,tp):
     temp=('<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>\n'
           '<CodeBlocks_project_file>\n'
@@ -84,28 +58,4 @@ def code_cbp(self,tp):
           '		</Extensions>\n'
           '	</Project>\n'
           '</CodeBlocks_project_file>\n')
-    return temp
-
-def code_problem_index(contest):
-    temp=''
-    for self in contest:
-        temp+=self.contest_id+' '+self.problem_index+'\n'
-    temp=temp[:-1]
-    return temp
-
-def code_problem_name(contest):
-    temp=''
-    for self in contest:
-        temp+=self.problem_name+'\n'
-    temp=temp[:-1]
-    return temp
-
-def code_cpp_opener(self,tp):
-    temp='@echo off\n'
-    temp+=string_manip.quotify(path_maker.path_problem_cpp(self,tp))+'\n'
-    return temp
-
-def code_cbp_opener(self,tp):
-    temp='@echo off\n'
-    temp+=string_manip.quotify(path_maker.path_problem_cbp(self,tp))+'\n'
     return temp

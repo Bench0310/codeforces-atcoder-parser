@@ -1,14 +1,13 @@
 <id>
 input <id>
-main <id>
-bf <id>
-gen <id>
-debug main/bf/gen <id>
+main|bf|ch|gen <id>
+debug main|bf|ch|gen <id>
 add <id>
-rm <id> <num>
-rmrange <id> <l> <r>
+keep <id> <l>
+rm <id> <r>
 tl <id> <tl>
 stress <id> <num>
 path
 cls
+help
 exit

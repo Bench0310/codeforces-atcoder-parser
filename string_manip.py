@@ -1,19 +1,21 @@
-import strings
-
 def quotify(s):
     return '"'+s+'"'
 
-def k_digit(num,k):
+def digit_pad(num,k):
     return f'{num:0{k}d}'
 
-def beautify_sample(s):
-    s=s.replace(strings.sample_test_newline,'\n')
-    s=s.replace(strings.sample_test_smaller_than,'<')
-    s=s.replace(strings.sample_test_greater_than,'>')
-    while(len(s) and s[0]=='\n'):
-        s=s[1:]
-    while(len(s) and s[-1]=='\n'):
-        s=s[:-1]
-    s+='\n'
-    s=s.replace(' \n','\n')
-    return s
+def path_win(path):
+    res=path[0]+':'
+    for cd in path[1:]: res+='\\'+cd
+    return res
+
+def path_wsl(path):
+    res='/mnt/'+path[0].lower()
+    for cd in path[1:]: res+='/'+cd
+    return res
+
+def path_wsl_exe(path):
+    res='/mnt/'+path[0].lower()
+    for cd in path[1:-1]: res+='/'+cd
+    res+='/./'+path[-1]
+    return res
