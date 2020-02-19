@@ -1,6 +1,7 @@
 import path_maker
 import string_manip
 import name_maker
+import strings
 
 def code_cpp():
     temp=('#include <bits/stdc++.h>\n'
@@ -58,4 +59,38 @@ def code_cbp(self,tp):
           '		</Extensions>\n'
           '	</Project>\n'
           '</CodeBlocks_project_file>\n')
+    return temp
+
+def code_run(self):
+    temp=('# $1 -> io_cnt\n'
+          '# $2 -> tl\n'
+          'NoColor=\'\\033[0m\'\n'
+          'BRed=\'\\033[1;31m\'\n'
+          'BGreen=\'\\033[1;32m\'\n'
+          'BBlue=\'\\033[1;34m\'\n'
+          'BPurple=\'\\033[1;35m\'\n'
+          'BWhite=\'\\033[1;37m\'\n'
+          'g++ '+string_manip.path_wsl_q(path_maker.path_problem_cpp(self,strings.main))+' -o '+string_manip.path_wsl_q(path_maker.path_problem_exe(self,strings.main))+'\n'
+          'for((i=1;i<=${1};i++))\n'
+          'do\n'
+          '    printf -v t "%02d" ${i}\n'
+          '    printf "${BWhite}[Test #${t}] "\n'
+          '    timeout ${2} '+string_manip.path_wsl_exe_q(path_maker.path_problem_exe(self,strings.main))+' < "'+string_manip.path_wsl(path_maker.path_io(self))+'/'+self.problem_index+'_${t}.in" > '+string_manip.path_wsl_q(path_maker.path_io_txt(self,strings.main))+'\n'
+          '    if((${?}==124))\n'
+          '    then\n'
+          '        printf "${BPurple}TLE${NoColor}\\n"\n'
+          '    elif [[ ! $(diff -w '+string_manip.path_wsl_q(path_maker.path_io_txt(self,strings.main))+' "'+string_manip.path_wsl(path_maker.path_io(self))+'/'+self.problem_index+'_${t}.out") ]]\n'
+          '    then\n'
+          '        printf "${BGreen}OK${NoColor}\\n"\n'
+          '    else\n'
+          '        printf "${BRed}WA${NoColor}\\n"\n'
+          '        printf "${BBlue}Input${NoColor}\\n"\n'
+          '        cat "'+string_manip.path_wsl(path_maker.path_io(self))+'/'+self.problem_index+'_${t}.in"\n'
+          '        printf "${BBlue}Received${NoColor}\\n"\n'
+          '        cat '+string_manip.path_wsl_q(path_maker.path_io_txt(self,strings.main))+'\n'
+          '        printf "${BBlue}Expected${NoColor}\\n"\n'
+          '        cat "'+string_manip.path_wsl(path_maker.path_io(self))+'/'+self.problem_index+'_${t}.out"\n'
+          '    fi\n'
+          'done\n'
+          '\n')
     return temp

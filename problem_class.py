@@ -19,7 +19,7 @@ class Problem:
         file_management.create_folder(string_manip.path_win(path_maker.path_io(self)))
         #Utils
         file_management.create_folder(string_manip.path_win(path_maker.path_utils(self)))
-        file_management.create_file_wsl(string_manip.path_win(path_maker.path_utils_run(self)),'\n')
+        file_management.create_file_wsl(string_manip.path_win(path_maker.path_utils_run(self)),code_maker.code_run(self))
         file_management.create_file_wsl(string_manip.path_win(path_maker.path_utils_stress(self)),'')
         file_management.create_file_wsl(string_manip.path_win(path_maker.path_utils_check(self)),'')
         file_management.create_file_win(string_manip.path_win(path_maker.path_utils_verdict(self)),'')

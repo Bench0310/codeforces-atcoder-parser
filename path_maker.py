@@ -10,6 +10,9 @@ def path_problem_cpp(self,tp):
 def path_problem_cbp(self,tp):
     return path_problem(self)+[name_maker.name_problem_cbp(self,tp)]
 
+def path_problem_exe(self,tp):
+    return path_problem(self)+[name_maker.name_problem_exe(self,tp)]
+
 #IO
 def path_io(self):
     return self.path+[name_maker.name_io(self)]

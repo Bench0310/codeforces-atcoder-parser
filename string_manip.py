@@ -19,3 +19,12 @@ def path_wsl_exe(path):
     for cd in path[1:-1]: res+='/'+cd
     res+='/./'+path[-1]
     return res
+
+def path_win_q(path):
+    return quotify(path_win(path))
+
+def path_wsl_q(path):
+    return quotify(path_wsl(path))
+
+def path_wsl_exe_q(path):
+    return quotify(path_wsl_exe(path))

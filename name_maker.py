@@ -13,6 +13,9 @@ def name_problem_cbp(self,tp):
     if(tp==strings.main): return self.contest_id+self.problem_index+' '+self.problem_name+'.cbp'
     else: return self.contest_id+self.problem_index+'_'+tp+'.cbp'
 
+def name_problem_exe(self,tp):
+    return tp
+
 #IO
 def name_io(self):
     return 'IO'
