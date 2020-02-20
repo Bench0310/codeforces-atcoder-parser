@@ -10,3 +10,8 @@ if(file_management.file_exists('C:\\Bench\\CodeHub\\Test\\0C Parser')):
 
 file_management.create_folder('C:\\Bench\\CodeHub\\Test\\0C Parser')
 p=Problem(['C','Bench','CodeHub','Test','0C Parser'],'0','C','Parser')
+p.add_test('5\n','5\n')
+p.add_test('8\n','8\n')
+p.run()
+p.stress(10)
+p.check(10)
