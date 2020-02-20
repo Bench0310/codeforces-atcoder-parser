@@ -1,5 +1,4 @@
 import strings
-import consts
 
 #Problem
 def name_problem(self):
@@ -21,10 +20,10 @@ def name_io(self):
     return 'IO'
 
 def name_io_in(self,j):
-    return self.problem_index+'_'+string_manip.digit_pad(j,consts.io_pad)+'.in'
+    return self.problem_index+'_'+str(j)+'.in'
 
 def name_io_out(self,j):
-    return self.problem_index+'_'+string_manip.digit_pad(j,consts.io_pad)+'.out'
+    return self.problem_index+'_'+str(j)+'.out'
 
 def name_io_txt(self,tp):
     return '_'+tp+'.txt'

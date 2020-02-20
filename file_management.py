@@ -21,3 +21,7 @@ def read_file(path):
     temp=f.read()
     f.close()
     return temp
+
+def delete_file(path):
+    if(file_exists(file)):
+        os.remove(path)
