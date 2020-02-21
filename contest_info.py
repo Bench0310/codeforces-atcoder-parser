@@ -54,6 +54,6 @@ def get_problems_offline(contest_id):
     global problem_index
     global problem_name
     global sample_test_num
-    problem_index=file_management.read_file(path_maker.path_temp_problem_index(contest_id)).split('\n')
-    problem_name=file_management.read_file(path_maker.path_temp_problem_name(contest_id)).split('\n')
-    sample_test_num=list(map(int,file_management.read_file(path_maker.path_temp_sample_test_num(contest_id)).split('\n')))
+    problem_index=file_management.read_file(path_maker.path_temp_problemindex(contest_id)).split('\n')
+    problem_name=file_management.read_file(path_maker.path_temp_problemname(contest_id)).split('\n')
+    sample_test_num=list(map(int,file_management.read_file(path_maker.path_temp_sampletestnum(contest_id)).split('\n')))

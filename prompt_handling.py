@@ -41,8 +41,8 @@ def prompt_problem_index_checker():
 def prompt_unrecognized_problem_index(problem_index_checker):
     print(problem_index_checker+strings.message_unrecognized_problem_index)
 
-def prompt_test(sample_test):
-    printf('[Test #'+string_manip.k_digit(sample_test,2)+'] ',bold=1)
+def prompt_test(j):
+    printf('[Test #'+string_manip.k_digit(j,2)+'] ',bold=1)
 
 def prompt_test_status(status):
     if(status=='OK'):
@@ -57,3 +57,14 @@ def prompt_output_comparison(sample_test_output,sample_test_answer):
     printf(sample_test_output)
     printf('Expected:\n','blue',1)
     printf(sample_test_answer)
+
+def prompt_input_output_comparison(sample_test_input,sample_test_output,sample_test_answer):
+    printf('Input:\n','blue',1)
+    printf(sample_test_input)
+    prompt_output_comparison(sample_test_output,sample_test_answer)
+
+def prompt_stress(j):
+    printf('[Stress #'+string_manip.k_digit(j,2)+'] ',bold=1)
+
+def prompt_tle(tp):
+    printf('TLE: '+tp+'\n','yellow')
