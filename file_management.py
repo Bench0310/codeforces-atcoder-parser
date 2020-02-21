@@ -25,3 +25,8 @@ def read_file(path):
 def delete_file(path):
     if(file_exists(path)):
         os.remove(path)
+
+def edit_file(path,edit):
+    temp=read_file(path)
+    temp=edit(temp)
+    create_file_win(path,temp)

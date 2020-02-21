@@ -5,6 +5,7 @@ tp_gen='gen'
 tps=[tp_main,tp_bf,tp_ch,tp_gen]
 verdict_wa='WA'
 comm_code='code'
+comm_codeall='codeall'
 comm_debug='debug'
 comm_add='add'
 comm_keep='keep'
@@ -16,9 +17,10 @@ comm_path='path'
 comm_cls='cls'
 comm_help='help'
 comm_exit='exit'
-comms=[comm_code,comm_debug,comm_add,comm_keep,comm_rm,comm_tl,comm_stress,comm_check,comm_path,comm_cls,comm_help,comm_exit]
+comms=[comm_code,comm_codeall,comm_debug,comm_add,comm_keep,comm_rm,comm_tl,comm_stress,comm_check,comm_path,comm_cls,comm_help,comm_exit]
 comms_args={
     comm_code:2,
+    comm_codeall:0,
     comm_debug:2,
     comm_add:1,
     comm_keep:2,
@@ -31,7 +33,8 @@ comms_args={
     comm_help:0,
     comm_exit:0
 }
-#comms_args=[2,2,1,2,2,2,2,2,0,0,0,0]
+help_contest='contest'
+help_problem='problem'
 
 problem_one='problemindex='
 problem_index_left='"'

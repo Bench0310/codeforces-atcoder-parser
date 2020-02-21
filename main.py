@@ -2,28 +2,36 @@ import output_setup
 import prompt_handling
 import website_handler
 from contest_class import Contest
+import file_management
+import strings
+import system_action
 output_setup.init()
 
 path=['C','Bench','CodeHub','Test']
 user='Bench'
+
 while(True):
     prompt_handling.prompt_user(user)
     contest_id=input()
-    if(contest_id=='exit'):
+    if(contest_id=='update'):
+        website_handler.get_contest_url(path,'-1')
+    elif(contest_id=='cls'):
+        system_action.clear_screen()
+    elif(contest_id=='help'):
+        prompt_handling.prompt_help(strings.help_contest)
+    elif(contest_id=='exit'):
         break
-    url=''
-    contests=website_handler.get_source('https://codeforces.com/api/contest.list')
-    if(contests.find('"id":'+contest_id+',')!=-1):
-        url='https://codeforces.com/contest/'+contest_id+'/problems'
-    contests=website_handler.get_source('https://codeforces.com/api/contest.list?gym=true')
-    if(contests.find('"id":'+contest_id+',')!=-1):
-        url='https://codeforces.com/gym/'+contest_id+'/problems'
-    if(url!=''):
-        contest=Contest(path,contest_id,url)
-        while(True):
-            prompt_handling.prompt_user_contest(user,contest_id)
-            if(contest.solve()==0):
-                break
+    elif(contest_id.isdigit()):
+        url=website_handler.get_contest_url(path,contest_id)
+        if(url!=''):
+            contest=Contest(path,contest_id,url)
+            while(True):
+                prompt_handling.prompt_user_contest(user,contest_id)
+                if(contest.solve()==0):
+                    break
+                prompt_handling.prompt_newline(1)
+        else:
+            prompt_handling.prompt_contest_not_found()
     else:
-        prompt_handling.prompt_contest_not_found()
-    prompt_handling.prompt_newline(3)
+        prompt_handling.prompt_invalid_command(contest_id)
+    prompt_handling.prompt_newline(1)

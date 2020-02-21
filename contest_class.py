@@ -83,6 +83,9 @@ class Contest:
                         if(p.problem_index.lower()==args[1]):
                             p.open_cpp(args[2])
                     self.last_problem_index=args[1]
+            elif(command==strings.comm_codeall):
+                for p in self.problems:
+                    p.open_cpp(strings.tp_main)
             elif(command==strings.comm_debug):
                 if(argument_parser.parse_id(args[1],self.problem_indices)==1 and argument_parser.parse_tp(args[2])==1):
                     for p in self.problems:
@@ -134,7 +137,7 @@ class Contest:
             elif(command==strings.comm_cls):
                 system_action.clear_screen()
             elif(command==strings.comm_help):
-                prompt_handling.prompt_help()
+                prompt_handling.prompt_help(strings.help_problem)
             return 1
         else:
             prompt_handling.prompt_invalid_command(command)

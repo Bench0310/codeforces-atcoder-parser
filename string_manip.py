@@ -31,3 +31,11 @@ def beautify_test(s):
     if(len(s)==0 or s[-1]!='\n'):
         s+='\n'
     return s
+
+def code_wsl(s):
+    s=s.replace('%I64d','%lld')
+    return s
+
+def code_win(s):
+    s=s.replace('%lld','%I64d')
+    return s
