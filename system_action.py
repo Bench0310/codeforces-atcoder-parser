@@ -7,10 +7,10 @@ def run_bash(path,args):
     subprocess.run(command,shell=False)
 
 def open_file(path):
-    subprocess.run(path,shell=False)
+    subprocess.run(path,shell=True)
 
-def clear_screen(path):
-    subprocess.run('cls',shell=False)
+def clear_screen():
+    subprocess.run('cls',shell=True)
 
 def copy_to_clipboard(content):
-    subprocess.run('@echo '+content+' | clip',shell=False)
+    subprocess.run('@echo '+content+' | clip',shell=True)

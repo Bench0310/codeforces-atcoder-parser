@@ -1,3 +1,5 @@
+import strings
+
 def quotify(s):
     return '"'+s+'"'
 
@@ -16,3 +18,16 @@ def path_win_q(path):
 
 def path_wsl_q(path):
     return quotify(path_wsl(path))
+
+def beautify_test(s):
+    s=s.replace(strings.test_newline,'\n')
+    s=s.replace(strings.test_smaller_than,'<')
+    s=s.replace(strings.test_greater_than,'>')
+    if(len(s)>0):
+        l=0
+        while(l<len(s) and s[l]=='\n'):
+            l+=1
+        s=s[l:]
+    if(len(s)==0 or s[-1]!='\n'):
+        s+='\n'
+    return s

@@ -23,5 +23,5 @@ def read_file(path):
     return temp
 
 def delete_file(path):
-    if(file_exists(file)):
+    if(file_exists(path)):
         os.remove(path)

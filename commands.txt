@@ -1,6 +1,6 @@
 <id>                              | Run <id> on current tests
-main|bf|ch|gen <id>               | Open .cpp of main|bf|ch|gen of <id>
-debug main|bf|ch|gen <id>         | Open .cbp of main|bf|ch|gen of <id>
+code <id> <tp>                    | Open .cpp of <tp>={main|bf|ch|gen} of <id>
+debug <id> <tp>                   | Open .cbp of <tp>={main|bf|ch|gen} of <id>
 add <id>                          | Add test to <id>
 keep <id> <num>                   | Keep first <num> tests of <id> and delete the rest
 rm <id> <num>                     | Delete last <num> tests of <id>
