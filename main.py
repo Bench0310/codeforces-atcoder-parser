@@ -1,56 +1,30 @@
-import strings
-import path_maker
-import code_maker
-import string_manip
-import checker
-import contest_create
-import contest_info
-import website_source
-import file_management
-import system_action
 import output_setup
 import prompt_handling
+import website_handler
+from contest_class import Contest
+output_setup.init()
 
-contest_id=prompt_handling.prompt_contest_id()
-if(not file_management.file_exists(path_maker.path_contest(contest_id))):
-    if(not contest_info.contest_exists(contest_id)):
-        prompt_handling.prompt_contest_does_not_exist()
-    contest_info.get_problems_online(contest_id)
-    contest_create.init()
-    path_maker.init()
-    code_maker.init()
-    checker.init()
-    contest_create.create_contest(contest_id)
-    prompt_handling.prompt_succesful_parsing()
-    system_action.run_batch(path_maker.path_temp_cmd(contest_id))
-else:
-    contest_info.get_problems_offline(contest_id)
-    contest_create.init()
-    path_maker.init()
-    code_maker.init()
-    checker.init()
-    prompt_handling.prompt_already_parsed()
-    if(prompt_handling.prompt_optional_cbopener()):
-        system_action.run_batch(path_maker.path_temp_cmd(contest_id))
-
-prompt_handling.prompt_newline(1)
-
-problem_index=contest_info.problem_index
-last_valid=0
-commands=[strings.command_path,strings.command_cls,strings.command_exit]
-
-while(1):
-    problem_index_checker=prompt_handling.prompt_problem_index_checker()
-    if(problem_index_checker.upper() in problem_index):
-        checker.problem_checker(contest_id,problem_index.index(problem_index_checker.upper()))
-        last_valid=problem_index.index(problem_index_checker.upper())
-    elif(problem_index_checker in commands):
-        if(problem_index_checker==strings.command_path):
-            system_action.copy_to_clipboard(path_maker.path_problem_main(contest_id,last_valid))
-        elif(problem_index_checker==strings.command_cls):
-            system_action.clear_screen()
-        elif(problem_index_checker==strings.command_exit):
-            break
+path=['C','Bench','CodeHub','Test']
+user='Bench'
+while(True):
+    prompt_handling.prompt_user(user)
+    contest_id=input()
+    if(contest_id=='exit'):
+        break
+    url=''
+    contests=website_handler.get_source('https://codeforces.com/api/contest.list')
+    if(contests.find('"id":'+contest_id+',')!=-1):
+        url='https://codeforces.com/contest/'+contest_id+'/problems'
+    contests=website_handler.get_source('https://codeforces.com/api/contest.list?gym=true')
+    if(contests.find('"id":'+contest_id+',')!=-1):
+        url='https://codeforces.com/gym/'+contest_id+'/problems'
+    if(url!=''):
+        contest=Contest(path,contest_id,url)
+        while(True):
+            prompt_handling.prompt_user_contest(user,contest_id)
+            if(contest.solve()==0):
+                break
+        continue
     else:
-        prompt_handling.prompt_unrecognized_problem_index(problem_index_checker)
-    prompt_handling.prompt_newline(1)
+        prompt_handling.prompt_contest_not_found()
+    prompt_handling.prompt_newline(3)

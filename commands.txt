@@ -1,14 +1,13 @@
-<id>
-input <id>
-main <id>
-bf <id>
-gen <id>
-debug main/bf/gen <id>
-add <id>
-rm <id> <num>
-rmrange <id> <l> <r>
-tl <id> <tl>
-stress <id> <num>
-path
-cls
-exit
+<id>                              | Run <id> on current tests
+code <id> <tp>                    | Open .cpp of <tp>={main|bf|ch|gen} of <id>
+debug <id> <tp>                   | Open .cbp of <tp>={main|bf|ch|gen} of <id>
+add <id>                          | Add test to <id>
+keep <id> <num>                   | Keep first <num> tests of <id> and delete the rest
+rm <id> <num>                     | Delete last <num> tests of <id>
+tl <id> <tl>                      | Set TL of <id> to <tl>
+stress <id> <num>                 | Stress <id> on <num> tests
+check <id> <num>                  | Check <id> on <num> tests
+path                              | Copy path of last used <id> to clipboard
+cls                               | Clear screen
+help                              | Print this guide
+exit                              | Exit contest

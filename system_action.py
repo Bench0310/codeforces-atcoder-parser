@@ -1,19 +1,16 @@
 import subprocess
-import os
 
-def run_batch(path):
-    subprocess.call(path)
+def run_bash(path,args):
+    command='wsl '+path
+    for arg in args:
+        command+=' '+str(arg)
+    subprocess.run(command,shell=False)
 
-def run_batch_timeout(path,process_name,tl):
-    try:
-        subprocess.call(path,timeout=tl)
-        return 1
-    except subprocess.TimeoutExpired:
-        os.system('taskkill /im '+process_name+' /f >nul 2>&1')
-        return 0
+def open_file(path):
+    subprocess.run(path,shell=True)
 
 def clear_screen():
-    os.system('cls')
+    subprocess.run('cls',shell=True)
 
 def copy_to_clipboard(content):
-    os.system('@echo '+content+' | clip')
+    subprocess.run('@echo '+content+' | clip',shell=True)

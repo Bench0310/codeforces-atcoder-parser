@@ -1,70 +1,35 @@
 from output_setup import printf,set_color
-import strings
-import string_manip
 
 def prompt_newline(num):
     for i in range(num):
         print('')
 
-def prompt_contest_id():
-    printf(strings.message_enter_contest_number)
+def prompt_user(user):
+    printf(user,'green',1)
+    printf('/','white')
     set_color('yellow')
-    contest_id=int(input())
-    set_color('white')
-    return contest_id
 
-def prompt_contest_does_not_exist():
-    print(strings.message_contest_does_not_exist)
-    exit()
+def prompt_user_contest(user,contest_id):
+    printf(user,'green',1)
+    printf('/','white')
+    printf(contest_id,'yellow')
+    printf('> ','white')
+    set_color('cyan',1)
+
+def prompt_contest_not_found():
+    printf('Contest not found!\n','red')
 
 def prompt_codeforces_not_responding():
-    printf(strings.message_codeforces_not_responding+'\n','red')
+    printf('Codeforces not responding, retrying now!\n','red')
 
-def prompt_succesful_parsing():
-    printf(strings.message_successful_parsing+'\n','green')
+def prompt_wrong_num_of_args(command,args_expected,args_given):
+    printf('Command \''+command+'\' expects '+str(args_expected)+' argument'+('s' if args_expected!=1 else '')+', but '+str(args_given)+' '+('was' if args_given==1 else 'were')+' given\n','white',1)
 
-def prompt_already_parsed():
-    printf(strings.message_already_parsed+'\n','magenta')
+def prompt_invalid_command(command):
+    printf('Command \''+command+'\' is not a command\n','white',1)
 
-def prompt_optional_cbopener():
-    printf(strings.message_optional_cbopener,'magenta',1)
-    temp=input().upper()
-    return (temp=='Y')
+def prompt_invalid_arg(arg,required_arg):
+    printf('\''+arg+'\' does not name a <'+required_arg+'>\n','white',1)
 
-def prompt_problem_index_checker():
-    printf(strings.message_problem_index)
-    set_color('cyan',1)
-    temp=input()
-    set_color('white')
-    return temp
-
-def prompt_unrecognized_problem_index(problem_index_checker):
-    print(problem_index_checker+strings.message_unrecognized_problem_index)
-
-def prompt_test(j):
-    printf('[Test #'+string_manip.k_digit(j,2)+'] ',bold=1)
-
-def prompt_test_status(status):
-    if(status=='OK'):
-        printf('OK\n','green',1)
-    elif(status=='TLE'):
-        printf('TLE\n','yellow')
-    elif(status=='WA'):
-        printf('WA\n','red',1)
-
-def prompt_output_comparison(sample_test_output,sample_test_answer):
-    printf('Received:\n','blue',1)
-    printf(sample_test_output)
-    printf('Expected:\n','blue',1)
-    printf(sample_test_answer)
-
-def prompt_input_output_comparison(sample_test_input,sample_test_output,sample_test_answer):
-    printf('Input:\n','blue',1)
-    printf(sample_test_input)
-    prompt_output_comparison(sample_test_output,sample_test_answer)
-
-def prompt_stress(j):
-    printf('[Stress #'+string_manip.k_digit(j,2)+'] ',bold=1)
-
-def prompt_tle(tp):
-    printf('TLE: '+tp+'\n','yellow')
+def prompt_help():
+    printf('This should print the help guide\n','white',1)

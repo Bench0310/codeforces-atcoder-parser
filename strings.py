@@ -1,26 +1,46 @@
-contest_id_one='"id":'
+tp_main='main'
+tp_bf='bf'
+tp_ch='ch'
+tp_gen='gen'
+tps=[tp_main,tp_bf,tp_ch,tp_gen]
+verdict_wa='WA'
+comm_code='code'
+comm_debug='debug'
+comm_add='add'
+comm_keep='keep'
+comm_rm='rm'
+comm_tl='tl'
+comm_stress='stress'
+comm_check='check'
+comm_path='path'
+comm_cls='cls'
+comm_help='help'
+comm_exit='exit'
+comms=[comm_code,comm_debug,comm_add,comm_keep,comm_rm,comm_tl,comm_stress,comm_check,comm_path,comm_cls,comm_help,comm_exit]
+comms_args={
+    comm_code:2,
+    comm_debug:2,
+    comm_add:1,
+    comm_keep:2,
+    comm_rm:2,
+    comm_tl:2,
+    comm_stress:2,
+    comm_check:2,
+    comm_path:0,
+    comm_cls:0,
+    comm_help:0,
+    comm_exit:0
+}
+#comms_args=[2,2,1,2,2,2,2,2,0,0,0,0]
+
 problem_one='problemindex='
 problem_index_left='"'
 problem_index_right='"'
 problem_name_left='<div class="title">'
 problem_name_right='</div>'
-sample_test_left='<pre>'
-sample_test_right='</pre>'
-sample_test_newline='<br />'
-sample_test_smaller_than='&lt;'
-sample_test_greater_than='&gt;'
-file_forbidden_chars='<>:"/\\|?*'
-message_codeforces_not_responding='Codeforces not responding, retrying now!'
-message_enter_contest_number='Contest number: '
-message_contest_does_not_exist='Contest doesn\'t exist\n'
-message_successful_parsing='Successfully parsed.'
-message_already_parsed='Contest already parsed.'
-message_optional_cbopener='CodeBlocks? [Y/_]: '
-message_problem_index='Problem index: '
-message_unrecognized_problem_index=' is not a problem index, \'path\', \'cls\' or \'exit\''
-url_contest_list='https://codeforces.com/api/contest.list'
-url_contest_left='https://codeforces.com/contest/'
-url_contest_right='/problems'
-command_path='path'
-command_cls='cls'
-command_exit='exit'
+test_left='<pre>'
+test_right='</pre>'
+test_newline='<br />'
+test_smaller_than='&lt;'
+test_greater_than='&gt;'
+allowed_chars='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 '

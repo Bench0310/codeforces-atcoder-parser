@@ -1,5 +1,7 @@
-from colorama import init
-init()
+import colorama
+
+def init():
+    colorama.init()
 
 colors={
     'black':'\033[30m',
@@ -16,10 +18,8 @@ colors={
 
 def printf(message,color='white',bold=0):
     if(not color in colors): raise Exception(f'{color} does not name a color')
-    print(colors['end'],end='')
-    print(colors[color]+(colors['bold'] if bold else '')+message+colors['end'],end='')
+    print(colors['end']+colors[color]+(colors['bold'] if bold else '')+message+colors['end'],end='')
 
 def set_color(color='white',bold=0):
     if(not color in colors): raise Exception(f'{color} does not name a color')
-    print(colors['end'],end='')
-    print(colors[color]+(colors['bold'] if bold else ''),end='')
+    print(colors['end']+colors[color]+(colors['bold'] if bold else ''),end='')
