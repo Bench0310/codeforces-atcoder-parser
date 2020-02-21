@@ -24,7 +24,6 @@ while(True):
             prompt_handling.prompt_user_contest(user,contest_id)
             if(contest.solve()==0):
                 break
-        continue
     else:
         prompt_handling.prompt_contest_not_found()
     prompt_handling.prompt_newline(3)
