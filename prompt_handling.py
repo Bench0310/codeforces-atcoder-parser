@@ -19,10 +19,13 @@ def prompt_user_contest(user,contest_id):
     set_color('cyan',1)
 
 def prompt_contest_not_found():
-    printf('Contest not found!\n','red')
+    printf('Contest not found\n','red')
+
+def prompt_contest_no_problems():
+    printf('Contest has no problems\n','red')
 
 def prompt_codeforces_not_responding():
-    printf('Codeforces not responding, retrying now!\n','red')
+    printf('Codeforces not responding, retrying now\n','red')
 
 def prompt_wrong_num_of_args(command,args_expected,args_given):
     printf('Command \''+command+'\' expects '+str(args_expected)+' argument'+('s' if args_expected!=1 else '')+', but '+str(args_given)+' '+('was' if args_given==1 else 'were')+' given\n','white',1)

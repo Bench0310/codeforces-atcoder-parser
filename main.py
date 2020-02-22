@@ -5,9 +5,10 @@ from contest_class import Contest
 import file_management
 import strings
 import system_action
+import string_manip
 output_setup.init()
 
-path=['C','Bench','CodeHub','Test']
+path=['C','Bench','CodeHub','Codeforces']
 user='Bench'
 
 while(True):
@@ -25,11 +26,14 @@ while(True):
         url=website_handler.get_contest_url(path,contest_id)
         if(url!=''):
             contest=Contest(path,contest_id,url)
-            while(True):
-                prompt_handling.prompt_user_contest(user,contest_id)
-                if(contest.solve()==0):
-                    break
-                prompt_handling.prompt_newline(1)
+            if(file_management.file_exists(string_manip.path_win(path+[contest_id]))==True):
+                while(True):
+                    prompt_handling.prompt_user_contest(user,contest_id)
+                    if(contest.solve()==0):
+                        break
+                    prompt_handling.prompt_newline(1)
+            else:
+                prompt_handling.prompt_contest_no_problems()
         else:
             prompt_handling.prompt_contest_not_found()
     else:

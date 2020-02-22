@@ -12,6 +12,9 @@ def name_problem_cbp(self,tp):
     if(tp==strings.tp_main): return self.contest_id+self.problem_index+' '+self.problem_name+'.cbp'
     else: return self.contest_id+self.problem_index+'_'+tp+'.cbp'
 
+def name_problem_cpp_wsl(self,tp):
+    return tp+'.cpp'
+
 def name_problem_exe(self,tp):
     return tp
 

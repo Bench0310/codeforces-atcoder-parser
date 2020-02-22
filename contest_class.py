@@ -53,8 +53,11 @@ class Contest:
                     self.problems[-1].add_test(test_in,test_out)
                     test_index=contest_data_source.find(strings.test_left,test_index_right)
                 source_index=next_source_index
+        if(len(self.problems)>0):
             self.make_metadata()
-        self.last_problem_index=self.problems[0].problem_index
+            self.last_problem_index=self.problems[0].problem_index
+        else:
+            file_management.delete_empty_folder(string_manip.path_win(self.path))
     def make_metadata(self):
         metadata=''
         for p in self.problems:

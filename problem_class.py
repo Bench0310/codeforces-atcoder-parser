@@ -20,6 +20,7 @@ class Problem:
             for tp in strings.tps:
                 file_management.create_file_win(string_manip.path_win(path_maker.path_problem_cpp(self,tp)),code_maker.code_cpp(self,tp))
                 file_management.create_file_win(string_manip.path_win(path_maker.path_problem_cbp(self,tp)),code_maker.code_cbp(self,tp))
+                file_management.create_file_wsl(string_manip.path_win(path_maker.path_problem_cpp_wsl(self,tp)),'')
             #IO
             file_management.create_folder(string_manip.path_win(path_maker.path_io(self)))
             #Utils
@@ -61,23 +62,22 @@ class Problem:
         self.time_limit=time_limit
     def copy_path(self):
         system_action.copy_to_clipboard(string_manip.path_win(path_maker.path_problem_cpp(self,strings.tp_main)))
+    def translate_code_wsl(self,tp):
+        code=file_management.read_file(string_manip.path_win(path_maker.path_problem_cpp(self,tp)))
+        code=string_manip.code_wsl(code)
+        file_management.create_file_wsl(string_manip.path_win(path_maker.path_problem_cpp_wsl(self,tp)),code)
     def run(self):
-        file_management.edit_file(string_manip.path_win(path_maker.path_problem_cpp(self,strings.tp_main)),string_manip.code_wsl)
+        self.translate_code_wsl(strings.tp_main)
         system_action.run_bash(string_manip.path_wsl_q(path_maker.path_utils_run(self)),[self.test_cnt,self.time_limit])
-        file_management.edit_file(string_manip.path_win(path_maker.path_problem_cpp(self,strings.tp_main)),string_manip.code_win)
     def stress(self,stress_cnt):
         for tp in [strings.tp_main,strings.tp_bf,strings.tp_gen]:
-            file_management.edit_file(string_manip.path_win(path_maker.path_problem_cpp(self,tp)),string_manip.code_wsl)
+            self.translate_code_wsl(tp)
         system_action.run_bash(string_manip.path_wsl_q(path_maker.path_utils_stress(self)),[stress_cnt,self.time_limit])
-        for tp in [strings.tp_main,strings.tp_bf,strings.tp_gen]:
-            file_management.edit_file(string_manip.path_win(path_maker.path_problem_cpp(self,tp)),string_manip.code_win)
         if(file_management.read_file(string_manip.path_win(path_maker.path_utils_verdict(self)))==strings.verdict_wa):
             test_in=file_management.read_file(string_manip.path_win(path_maker.path_io_txt(self,strings.tp_gen)))
             test_out=file_management.read_file(string_manip.path_win(path_maker.path_io_txt(self,strings.tp_bf)))
             self.add_test(test_in,test_out)
     def check(self,check_cnt):
         for tp in [strings.tp_main,strings.tp_ch,strings.tp_gen]:
-            file_management.edit_file(string_manip.path_win(path_maker.path_problem_cpp(self,tp)),string_manip.code_wsl)
+            self.translate_code_wsl(tp)
         system_action.run_bash(string_manip.path_wsl_q(path_maker.path_utils_check(self)),[check_cnt,self.time_limit])
-        for tp in [strings.tp_main,strings.tp_ch,strings.tp_gen]:
-            file_management.edit_file(string_manip.path_win(path_maker.path_problem_cpp(self,tp)),string_manip.code_win)
