@@ -4,7 +4,7 @@ import strings
 
 def prompt_newline(num):
     for i in range(num):
-        print('')
+        printf('\n')
 
 def prompt_user(user):
     printf(user,'green',1)
@@ -35,6 +35,13 @@ def prompt_invalid_arg(arg,required_arg):
 
 def prompt_updating_contest_gym_data():
     printf('Updating contest+gym data\n','magenta',1)
+
+def prompt_io(test_idx,test_in,test_out):
+    printf('[Test #'+str(test_idx)+']\n','white',1)
+    printf('Input\n','blue',1)
+    printf(test_in)
+    printf('Output\n','blue',1)
+    printf(test_out)
 
 def prompt_help(help_tp):
     printf(commands.commands_ini,'blue',1)

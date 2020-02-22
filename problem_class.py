@@ -4,6 +4,7 @@ import string_manip
 import strings
 import code_maker
 import system_action
+import prompt_handling
 
 class Problem:
     def __init__(self,path,contest_id,problem_index,problem_name,test_cnt,problem_exists):
@@ -31,14 +32,19 @@ class Problem:
         system_action.open_file(string_manip.path_win_q(path_maker.path_problem_cpp(self,tp)))
     def open_cbp(self,tp):
         system_action.open_file(string_manip.path_win_q(path_maker.path_problem_cbp(self,tp)))
+    def print_io(self):
+        for test_idx in range(1,self.test_cnt+1):
+            test_in=file_management.read_file(string_manip.path_win(path_maker.path_io_in(self,test_idx)))
+            test_out=file_management.read_file(string_manip.path_win(path_maker.path_io_out(self,test_idx)))
+            prompt_handling.prompt_io(test_idx,test_in,test_out)
     def add_test(self,test_in,test_out):
         self.test_cnt+=1
         file_management.create_file_win(string_manip.path_win(path_maker.path_io_in(self,self.test_cnt)),test_in)
         file_management.create_file_win(string_manip.path_win(path_maker.path_io_out(self,self.test_cnt)),test_out)
     def add_test_manually(self):
         self.add_test('','')
-        system_action.open_file(string_manip.path_win_q(path_maker.path_io_out(self,self.test_cnt)))
         system_action.open_file(string_manip.path_win_q(path_maker.path_io_in(self,self.test_cnt)))
+        system_action.open_file(string_manip.path_win_q(path_maker.path_io_out(self,self.test_cnt)))
     def rm_last_test(self):
         if(self.test_cnt>0):
             file_management.delete_file(string_manip.path_win(path_maker.path_io_in(self,self.test_cnt)))
@@ -66,8 +72,8 @@ class Problem:
         for tp in [strings.tp_main,strings.tp_bf,strings.tp_gen]:
             file_management.edit_file(string_manip.path_win(path_maker.path_problem_cpp(self,tp)),string_manip.code_win)
         if(file_management.read_file(string_manip.path_win(path_maker.path_utils_verdict(self)))==strings.verdict_wa):
-            test_in=file_management.file_read(string_manip.path_win(path_maker.path_io_txt(self,strings.tp_gen)))
-            test_out=file_management.file_read(string_manip.path_win(path_maker.path_io_txt(self,strings.tp_bf)))
+            test_in=file_management.read_file(string_manip.path_win(path_maker.path_io_txt(self,strings.tp_gen)))
+            test_out=file_management.read_file(string_manip.path_win(path_maker.path_io_txt(self,strings.tp_bf)))
             self.add_test(test_in,test_out)
     def check(self,check_cnt):
         for tp in [strings.tp_main,strings.tp_ch,strings.tp_gen]:

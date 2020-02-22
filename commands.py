@@ -6,6 +6,7 @@ commands_problem=(
 'code <id> <tp>        | Open .cpp of <tp>={main,bf,ch,gen} of <id>\n'
 'codeall               | Open .cpp of main of all problems\n'
 'debug <id> <tp>       | Open .cbp of <tp>={main,bf,ch,gen} of <id>\n'
+'io <id>               | Print all input and output tests of <id>\n'
 'add <id>              | Add test to <id>\n'
 'keep <id> <num>       | Keep first <num> tests of <id> and delete the rest\n'
 'rm <id> <num>         | Delete last <num> tests of <id>\n'
@@ -13,6 +14,7 @@ commands_problem=(
 'stress <id> <num>     | Stress <id> on <num> tests\n'
 'check <id> <num>      | Check <id> on <num> tests\n'
 'path                  | Copy path of last used <id> to clipboard\n'
+'pathx <id>            | Copy path of <id> to clipboard\n'
 'cls                   | Clear screen\n'
 'help                  | Print this guide\n'
 'exit                  | Exit contest\n')
