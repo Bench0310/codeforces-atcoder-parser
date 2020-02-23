@@ -88,6 +88,8 @@ class Contest:
         elif(command==strings.comm_codeall):
             for p in self.problems:
                 p.open_cpp(strings.tp_main)
+            for p in reversed(self.problems):
+                p.open_cpp(strings.tp_main)
         elif(command==strings.comm_debug):
             if(argument_parser.parse_id(args[1],self.problem_indices)==1 and argument_parser.parse_tp(args[2])==1):
                 for p in self.problems:
