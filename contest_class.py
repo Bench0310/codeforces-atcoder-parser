@@ -55,7 +55,7 @@ class Contest:
                 source_index=next_source_index
         if(len(self.problems)>0):
             self.make_metadata()
-            self.last_problem_index=self.problems[0].problem_index
+            self.last_problem_index=self.problems[0].problem_index.lower()
         else:
             file_management.delete_empty_folder(string_manip.path_win(self.path))
     def make_metadata(self):
@@ -72,12 +72,13 @@ class Contest:
                 if(p.problem_index.lower()==command):
                     if(args_num==0):
                         p.run()
+                        self.last_problem_index=command
                     else:
                         prompt_handling.prompt_wrong_num_of_args(command,0,args_num)
         elif(not command in strings.comms):
             prompt_handling.prompt_invalid_command(command)
-        elif(args_num!=strings.comms_args[command]):
-            prompt_handling.prompt_wrong_num_of_args(command,strings.comms_args[command],args_num)
+        elif(args_num!=strings.comms[command]):
+            prompt_handling.prompt_wrong_num_of_args(command,strings.comms[command],args_num)
         elif(command==strings.comm_code):
             if(argument_parser.parse_id(args[1],self.problem_indices)==1 and argument_parser.parse_tp(args[2])==1):
                 for p in self.problems:
@@ -93,6 +94,9 @@ class Contest:
                     if(p.problem_index.lower()==args[1]):
                         p.open_cbp(args[2])
                 self.last_problem_index=args[1]
+        elif(command==strings.comm_debugall):
+            for p in self.problems:
+                p.open_cbp(strings.tp_main)
         elif(command==strings.comm_io):
             if(argument_parser.parse_id(args[1],self.problem_indices)==1):
                 for p in self.problems:

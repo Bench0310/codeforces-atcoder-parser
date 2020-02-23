@@ -6,6 +6,7 @@ commands_problem=(
 'code <id> <tp>        | Open .cpp of <tp>={main,bf,ch,gen} of <id>\n'
 'codeall               | Open .cpp of main of all problems\n'
 'debug <id> <tp>       | Open .cbp of <tp>={main,bf,ch,gen} of <id>\n'
+'debugall              | Open .cbp of main of all problems\n'
 'io <id>               | Print all input and output tests of <id>\n'
 'add <id>              | Add test to <id>\n'
 'keep <id> <num>       | Keep first <num> tests of <id> and delete the rest\n'

@@ -7,6 +7,7 @@ verdict_wa='WA'
 comm_code='code'
 comm_codeall='codeall'
 comm_debug='debug'
+comm_debugall='debugall'
 comm_io='io'
 comm_add='add'
 comm_keep='keep'
@@ -19,11 +20,11 @@ comm_pathx='pathx'
 comm_cls='cls'
 comm_help='help'
 comm_exit='exit'
-comms=[comm_code,comm_codeall,comm_debug,comm_io,comm_add,comm_keep,comm_rm,comm_tl,comm_stress,comm_check,comm_path,comm_pathx,comm_cls,comm_help,comm_exit]
-comms_args={
+comms={
     comm_code:2,
     comm_codeall:0,
     comm_debug:2,
+    comm_debugall:0,
     comm_io:1,
     comm_add:1,
     comm_keep:2,

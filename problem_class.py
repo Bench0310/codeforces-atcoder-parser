@@ -44,8 +44,8 @@ class Problem:
         file_management.create_file_win(string_manip.path_win(path_maker.path_io_out(self,self.test_cnt)),test_out)
     def add_test_manually(self):
         self.add_test('','')
-        system_action.open_file(string_manip.path_win_q(path_maker.path_io_in(self,self.test_cnt)))
         system_action.open_file(string_manip.path_win_q(path_maker.path_io_out(self,self.test_cnt)))
+        system_action.open_file(string_manip.path_win_q(path_maker.path_io_in(self,self.test_cnt)))
     def rm_last_test(self):
         if(self.test_cnt>0):
             file_management.delete_file(string_manip.path_win(path_maker.path_io_in(self,self.test_cnt)))

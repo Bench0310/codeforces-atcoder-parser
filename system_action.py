@@ -1,4 +1,5 @@
 import subprocess
+import os
 
 def run_bash(path,args):
     command='wsl '+path
@@ -7,10 +8,10 @@ def run_bash(path,args):
     subprocess.run(command,shell=False)
 
 def open_file(path):
-    subprocess.run(path,shell=True)
+    os.startfile(path)
 
 def clear_screen():
-    subprocess.run('cls',shell=True)
+    os.system('cls')
 
 def copy_to_clipboard(content):
-    subprocess.run('@echo '+content+' | clip',shell=True)
+    os.system('@echo '+content+' | clip')
