@@ -65,6 +65,8 @@ class Contest:
         file_management.create_file_win(string_manip.path_win(self.path+['metadata.txt']),metadata[:-1])
     def solve(self):
         args=list(filter(None,input().lower().split(' ')))
+        if(len(args)==0):
+            args.append('')
         command=args[0]
         args_num=len(args)-1
         if(command in self.problem_indices):

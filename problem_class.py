@@ -59,7 +59,7 @@ class Problem:
         for _ in range(cnt):
             self.rm_last_test()
     def set_time_limit(self,time_limit):
-        self.time_limit=time_limit
+        self.time_limit=max(1,min(20,time_limit))
     def copy_path(self):
         system_action.copy_to_clipboard(string_manip.path_win(path_maker.path_problem_cpp(self,strings.tp_main)))
     def translate_code_wsl(self,tp):
