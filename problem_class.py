@@ -28,7 +28,7 @@ class Problem:
             file_management.create_file_wsl(string_manip.path_win(path_maker.path_utils_run(self)),code_maker.code_run(self))
             file_management.create_file_wsl(string_manip.path_win(path_maker.path_utils_stress(self)),code_maker.code_stress(self))
             file_management.create_file_wsl(string_manip.path_win(path_maker.path_utils_check(self)),code_maker.code_check(self))
-            file_management.create_file_win(string_manip.path_win(path_maker.path_utils_verdict(self)),'')
+            file_management.create_file_wsl(string_manip.path_win(path_maker.path_utils_verdict(self)),'')
     def open_cpp(self,tp):
         system_action.open_file(string_manip.path_win_q(path_maker.path_problem_cpp(self,tp)))
     def open_cbp(self,tp):
@@ -40,10 +40,10 @@ class Problem:
             prompt_handling.prompt_io(test_idx,test_in,test_out)
     def add_test(self,test_in,test_out):
         self.test_cnt+=1
-        file_management.create_file_win(string_manip.path_win(path_maker.path_io_in(self,self.test_cnt)),test_in)
-        file_management.create_file_win(string_manip.path_win(path_maker.path_io_out(self,self.test_cnt)),test_out)
+        file_management.create_file_wsl(string_manip.path_win(path_maker.path_io_in(self,self.test_cnt)),test_in)
+        file_management.create_file_wsl(string_manip.path_win(path_maker.path_io_out(self,self.test_cnt)),test_out)
     def add_test_manually(self):
-        self.add_test('','')
+        self.add_test('\n','\n')
         system_action.open_file(string_manip.path_win_q(path_maker.path_io_out(self,self.test_cnt)))
         system_action.open_file(string_manip.path_win_q(path_maker.path_io_in(self,self.test_cnt)))
     def rm_last_test(self):
