@@ -58,7 +58,6 @@ def prompt_help(help_tp):
     if(help_tp==strings.help_contest):
         help+=commands.commands_contest
     elif(help_tp==strings.help_problem):
-        help+='<id>'+' '*(commands.help_width-len('<id>'))+'| Run <id> on current tests\n'
         help+=commands.help_string
     arg=0
     comm=1

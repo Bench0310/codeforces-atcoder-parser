@@ -17,6 +17,7 @@ def ini():
     global commands
     global help_string
     commands=[
+        Command('run',[arg_id],'Run <id> on current tests'),
         Command('code',[arg_id,arg_tp],'Open .cpp of <tp>={main,bf,ch,gen} of <id>'),
         Command('codeall',[],'Open .cpp of main of all problems'),
         Command('debug',[arg_id,arg_tp],'Open .cbp of <tp>={main,bf,ch,gen} of <id>'),
@@ -37,7 +38,10 @@ def ini():
     help_string=''
     for command in commands:
         help=''
-        help+=command.name
+        if(command.name=='run'):
+            help+='['+command.name+']'
+        else:
+            help+=command.name
         for argument in command.arguments:
             help+=' <'+argument.name+'>'
         help+=' '*(help_width-len(help))

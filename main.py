@@ -28,7 +28,7 @@ while(True):
         if(url!=''):
             contest=Contest(path,contest_id,url)
             if(file_management.file_exists(string_manip.path_win(path+[contest_id]))==True):
-                commands.arg_id.str_options=contest.problem_indices
+                commands.arg_id.str_options=list(contest.problems)
                 commands.ini()
                 while(True):
                     prompt_handling.prompt_user_contest(user,contest_id)
