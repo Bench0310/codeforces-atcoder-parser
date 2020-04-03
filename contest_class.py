@@ -4,8 +4,8 @@ import string_manip
 from problem_class import Problem
 import strings
 import website_handler
-import argument_parser
 import system_action
+import commands
 
 class Contest:
     def __init__(self,path,contest_id,url):
@@ -77,90 +77,88 @@ class Contest:
                         self.last_problem_index=command
                     else:
                         prompt_handling.prompt_wrong_num_of_args(command,0,args_num)
-        elif(not command in strings.comms):
-            prompt_handling.prompt_invalid_command(command)
-        elif(args_num!=strings.comms[command]):
-            prompt_handling.prompt_wrong_num_of_args(command,strings.comms[command],args_num)
-        elif(command==strings.comm_code):
-            if(argument_parser.parse_id(args[1],self.problem_indices)==1 and argument_parser.parse_tp(args[2])==1):
+        else:
+            found=False
+            parsed=False
+            for comm in commands.commands:
+                if(comm.name==command):
+                    found=True
+                    parsed=comm.parse(args[1:])
+            if(not found):
+                prompt_handling.prompt_invalid_command(command)
+            elif(not parsed):
+                return 1
+            elif(command=='code'):
                 for p in self.problems:
                     if(p.problem_index.lower()==args[1]):
                         p.open_cpp(args[2])
                 self.last_problem_index=args[1]
-        elif(command==strings.comm_codeall):
-            for p in self.problems:
-                p.open_cpp(strings.tp_main)
-            for p in reversed(self.problems):
-                p.open_cpp(strings.tp_main)
-        elif(command==strings.comm_debug):
-            if(argument_parser.parse_id(args[1],self.problem_indices)==1 and argument_parser.parse_tp(args[2])==1):
+            elif(command==strings.comm_codeall):
+                for p in self.problems:
+                    p.open_cpp(strings.tp_main)
+                for p in reversed(self.problems):
+                    p.open_cpp(strings.tp_main)
+            elif(command==strings.comm_debug):
                 for p in self.problems:
                     if(p.problem_index.lower()==args[1]):
                         p.open_cbp(args[2])
                 self.last_problem_index=args[1]
-        elif(command==strings.comm_debugall):
-            for p in self.problems:
-                p.open_cbp(strings.tp_main)
-        elif(command==strings.comm_io):
-            if(argument_parser.parse_id(args[1],self.problem_indices)==1):
+            elif(command==strings.comm_debugall):
+                for p in self.problems:
+                    p.open_cbp(strings.tp_main)
+            elif(command==strings.comm_io):
                 for p in self.problems:
                     if(p.problem_index.lower()==args[1]):
                         p.print_io()
                 self.last_problem_index=args[1]
-        elif(command==strings.comm_add):
-            if(argument_parser.parse_id(args[1],self.problem_indices)==1):
+            elif(command==strings.comm_add):
                 for p in self.problems:
                     if(p.problem_index.lower()==args[1]):
                         p.add_test_manually()
                 self.last_problem_index=args[1]
                 self.make_metadata()
-        elif(command==strings.comm_keep):
-            if(argument_parser.parse_id(args[1],self.problem_indices)==1 and argument_parser.parse_num(args[2])==1):
+            elif(command==strings.comm_keep):
                 for p in self.problems:
                     if(p.problem_index.lower()==args[1]):
                         p.rm_test_keep(int(args[2]))
                 self.last_problem_index=args[1]
                 self.make_metadata()
-        elif(command==strings.comm_rm):
-            if(argument_parser.parse_id(args[1],self.problem_indices)==1 and argument_parser.parse_num(args[2])==1):
+            elif(command==strings.comm_rm):
                 for p in self.problems:
                     if(p.problem_index.lower()==args[1]):
                         p.rm_test_rm(int(args[2]))
                 self.last_problem_index=args[1]
                 self.make_metadata()
-        elif(command==strings.comm_tl):
-            if(argument_parser.parse_id(args[1],self.problem_indices)==1 and argument_parser.parse_tl(args[2])==1):
+            elif(command==strings.comm_tl):
                 for p in self.problems:
                     if(p.problem_index.lower()==args[1]):
                         p.set_time_limit(int(args[2]))
                 self.last_problem_index=args[1]
-        elif(command==strings.comm_stress):
-            if(argument_parser.parse_id(args[1],self.problem_indices)==1 and argument_parser.parse_num(args[2])==1):
+            elif(command==strings.comm_stress):
                 for p in self.problems:
                     if(p.problem_index.lower()==args[1]):
                         p.stress(int(args[2]))
                 self.last_problem_index=args[1]
                 self.make_metadata()
-        elif(command==strings.comm_check):
-            if(argument_parser.parse_id(args[1],self.problem_indices)==1 and argument_parser.parse_num(args[2])==1):
+            elif(command==strings.comm_check):
                 for p in self.problems:
                     if(p.problem_index.lower()==args[1]):
                         p.check(int(args[2]))
                 self.last_problem_index=args[1]
                 self.make_metadata()
-        elif(command==strings.comm_path):
-            for p in self.problems:
-                if(p.problem_index.lower()==self.last_problem_index):
-                    p.copy_path()
-        elif(command==strings.comm_pathx):
-            if(argument_parser.parse_id(args[1],self.problem_indices)==1):
+            elif(command==strings.comm_path):
                 for p in self.problems:
-                    if(p.problem_index.lower()==args[1]):
+                    if(p.problem_index.lower()==self.last_problem_index):
                         p.copy_path()
-        elif(command==strings.comm_cls):
-            system_action.clear_screen()
-        elif(command==strings.comm_help):
-            prompt_handling.prompt_help(strings.help_problem)
-        elif(command==strings.comm_exit):
-            return 0
+            elif(command==strings.comm_pathx):
+                if(argument_parser.parse_id(args[1],self.problem_indices)==1):
+                    for p in self.problems:
+                        if(p.problem_index.lower()==args[1]):
+                            p.copy_path()
+            elif(command==strings.comm_cls):
+                system_action.clear_screen()
+            elif(command==strings.comm_help):
+                prompt_handling.prompt_help(strings.help_problem)
+            elif(command==strings.comm_exit):
+                return 0
         return 1

@@ -6,6 +6,7 @@ import file_management
 import strings
 import system_action
 import string_manip
+import commands
 output_setup.init()
 
 path=['C','Bench','CodeHub','Codeforces']
@@ -27,6 +28,8 @@ while(True):
         if(url!=''):
             contest=Contest(path,contest_id,url)
             if(file_management.file_exists(string_manip.path_win(path+[contest_id]))==True):
+                commands.arg_id.str_options=contest.problem_indices
+                commands.ini()
                 while(True):
                     prompt_handling.prompt_user_contest(user,contest_id)
                     if(contest.solve()==0):

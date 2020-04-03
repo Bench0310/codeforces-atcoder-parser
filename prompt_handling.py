@@ -27,14 +27,20 @@ def prompt_contest_no_problems():
 def prompt_codeforces_not_responding():
     printf('Codeforces not responding, retrying now\n','red')
 
+def prompt_not_an_int(name,arg):
+    printf('<'+name+'>: '+'\''+arg+'\' is not an int\n','white',1)
+
+def prompt_int_not_in_range(name,arg,num_range):
+    printf('<'+name+'>: '+'\''+arg+'\' is not in range ['+str(num_range[0])+','+str(num_range[1])+']\n','white',1)
+
+def prompt_str_not_in_options(name,arg,str_options):
+    printf('<'+name+'>: '+'\''+arg+'\' is not in ['+','.join(str_options)+']\n','white',1)
+
 def prompt_wrong_num_of_args(command,args_expected,args_given):
     printf('Command \''+command+'\' expects '+str(args_expected)+' argument'+('s' if args_expected!=1 else '')+', but '+str(args_given)+' '+('was' if args_given==1 else 'were')+' given\n','white',1)
 
 def prompt_invalid_command(command):
     printf('\''+command+'\' does not name a command\n','white',1)
-
-def prompt_invalid_arg(arg,required_arg):
-    printf('\''+arg+'\' does not name a <'+required_arg+'>\n','white',1)
 
 def prompt_updating_contest_gym_data():
     printf('Updating contest+gym data\n','magenta',1)
@@ -47,12 +53,13 @@ def prompt_io(test_idx,test_in,test_out):
     printf(test_out)
 
 def prompt_help(help_tp):
-    printf(commands.commands_ini,'blue',1)
+    printf(commands.commands_zero,'blue',1)
     help=''
     if(help_tp==strings.help_contest):
-        help=commands.commands_contest
+        help+=commands.commands_contest
     elif(help_tp==strings.help_problem):
-        help=commands.commands_problem
+        help+='<id>'+' '*(commands.help_width-len('<id>'))+'| Run <id> on current tests\n'
+        help+=commands.help_string
     arg=0
     comm=1
     for c in help:
