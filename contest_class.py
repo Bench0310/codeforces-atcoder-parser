@@ -77,17 +77,15 @@ class Contest:
         for comm in commands.commands:
             if(comm.name==command):
                 found=True
-                parsed=comm.parse(args[1:])
+                parsed=comm.parse(self,args[1:])
         if(not found):
             prompt_handling.prompt_invalid_command(command)
         elif(not parsed):
             return 1
         elif(command=='run'):
             self.problems[args[1]].run()
-            self.last_problem_index=args[1]
         elif(command=='code'):
             self.problems[args[1]].open_cpp(args[2])
-            self.last_problem_index=args[1]
         elif(command=='codeall'):
             for p in self.problems.values():
                 p.open_cpp(strings.tp_main)
@@ -95,41 +93,32 @@ class Contest:
                 p.open_cpp(strings.tp_main)
         elif(command=='debug'):
             self.problems[args[1]].open_cbp(args[2])
-            self.last_problem_index=args[1]
         elif(command=='debugall'):
             for p in self.problems.values():
                 p.open_cbp(strings.tp_main)
         elif(command=='io'):
             self.problems[args[1]].print_io()
-            self.last_problem_index=args[1]
         elif(command=='add'):
             self.problems[args[1]].add_test_manually()
-            self.last_problem_index=args[1]
             self.make_metadata()
         elif(command=='keep'):
             self.problems[args[1]].rm_test_keep(int(args[2]))
-            self.last_problem_index=args[1]
             self.make_metadata()
         elif(command=='rm'):
             self.problems[args[1]].rm_test_rm(int(args[2]))
-            self.last_problem_index=args[1]
             self.make_metadata()
         elif(command=='tl'):
             self.problems[args[1]].set_time_limit(int(args[2]))
-            self.last_problem_index=args[1]
         elif(command=='stress'):
             self.problems[args[1]].stress(int(args[2]))
-            self.last_problem_index=args[1]
             self.make_metadata()
         elif(command=='check'):
             self.problems[args[1]].check(int(args[2]))
-            self.last_problem_index=args[1]
             self.make_metadata()
         elif(command=='path'):
             self.problems[self.last_problem_index].copy_path()
         elif(command=='pathx'):
             self.problems[args[1]].copy_path()
-            self.last_problem_index=args[1]
         elif(command=='cls'):
             system_action.clear_screen()
         elif(command=='help'):

@@ -27,11 +27,16 @@ class Command:
         self.name=name
         self.arguments=arguments
         self.description=description
-    def parse(self,args):
+    def parse(self,contest,args):
         if(len(self.arguments)!=len(args)):
             prompt_handling.prompt_wrong_num_of_args(self.name,len(self.arguments),len(args))
             return False
+        arg_id=0
         for i in range(len(args)):
             if(self.arguments[i].parse(args[i])==False):
                 return False
+            if(self.arguments[i].name=='id'):
+                arg_id=args[i]
+        if(arg_id!=0):
+            contest.last_problem_index=arg_id
         return True
