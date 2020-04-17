@@ -4,19 +4,24 @@ import strings
 help_width=22
 help_string=''
 
-arg_id=Argument('id',strings.ctp_str,0,[])
-arg_tp=Argument('tp',strings.ctp_str,0,strings.tps)
-arg_tl=Argument('tl',strings.ctp_num,[1,60],0)
-arg_num=Argument('num',strings.ctp_num,[0,10000],0)
-arg_cnt=Argument('cnt',strings.ctp_num,[1,10000],0)
+arg_tp_num='num'
+arg_tp_str='str'
+
+arg_id=Argument('id',arg_tp_str,0,[])
+arg_tp=Argument('tp',arg_tp_str,0,strings.tps)
+arg_tl=Argument('tl',arg_tp_num,[1,60],0)
+arg_num=Argument('num',arg_tp_num,[0,10000],0)
+arg_cnt=Argument('cnt',arg_tp_num,[1,10000],0)
 
 commands_zero='Command'+' '*(help_width-len('Command'))+'| Description\n'
-commands=[]
+comms=[]
+commands={}
 
 def ini():
+    global comms
     global commands
     global help_string
-    commands=[
+    comms=[
         Command('run',[arg_id],'Run <id> on current tests'),
         Command('code',[arg_id,arg_tp],'Open .cpp of <tp>={main,bf,ch,gen} of <id>'),
         Command('codeall',[],'Open .cpp of main of all problems'),
@@ -35,8 +40,11 @@ def ini():
         Command('help',[],'Print this guide'),
         Command('exit',[],'Exit contest')
     ]
+    commands.clear()
+    for comm in comms:
+        commands[comm.name]=comm
     help_string=''
-    for command in commands:
+    for command in commands.values():
         help=''
         if(command.name=='run'):
             help+='['+command.name+']'

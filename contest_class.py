@@ -71,54 +71,55 @@ class Contest:
         if(args[0] in self.problems):
             args=['run']+args
         command=args[0]
-        args_num=len(args)-1
-        found=False
-        parsed=False
-        for comm in commands.commands:
-            if(comm.name==command):
-                found=True
-                parsed=comm.parse(self,args[1:])
-        if(not found):
+        if(not command in commands.commands):
             prompt_handling.prompt_invalid_command(command)
-        elif(not parsed):
-            return 1
-        elif(command=='run'):
-            self.problems[args[1]].run()
+            return True
+        if(commands.commands[command].parse(args[1:])==False):
+            return True
+        arg={}
+        arg_now=1
+        for argument in commands.commands[command].arguments:
+            arg[argument.name]=args[arg_now]
+            arg_now+=1
+        if('id' in arg):
+            self.last_problem_index=arg['id']
+        if(command=='run'):
+            self.problems[arg['id']].run()
         elif(command=='code'):
-            self.problems[args[1]].open_cpp(args[2])
+            self.problems[arg['id']].open_cpp(arg['tp'])
         elif(command=='codeall'):
             for p in self.problems.values():
                 p.open_cpp(strings.tp_main)
             for p in reversed(self.problems.values()):
                 p.open_cpp(strings.tp_main)
         elif(command=='debug'):
-            self.problems[args[1]].open_cbp(args[2])
+            self.problems[arg['id']].open_cbp(arg['tp'])
         elif(command=='debugall'):
             for p in self.problems.values():
                 p.open_cbp(strings.tp_main)
         elif(command=='io'):
-            self.problems[args[1]].print_io()
+            self.problems[arg['id']].print_io()
         elif(command=='add'):
-            self.problems[args[1]].add_test_manually()
+            self.problems[arg['id']].add_test_manually()
             self.make_metadata()
         elif(command=='keep'):
-            self.problems[args[1]].rm_test_keep(int(args[2]))
+            self.problems[arg['id']].rm_test_keep(int(arg['num']))
             self.make_metadata()
         elif(command=='rm'):
-            self.problems[args[1]].rm_test_rm(int(args[2]))
+            self.problems[arg['id']].rm_test_rm(int(arg['num']))
             self.make_metadata()
         elif(command=='tl'):
-            self.problems[args[1]].set_time_limit(int(args[2]))
+            self.problems[arg['id']].set_time_limit(int(arg['tl']))
         elif(command=='stress'):
-            self.problems[args[1]].stress(int(args[2]))
+            self.problems[arg['id']].stress(int(arg['cnt']))
             self.make_metadata()
         elif(command=='check'):
-            self.problems[args[1]].check(int(args[2]))
+            self.problems[arg['id']].check(int(arg['cnt']))
             self.make_metadata()
         elif(command=='path'):
             self.problems[self.last_problem_index].copy_path()
         elif(command=='pathx'):
-            self.problems[args[1]].copy_path()
+            self.problems[arg['id']].copy_path()
         elif(command=='cls'):
             system_action.clear_screen()
         elif(command=='help'):

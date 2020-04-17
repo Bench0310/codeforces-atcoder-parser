@@ -6,40 +6,7 @@ tps=[tp_main,tp_bf,tp_ch,tp_gen]
 ctp_num='num'
 ctp_str='str'
 verdict_wa='WA'
-comm_code='code'
-comm_codeall='codeall'
-comm_debug='debug'
-comm_debugall='debugall'
-comm_io='io'
-comm_add='add'
-comm_keep='keep'
-comm_rm='rm'
-comm_tl='tl'
-comm_stress='stress'
-comm_check='check'
-comm_path='path'
-comm_pathx='pathx'
-comm_cls='cls'
-comm_help='help'
-comm_exit='exit'
-comms={
-    comm_code:2,
-    comm_codeall:0,
-    comm_debug:2,
-    comm_debugall:0,
-    comm_io:1,
-    comm_add:1,
-    comm_keep:2,
-    comm_rm:2,
-    comm_tl:2,
-    comm_stress:2,
-    comm_check:2,
-    comm_path:0,
-    comm_pathx:1,
-    comm_cls:0,
-    comm_help:0,
-    comm_exit:0
-}
+
 help_contest='contest'
 help_problem='problem'
 
