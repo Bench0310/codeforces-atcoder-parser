@@ -68,12 +68,9 @@ class Problem:
         code=file_management.read_file(string_manip.path_win(path_maker.path_problem_cpp(self,tp)))
         code=string_manip.code_wsl(code)
         file_management.create_file_wsl(string_manip.path_win(path_maker.path_problem_cpp_wsl(self,tp)),code)
-    def run(self):
+    def run(self,verdict_only):
         self.translate_code_wsl(strings.tp_main)
-        system_action.run_bash(string_manip.path_wsl_q(path_maker.path_utils_run(self)),[self.test_cnt,self.time_limit,0])
-    def runv(self):
-        self.translate_code_wsl(strings.tp_main)
-        system_action.run_bash(string_manip.path_wsl_q(path_maker.path_utils_run(self)),[self.test_cnt,self.time_limit,1])
+        system_action.run_bash(string_manip.path_wsl_q(path_maker.path_utils_run(self)),[self.test_cnt,self.time_limit,verdict_only])
     def stress(self,stress_cnt):
         for tp in [strings.tp_main,strings.tp_bf,strings.tp_gen]:
             self.translate_code_wsl(tp)
