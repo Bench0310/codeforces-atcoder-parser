@@ -116,6 +116,8 @@ class Contest:
         elif(command=='check'):
             self.problems[arg['id']].check(int(arg['cnt']))
             self.make_metadata()
+        elif(command=='runv'):
+            self.problems[arg['id']].runv()
         elif(command=='path'):
             self.problems[self.last_problem_index].copy_path()
         elif(command=='pathx'):

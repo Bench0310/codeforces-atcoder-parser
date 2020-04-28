@@ -29,6 +29,8 @@ class Problem:
             file_management.create_file_wsl(string_manip.path_win(path_maker.path_utils_stress(self)),code_maker.code_stress(self))
             file_management.create_file_wsl(string_manip.path_win(path_maker.path_utils_check(self)),code_maker.code_check(self))
             file_management.create_file_wsl(string_manip.path_win(path_maker.path_utils_verdict(self)),'')
+            for tp in strings.tps:
+                file_management.create_file_wsl(string_manip.path_win(path_maker.path_utils_err(self,tp)),'')
     def open_cpp(self,tp):
         system_action.open_file(string_manip.path_win_q(path_maker.path_problem_cpp(self,tp)))
     def open_cbp(self,tp):
@@ -68,12 +70,15 @@ class Problem:
         file_management.create_file_wsl(string_manip.path_win(path_maker.path_problem_cpp_wsl(self,tp)),code)
     def run(self):
         self.translate_code_wsl(strings.tp_main)
-        system_action.run_bash(string_manip.path_wsl_q(path_maker.path_utils_run(self)),[self.test_cnt,self.time_limit])
+        system_action.run_bash(string_manip.path_wsl_q(path_maker.path_utils_run(self)),[self.test_cnt,self.time_limit,0])
+    def runv(self):
+        self.translate_code_wsl(strings.tp_main)
+        system_action.run_bash(string_manip.path_wsl_q(path_maker.path_utils_run(self)),[self.test_cnt,self.time_limit,1])
     def stress(self,stress_cnt):
         for tp in [strings.tp_main,strings.tp_bf,strings.tp_gen]:
             self.translate_code_wsl(tp)
         system_action.run_bash(string_manip.path_wsl_q(path_maker.path_utils_stress(self)),[stress_cnt,self.time_limit])
-        if(file_management.read_file(string_manip.path_win(path_maker.path_utils_verdict(self)))==strings.verdict_wa):
+        if(not file_management.read_file(string_manip.path_win(path_maker.path_utils_verdict(self))) in ['',strings.verdict_ok]):
             test_in=file_management.read_file(string_manip.path_win(path_maker.path_io_txt(self,strings.tp_gen)))
             test_out=file_management.read_file(string_manip.path_win(path_maker.path_io_txt(self,strings.tp_bf)))
             self.add_test(test_in,test_out)

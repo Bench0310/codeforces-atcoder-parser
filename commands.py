@@ -34,6 +34,7 @@ def ini():
         Command('tl',[arg_id,arg_tl],'Set TL of <id> to <tl>'),
         Command('stress',[arg_id,arg_cnt],'Stress <id> on <cnt> tests'),
         Command('check',[arg_id,arg_cnt],'Check <id> on <cnt> tests'),
+        Command('runv',[arg_id],'Run <id> on current tests, and only get verdicts'),
         Command('path',[],'Copy path of last used <id> to clipboard'),
         Command('pathx',[arg_id],'Copy path of <id> to clipboard'),
         Command('cls',[],'Clear screen'),

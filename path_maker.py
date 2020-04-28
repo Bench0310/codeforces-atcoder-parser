@@ -44,3 +44,6 @@ def path_utils_check(self):
 
 def path_utils_verdict(self):
     return path_utils(self)+[name_maker.name_utils_verdict(self)]
+
+def path_utils_err(self,tp):
+    return path_utils(self)+[name_maker.name_utils_err(self,tp)]

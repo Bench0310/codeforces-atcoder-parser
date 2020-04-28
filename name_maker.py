@@ -46,3 +46,6 @@ def name_utils_check(self):
 
 def name_utils_verdict(self):
     return 'verdict.txt'
+
+def name_utils_err(self,tp):
+    return '_err_'+tp+'.txt'

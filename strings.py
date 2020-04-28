@@ -5,7 +5,7 @@ tp_gen='gen'
 tps=[tp_main,tp_bf,tp_ch,tp_gen]
 ctp_num='num'
 ctp_str='str'
-verdict_wa='WA'
+verdict_ok='OK'
 
 help_contest='contest'
 help_problem='problem'
