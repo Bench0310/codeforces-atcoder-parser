@@ -12,6 +12,8 @@ def code_cpp(self,tp):
                 '\n'
                 'int main()\n'
                 '{\n'
+                '    ios::sync_with_stdio(0);\n'
+                '    cin.tie(0);\n'
                 '    \n'
                 '    return 0;\n'
                 '}\n')
@@ -33,6 +35,8 @@ def code_cpp(self,tp):
                 '\n'
                 'int main()\n'
                 '{\n'
+                '    ios::sync_with_stdio(0);\n'
+                '    cin.tie(0);\n'
                 '    \n'
                 '    return 0;\n'
                 '}\n')
@@ -51,6 +55,8 @@ def code_cpp(self,tp):
                 '\n'
                 'int main()\n'
                 '{\n'
+                '    ios::sync_with_stdio(0);\n'
+                '    cin.tie(0);\n'
                 '    \n'
                 '    return 0;\n'
                 '}\n')
