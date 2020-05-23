@@ -1,5 +1,6 @@
 import subprocess
 import os
+import pyperclip
 
 def run_bash(path,args):
     command='wsl '+path
@@ -14,4 +15,4 @@ def clear_screen():
     os.system('cls')
 
 def copy_to_clipboard(content):
-    os.system('@echo '+content+' | clip')
+    pyperclip.copy(content)

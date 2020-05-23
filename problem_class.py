@@ -64,6 +64,8 @@ class Problem:
         self.time_limit=max(1,min(20,time_limit))
     def copy_path(self):
         system_action.copy_to_clipboard(string_manip.path_win(path_maker.path_problem_cpp(self,strings.tp_main)))
+    def copy_main(self):
+        system_action.copy_to_clipboard(file_management.read_file(string_manip.path_win(path_maker.path_problem_cpp(self,strings.tp_main))))
     def translate_code_wsl(self,tp):
         code=file_management.read_file(string_manip.path_win(path_maker.path_problem_cpp(self,tp)))
         code=string_manip.code_wsl(code)

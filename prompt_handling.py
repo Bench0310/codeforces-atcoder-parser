@@ -24,8 +24,8 @@ def prompt_contest_not_found():
 def prompt_contest_no_problems():
     printf('Contest has no problems\n','red')
 
-def prompt_codeforces_not_responding():
-    printf('Codeforces not responding, retrying now\n','red')
+def prompt_platform_not_responding(platform):
+    printf(('Codeforces' if platform=='cf' else 'AtCoder')+' not responding, retrying now\n','red')
 
 def prompt_not_an_int(name,arg):
     printf('<'+name+'>: '+'\''+arg+'\' is not an int\n','white',1)
@@ -42,8 +42,11 @@ def prompt_wrong_num_of_args(command,args_expected,args_given):
 def prompt_invalid_command(command):
     printf('\''+command+'\' does not name a command\n','white',1)
 
-def prompt_updating_contest_gym_data():
-    printf('Updating contest+gym data\n','magenta',1)
+def prompt_updating_contest_gym_data_cf():
+    printf('Updating cf contest+gym data\n','magenta',1)
+
+def prompt_updating_contest_data_atc():
+    printf('Updating atc contest data\n','magenta',1)
 
 def prompt_io(test_idx,test_in,test_out):
     printf('[Test #'+str(test_idx)+']\n','white',1)
