@@ -35,8 +35,8 @@ def ini():
         Command('stress',[arg_id,arg_cnt],'Stress <id> on <cnt> tests'),
         Command('check',[arg_id,arg_cnt],'Check <id> on <cnt> tests'),
         Command('runv',[arg_id],'Run <id> on current tests, and only get verdicts'),
-        Command('path',[],'Copy path of last used <id> to clipboard'),
-        Command('pathx',[arg_id],'Copy path of <id> to clipboard'),
+        Command('path',[],'Copy path[cf]/code[atc] of last used <id> to clipboard'),
+        Command('pathx',[arg_id],'Copy path[cf]/code[atc] of <id> to clipboard'),
         Command('cls',[],'Clear screen'),
         Command('help',[],'Print this guide'),
         Command('exit',[],'Exit contest')
