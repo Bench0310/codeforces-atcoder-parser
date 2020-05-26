@@ -2,7 +2,7 @@ import strings
 
 #Problem
 def name_problem(self):
-    return self.contest_id+self.problem_index+' '+self.problem_name
+    return 'Code'
 
 def name_problem_cpp(self,tp):
     if(tp==strings.tp_main): return self.contest_id+self.problem_index+' '+self.problem_name+'.cpp'

@@ -1,31 +1,32 @@
 import os
+import string_manip
 
 def file_exists(path):
-    return os.path.exists(path)
+    return os.path.exists(string_manip.path_win(path))
 
 def create_folder(path):
-    os.mkdir(path)
+    os.mkdir(string_manip.path_win(path))
 
 def create_file_win(path,content):
-    f=open(path,'w')
+    f=open(string_manip.path_win(path),'w')
     f.write(content)
     f.close()
 
 def create_file_wsl(path,content):
-    f=open(path,'w',newline='\n')
+    f=open(string_manip.path_win(path),'w',newline='\n')
     f.write(content)
     f.close()
 
 def read_file(path):
-    f=open(path,'r')
+    f=open(string_manip.path_win(path),'r')
     temp=f.read()
     f.close()
     return temp
 
 def delete_file(path):
     if(file_exists(path)):
-        os.remove(path)
+        os.remove(string_manip.path_win(path))
 
 def delete_empty_folder(path):
     if(file_exists(path)):
-        os.rmdir(path)
+        os.rmdir(string_manip.path_win(path))

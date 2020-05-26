@@ -5,14 +5,14 @@ import string_manip
 
 def get_source(url,platform):
     r=requests.get(url)
-    while(not r):
+    while(r.status_code>=500):
         prompt_handling.prompt_platform_not_responding(platform)
         r=requests.get(url)
     return r.text
 
 def get_contest_url_cf(path,contest_id):
-    contest_data=(file_management.read_file(string_manip.path_win(path+['contest_data.txt'])) if file_management.file_exists(string_manip.path_win(path+['contest_data.txt'])) else '')
-    gym_data=(file_management.read_file(string_manip.path_win(path+['gym_data.txt'])) if file_management.file_exists(string_manip.path_win(path+['gym_data.txt'])) else '')
+    contest_data=(file_management.read_file(path+['contest_data.txt']) if file_management.file_exists(path+['contest_data.txt']) else '')
+    gym_data=(file_management.read_file(path+['gym_data.txt']) if file_management.file_exists(path+['gym_data.txt']) else '')
     url=''
     if(contest_data.find('> '+contest_id+'\n')!=-1):
         url='https://codeforces.com/contest/'+contest_id+'/problems'
@@ -34,8 +34,8 @@ def get_contest_url_cf(path,contest_id):
             source_index_right=gym_data_source.find(',',source_index_left)
             gym_data+='> '+gym_data_source[source_index_left+len('"id":'):source_index_right]+'\n'
             source_index_left=gym_data_source.find('"id":',source_index_left+1)
-        file_management.create_file_win(string_manip.path_win(path+['contest_data.txt']),contest_data)
-        file_management.create_file_win(string_manip.path_win(path+['gym_data.txt']),gym_data)
+        file_management.create_file_win(path+['contest_data.txt'],contest_data)
+        file_management.create_file_win(path+['gym_data.txt'],gym_data)
         if(contest_data.find('> '+contest_id+'\n')!=-1):
             url='https://codeforces.com/contest/'+contest_id+'/problems'
         elif(gym_data.find('> '+contest_id+'\n')!=-1):
@@ -43,7 +43,7 @@ def get_contest_url_cf(path,contest_id):
     return url
 
 def get_contest_url_atc(path,contest_id):
-    contest_data=(file_management.read_file(string_manip.path_win(path+['contest_data.txt'])) if file_management.file_exists(string_manip.path_win(path+['contest_data.txt'])) else '')
+    contest_data=(file_management.read_file(path+['contest_data.txt']) if file_management.file_exists(path+['contest_data.txt']) else '')
     url=''
     if(contest_data.find('> '+contest_id.lower()+'\n')!=-1):
         url='https://atcoder.jp/contests/'+contest_id.lower()+'/tasks_print'
@@ -70,7 +70,7 @@ def get_contest_url_atc(path,contest_id):
                 contest_data+='> '+contest_data_source[source_index_left+len('/contests/'):source_index_right]+'\n'
                 source_index=contest_data_source.find('<td >',source_index+1)
             page+=1
-        file_management.create_file_win(string_manip.path_win(path+['contest_data.txt']),contest_data)
+        file_management.create_file_win(path+['contest_data.txt'],contest_data)
         if(contest_data.find('> '+contest_id.lower()+'\n')!=-1):
             url='https://atcoder.jp/contests/'+contest_id.lower()+'/tasks_print'
     return url

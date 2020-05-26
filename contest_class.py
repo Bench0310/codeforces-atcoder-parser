@@ -13,8 +13,8 @@ class Contest:
         self.platform=platform
         self.problems={}
         self.last_problem_index=''
-        if(file_management.file_exists(string_manip.path_win(self.path))):
-            metadata=file_management.read_file(string_manip.path_win(self.path+['metadata.txt']))
+        if(file_management.file_exists(self.path)):
+            metadata=file_management.read_file(self.path+['metadata.txt'])
             problem_info=metadata.split('\n')
             for p in problem_info:
                 problem_index,problem_name,test_cnt=p.split('|')
@@ -23,7 +23,7 @@ class Contest:
                 problem_path=self.path+[contest_id+problem_index+' '+problem_name]
                 self.problems[problem_index.lower()]=Problem(problem_path,contest_id,problem_index,problem_name,int(test_cnt),True)
         elif(platform=='cf'):
-            file_management.create_folder(string_manip.path_win(self.path))
+            file_management.create_folder(self.path)
             contest_data_source=website_handler.get_source(url,'cf')
             source_index=contest_data_source.find(strings.problem_one_cf)
             while(source_index!=-1):
@@ -41,7 +41,7 @@ class Contest:
                         problem_name+=c
                 if(problem_name==''): problem_name='noname'
                 problem_name=' '.join(problem_name.split())
-                file_management.create_folder(string_manip.path_win(self.path+[contest_id+problem_index+' '+problem_name]))
+                file_management.create_folder(self.path+[contest_id+problem_index+' '+problem_name])
                 self.problems[problem_index.lower()]=Problem(self.path+[contest_id+problem_index+' '+problem_name],contest_id,problem_index,problem_name,0,False)
                 test_index=source_index
                 next_source_index=contest_data_source.find(strings.problem_one_cf,source_index+1)
@@ -57,8 +57,8 @@ class Contest:
                     self.problems[problem_index.lower()].add_test(test_in,test_out)
                     test_index=contest_data_source.find(strings.test_left_cf,test_index_right)
                 source_index=next_source_index
-        elif(platform=='atc' and website_handler.get_source(url[:-len('/tasks_print')],'atc').find('Virtual Standings')!=-1):
-            file_management.create_folder(string_manip.path_win(self.path))
+        elif(platform=='atc'):
+            file_management.create_folder(self.path)
             contest_data_source=website_handler.get_source(url,'atc')
             source_index=contest_data_source.find(strings.problem_one_atc)
             while(source_index!=-1):
@@ -76,7 +76,7 @@ class Contest:
                         problem_name+=c
                 if(problem_name==''): problem_name='noname'
                 problem_name=' '.join(problem_name.split())
-                file_management.create_folder(string_manip.path_win(self.path+[contest_id+problem_index+' '+problem_name]))
+                file_management.create_folder(self.path+[contest_id+problem_index+' '+problem_name])
                 self.problems[problem_index.lower()]=Problem(self.path+[contest_id+problem_index+' '+problem_name],contest_id,problem_index,problem_name,0,False)
                 test_index=source_index
                 next_source_index=contest_data_source.find(strings.problem_one_atc,source_index+1)
@@ -97,12 +97,12 @@ class Contest:
         if(len(self.problems)>0):
             self.make_metadata()
         else:
-            file_management.delete_empty_folder(string_manip.path_win(self.path))
+            file_management.delete_empty_folder(self.path)
     def make_metadata(self):
         metadata=''
         for p in self.problems.values():
             metadata+=p.problem_index+'|'+p.problem_name+'|'+str(p.test_cnt)+'\n'
-        file_management.create_file_win(string_manip.path_win(self.path+['metadata.txt']),metadata[:-1])
+        file_management.create_file_win(self.path+['metadata.txt'],metadata[:-1])
     def solve(self):
         args=list(filter(None,input().lower().split(' ')))
         if(len(args)==0):
