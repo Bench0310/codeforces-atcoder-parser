@@ -23,11 +23,8 @@ def beautify_test(s):
     s=s.replace(strings.test_newline,'\n')
     s=s.replace(strings.test_smaller_than,'<')
     s=s.replace(strings.test_greater_than,'>')
-    if(len(s)>0):
-        l=0
-        while(l<len(s) and s[l]=='\n'):
-            l+=1
-        s=s[l:]
+    while(len(s)>0 and s[-1]=='\n'):
+        s=s[:-1]
     if(len(s)==0 or s[-1]!='\n'):
         s+='\n'
     return s

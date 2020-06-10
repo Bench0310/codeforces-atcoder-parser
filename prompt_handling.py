@@ -57,7 +57,7 @@ def prompt_int_not_in_range(name,arg,num_range):
     printf('<'+name+'>: '+'\''+arg+'\' is not in range ['+str(num_range[0])+','+str(num_range[1])+']\n','white',1)
 
 def prompt_str_not_in_options(name,arg,str_options):
-    printf('<'+name+'>: '+'\''+arg+'\' is not in ['+','.join(str_options)+']\n','white',1)
+    printf('<'+name+'>: '+'\''+arg+'\' is not in [\''+'\',\''.join(str_options)+'\']\n','white',1)
 
 def prompt_wrong_num_of_args(command,args_expected,args_given):
     printf('Command \''+command+'\' expects '+str(args_expected)+' argument'+('s' if args_expected!=1 else '')+', but '+str(args_given)+' '+('was' if args_given==1 else 'were')+' given\n','white',1)
