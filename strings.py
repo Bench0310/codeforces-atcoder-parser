@@ -11,7 +11,7 @@ help_contest='contest'
 help_problem='problem'
 
 #cf
-problem_one_cf='problemindex='
+problem_one_cf='problemindex="'
 problem_index_left_cf='"'
 problem_index_right_cf='"'
 problem_name_left_cf='<div class="title">'

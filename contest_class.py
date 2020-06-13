@@ -39,7 +39,7 @@ class Contest:
                 for c in problem_name_temp:
                     if(c in strings.allowed_chars):
                         problem_name+=c
-                if(problem_name==''): problem_name='noname'
+                if(problem_name=='' or problem_name.isspace()): problem_name='noname'
                 problem_name=' '.join(problem_name.split())
                 file_management.create_folder(self.path+[contest_id+problem_index+' '+problem_name])
                 self.problems[problem_index.lower()]=Problem(self.path+[contest_id+problem_index+' '+problem_name],contest_id,problem_index,problem_name,0,False)
@@ -74,7 +74,7 @@ class Contest:
                 for c in problem_name_temp:
                     if(c in strings.allowed_chars):
                         problem_name+=c
-                if(problem_name==''): problem_name='noname'
+                if(problem_name=='' or problem_name.isspace()): problem_name='noname'
                 problem_name=' '.join(problem_name.split())
                 file_management.create_folder(self.path+[contest_id+problem_index+' '+problem_name])
                 self.problems[problem_index.lower()]=Problem(self.path+[contest_id+problem_index+' '+problem_name],contest_id,problem_index,problem_name,0,False)
