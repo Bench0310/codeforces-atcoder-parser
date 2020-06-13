@@ -43,9 +43,9 @@ class Contest:
                 problem_name=' '.join(problem_name.split())
                 file_management.create_folder(self.path+[contest_id+problem_index+' '+problem_name])
                 self.problems[problem_index.lower()]=Problem(self.path+[contest_id+problem_index+' '+problem_name],contest_id,problem_index,problem_name,0,False)
-                test_index=source_index
+                test_index=contest_data_source.find(strings.test_left_cf,source_index)
                 next_source_index=contest_data_source.find(strings.problem_one_cf,source_index+1)
-                while(test_index<next_source_index or (next_source_index==-1 and test_index!=-1)):
+                while(test_index!=-1 and (test_index<next_source_index or next_source_index==-1)):
                     test_index_left=contest_data_source.find(strings.test_left_cf,test_index)+len(strings.test_left_cf)
                     test_index_right=contest_data_source.find(strings.test_right_cf,test_index_left)
                     test_in_string=contest_data_source[test_index_left:test_index_right]
@@ -78,9 +78,9 @@ class Contest:
                 problem_name=' '.join(problem_name.split())
                 file_management.create_folder(self.path+[contest_id+problem_index+' '+problem_name])
                 self.problems[problem_index.lower()]=Problem(self.path+[contest_id+problem_index+' '+problem_name],contest_id,problem_index,problem_name,0,False)
-                test_index=source_index
+                test_index=contest_data_source.find(strings.test_left_atc,source_index)
                 next_source_index=contest_data_source.find(strings.problem_one_atc,source_index+1)
-                while(test_index<next_source_index or (next_source_index==-1 and test_index!=-1)):
+                while(test_index!=-1 and (test_index<next_source_index or next_source_index==-1)):
                     test_index_left=contest_data_source.find(strings.test_left_atc,test_index)+len(strings.test_left_atc)
                     test_index_right=contest_data_source.find(strings.test_right_atc,test_index_left)
                     test_in_string=contest_data_source[test_index_left:test_index_right]
