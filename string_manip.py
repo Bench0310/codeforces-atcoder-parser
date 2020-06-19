@@ -23,6 +23,7 @@ def beautify_test(s):
     s=s.replace(strings.test_newline,'\n')
     s=s.replace(strings.test_smaller_than,'<')
     s=s.replace(strings.test_greater_than,'>')
+    s=s.replace(strings.test_ampersand,'&')
     while(len(s)>0 and s[0]=='\n'):
         s=s[1:]
     while(len(s)>0 and s[-1]=='\n'):
