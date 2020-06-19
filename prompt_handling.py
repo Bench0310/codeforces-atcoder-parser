@@ -75,8 +75,10 @@ def prompt_io(test_idx,test_in,test_out):
     printf('[Test #'+str(test_idx)+']\n','white',1)
     printf('Input\n','blue',1)
     printf(test_in)
+    if(len(test_in)==0 or test_in[-1]!='\n'): printf('\n')
     printf('Output\n','blue',1)
     printf(test_out)
+    if(len(test_out)==0 or test_out[-1]!='\n'): printf('\n')
 
 def prompt_help(help_tp):
     printf(commands.commands_zero,'blue',1)
