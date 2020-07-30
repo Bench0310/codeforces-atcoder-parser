@@ -21,6 +21,7 @@ def code_cpp(self,tp):
         return ('#include <bits/stdc++.h>\n'
                 '\n'
                 'using namespace std;\n'
+                'typedef long long ll;\n'
                 '/*\n'
                 'Input:\n'
                 'gen.txt + main.txt\n'
