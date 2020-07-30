@@ -32,8 +32,8 @@ class Command:
         if(len(self.arguments)!=len(args)):
             prompt_handling.prompt_wrong_num_of_args(self.name,len(self.arguments),len(args))
             return False
-        arg_id=0
+        successfully_parsed=True
         for i in range(len(args)):
             if(self.arguments[i].parse(args[i])==False):
-                return False
-        return True
+                successfully_parsed=False
+        return successfully_parsed
