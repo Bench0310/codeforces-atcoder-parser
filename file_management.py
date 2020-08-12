@@ -18,7 +18,7 @@ def create_file_wsl(path,content):
     f.close()
 
 def read_file(path):
-    f=open(string_manip.path_win(path),'r')
+    f=open(string_manip.path_win(path),'r',encoding='utf8')
     temp=f.read()
     f.close()
     return temp

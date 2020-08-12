@@ -8,7 +8,7 @@ import system_action
 import commands
 
 class Contest:
-    def __init__(self,path,contest_id,url,platform):
+    def __init__(self,path,contest_id,url,platform,path_offline):
         self.path=path+[contest_id]
         self.platform=platform
         self.problems={}
@@ -22,9 +22,9 @@ class Contest:
                     self.last_problem_index=problem_index.lower()
                 problem_path=self.path+[contest_id+problem_index+' '+problem_name]
                 self.problems[problem_index.lower()]=Problem(problem_path,contest_id,problem_index,problem_name,int(test_cnt),True)
-        elif(platform=='cf'):
+        elif(platform==strings.pl_cf):
             file_management.create_folder(self.path)
-            contest_data_source=website_handler.get_source(url,'cf')
+            contest_data_source=(website_handler.get_source(url,strings.pl_cf) if path_offline==None else file_management.read_file(path_offline))
             source_index=contest_data_source.find(strings.problem_one_cf)
             while(source_index!=-1):
                 quotation_index_left=contest_data_source.find(strings.problem_index_left_cf,source_index)+len(strings.problem_index_left_cf)
@@ -57,9 +57,9 @@ class Contest:
                     self.problems[problem_index.lower()].add_test(test_in,test_out)
                     test_index=contest_data_source.find(strings.test_left_cf,test_index_right)
                 source_index=next_source_index
-        elif(platform=='atc'):
+        elif(platform==strings.pl_atc):
             file_management.create_folder(self.path)
-            contest_data_source=website_handler.get_source(url,'atc')
+            contest_data_source=(website_handler.get_source(url,strings.pl_atc) if path_offline==None else file_management.read_file(path_offline))
             source_index=contest_data_source.find(strings.problem_one_atc)
             while(source_index!=-1):
                 quotation_index_left=source_index+len(strings.problem_one_atc)
@@ -104,22 +104,9 @@ class Contest:
             metadata+=p.problem_index+'|'+p.problem_name+'|'+str(p.test_cnt)+'\n'
         file_management.create_file_win(self.path+['metadata.txt'],metadata[:-1])
     def solve(self):
-        args=list(filter(None,input().lower().split(' ')))
-        if(len(args)==0):
-            args.append('')
-        if(args[0] in self.problems):
-            args=['run']+args
-        command=args[0]
-        if(not command in commands.commands):
-            prompt_handling.prompt_invalid_command(command)
+        command,arg,success=prompt_handling.parse_input(strings.level_problem)
+        if(success==False):
             return True
-        if(commands.commands[command].parse(args[1:])==False):
-            return True
-        arg={}
-        arg_now=1
-        for argument in commands.commands[command].arguments:
-            arg[argument.name]=args[arg_now]
-            arg_now+=1
         if('id' in arg):
             self.last_problem_index=arg['id']
         if(command=='run'):
@@ -158,19 +145,19 @@ class Contest:
         elif(command=='runv'):
             self.problems[arg['id']].run(1)
         elif(command=='path'):
-            if(self.platform=='cf'):
+            if(self.platform==strings.pl_cf):
                 self.problems[self.last_problem_index].copy_path()
-            elif(self.platform=='atc'):
+            elif(self.platform==strings.pl_atc):
                 self.problems[self.last_problem_index].copy_main()
         elif(command=='pathx'):
-            if(self.platform=='cf'):
+            if(self.platform==strings.pl_cf):
                 self.problems[arg['id']].copy_path()
-            elif(self.platform=='atc'):
+            elif(self.platform==strings.pl_atc):
                 self.problems[arg['id']].copy_main()
         elif(command=='cls'):
             system_action.clear_screen()
         elif(command=='help'):
-            prompt_handling.prompt_help(strings.help_problem)
+            prompt_handling.prompt_help(strings.level_problem)
         elif(command=='exit'):
-            return 0
-        return 1
+            return False
+        return True

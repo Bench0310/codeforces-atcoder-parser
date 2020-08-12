@@ -13,12 +13,12 @@ class Argument:
             if(not (arg.isdigit() or (arg[0]=='-' and arg[1:].isdigit()))):
                 prompt_handling.prompt_not_an_int(self.name,arg)
                 return False
-            if(self.num_range!=0 and (not (self.num_range[0]<=int(arg) and int(arg)<=self.num_range[1]))):
+            if(self.num_range!=None and (not (self.num_range[0]<=int(arg) and int(arg)<=self.num_range[1]))):
                 prompt_handling.prompt_int_not_in_range(self.name,arg,self.num_range)
                 return False
             return True
         elif(self.ctp==commands.arg_tp_str):
-            if(self.str_options!=0 and (not arg in self.str_options)):
+            if(self.str_options!=None and (not arg in self.str_options)):
                 prompt_handling.prompt_str_not_in_options(self.name,arg,self.str_options)
                 return False
             return True
