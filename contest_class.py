@@ -78,6 +78,7 @@ class Contest:
                 problem_name=' '.join(problem_name.split())
                 file_management.create_folder(self.path+[contest_id+problem_index+' '+problem_name])
                 self.problems[problem_index.lower()]=Problem(self.path+[contest_id+problem_index+' '+problem_name],contest_id,problem_index,problem_name,0,False)
+                source_index=contest_data_source.find(strings.problem_two_atc,source_index)
                 test_index=contest_data_source.find(strings.test_left_atc,source_index)
                 next_source_index=contest_data_source.find(strings.problem_one_atc,source_index+1)
                 while(test_index!=-1 and (test_index<next_source_index or next_source_index==-1)):
@@ -91,8 +92,6 @@ class Contest:
                     test_out=string_manip.beautify_test(test_out_string)
                     self.problems[problem_index.lower()].add_test(test_in,test_out)
                     test_index=contest_data_source.find(strings.test_left_atc,test_index_right)
-                for i in range(self.problems[problem_index.lower()].test_cnt//2,0,-1):
-                    self.problems[problem_index.lower()].rm_last_test()
                 source_index=next_source_index
         if(len(self.problems)>0):
             self.make_metadata()

@@ -20,6 +20,7 @@ test_left_cf='<pre>'
 test_right_cf='</pre>'
 
 problem_one_atc='<span class="h2">'
+problem_two_atc='<span class="lang-en">'
 problem_index_right_atc=' - '
 problem_name_right_atc='</span>'
 test_left_atc='</h3><pre>'
