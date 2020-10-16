@@ -18,7 +18,7 @@ def name_problem_exe(self,tp):
 
 def name_problem_dbg(self,tp):
     if(tp==strings.tp_main): return self.contest_id+self.problem_index+' '+self.problem_name+'_dbg'+'.exe'
-    else: return self.contest_id+self.problem_index+tp+'_dbg'+'.exe'
+    else: return self.contest_id+self.problem_index+'_'+tp+'_dbg'+'.exe'
 
 #IO
 def name_io(self):
