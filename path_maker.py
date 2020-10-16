@@ -13,6 +13,9 @@ def path_problem_cbp(self,tp):
 def path_problem_exe(self,tp):
     return path_problem(self)+[name_maker.name_problem_exe(self,tp)]
 
+def path_problem_dbg(self,tp):
+    return path_problem(self)+[name_maker.name_problem_dbg(self,tp)]
+
 #IO
 def path_io(self):
     return self.path+[name_maker.name_io(self)]

@@ -70,6 +70,7 @@ def init():
         Command('runv',[argp_id],'Run <id> on current tests, and only get verdicts'),
         Command('path',[],'Copy path[cf]/code[atc] of last used <id> to clipboard'),
         Command('pathx',[argp_id],'Copy path[cf]/code[atc] of <id> to clipboard'),
+        Command('dbg',[argp_id,argp_tp],'Open <tp>={main,bf,ch,gen} of <id> in gdb'),
         Command('cls',[],'Clear screen'),
         Command('help',[],'Print this guide'),
         Command('exit',[],'Exit contest')

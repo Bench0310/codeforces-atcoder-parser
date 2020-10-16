@@ -12,8 +12,11 @@ def run_bash(path,args):
 def open_file(path):
     os.startfile(string_manip.path_win(path))
 
+def run_command(command):
+    os.system(command)
+
 def clear_screen():
-    os.system('cls')
+    run_command('cls')
 
 def copy_to_clipboard(content):
     pyperclip.copy(content)

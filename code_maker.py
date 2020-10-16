@@ -58,6 +58,8 @@ def code_cpp(self,tp):
                 '{\n'
                 '    ios::sync_with_stdio(0);\n'
                 '    cin.tie(0);\n'
+                '    int tid; //id of current stress/check gen call, can be ignored\n'
+                '    cin >> tid;\n'
                 '    \n'
                 '    return 0;\n'
                 '}\n')
@@ -175,7 +177,7 @@ def code_stress(self):
             'fi\n'
             'for((i=1;i<=${1};i++))\n'
             'do\n'
-            '    { timeout ${2} '+string_manip.path_wsl_q(path_maker.path_problem_exe(self,strings.tp_gen))+' > '+string_manip.path_wsl_q(path_maker.path_io_txt(self,strings.tp_gen))+'; } &>'+string_manip.path_wsl_q(path_maker.path_utils_err(self,strings.tp_gen))+'\n'
+            '    { timeout ${2} '+string_manip.path_wsl_q(path_maker.path_problem_exe(self,strings.tp_gen))+' < <(printf "${i}") > '+string_manip.path_wsl_q(path_maker.path_io_txt(self,strings.tp_gen))+'; } &>'+string_manip.path_wsl_q(path_maker.path_utils_err(self,strings.tp_gen))+'\n'
             '    if((${?}==124))\n'
             '    then\n'
             '        printf "\\r${BWhite}[Stress #${i}] ${BPurple}TLE: gen${NoColor}\\n"\n'
@@ -256,7 +258,7 @@ def code_check(self):
             'fi\n'
             'for((i=1;i<=${1};i++))\n'
             'do\n'
-            '    { timeout ${2} '+string_manip.path_wsl_q(path_maker.path_problem_exe(self,strings.tp_gen))+' > '+string_manip.path_wsl_q(path_maker.path_io_txt(self,strings.tp_gen))+'; } &>'+string_manip.path_wsl_q(path_maker.path_utils_err(self,strings.tp_gen))+'\n'
+            '    { timeout ${2} '+string_manip.path_wsl_q(path_maker.path_problem_exe(self,strings.tp_gen))+' < <(printf "${i}") > '+string_manip.path_wsl_q(path_maker.path_io_txt(self,strings.tp_gen))+'; } &>'+string_manip.path_wsl_q(path_maker.path_utils_err(self,strings.tp_gen))+'\n'
             '    if((${?}==124))\n'
             '    then\n'
             '        printf "\\r${BWhite}[Check #${i}] ${BPurple}TLE: gen${NoColor}\\n"\n'
@@ -308,3 +310,8 @@ def code_check(self):
             '        break\n'
             '    fi\n'
             'done\n')
+
+def code_dbg(self,tp):
+    compile_command='cd '+string_manip.path_win_q(path_maker.path_problem(self))+' && g++ -g -Wall -Wextra -Wshadow -std=c++17 '+string_manip.quotify(name_maker.name_problem_cpp(self,tp))+' -o '+string_manip.quotify(name_maker.name_problem_dbg(self,tp))
+    gdb_command='start cmd /c "'+'cd '+string_manip.path_win_q(path_maker.path_problem(self))+' && gdb '+'\\"'+name_maker.name_problem_dbg(self,tp)+'\\"'+'"'
+    return [compile_command,gdb_command]
