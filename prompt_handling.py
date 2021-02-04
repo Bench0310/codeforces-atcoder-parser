@@ -1,4 +1,5 @@
 import colorama
+from datetime import datetime
 import commands
 import strings
 
@@ -26,6 +27,8 @@ def set_color(color='white',bold=0):
 
 def parse_input(level):
     args=list(filter(None,input().lower().split(' ')))
+    if(level==strings.level_problem):
+        prompt_time()
     if(len(args)==0):
         args.append('')
     if(level==strings.level_contest and args[0]!='' and (not args[0] in commands.commands_contest)):
@@ -65,6 +68,9 @@ def prompt_user_contest(user,contest_id):
     printf(contest_id,'yellow')
     printf('> ','white')
     set_color('cyan',1)
+
+def prompt_time():
+    printf('['+datetime.now().strftime('%H:%M:%S')+']\n')
 
 def prompt_offline_command():
     printf('Link copied, press enter to continue','magenta',1)
