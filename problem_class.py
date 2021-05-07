@@ -19,7 +19,6 @@ class Problem:
             file_management.create_folder(path_maker.path_problem(self))
             for tp in strings.tps:
                 file_management.create_file_win(path_maker.path_problem_cpp(self,tp),code_maker.code_cpp(self,tp))
-                file_management.create_file_win(path_maker.path_problem_cbp(self,tp),code_maker.code_cbp(self,tp))
             #IO
             file_management.create_folder(path_maker.path_io(self))
             #Utils
@@ -32,8 +31,6 @@ class Problem:
                 file_management.create_file_wsl(path_maker.path_utils_err(self,tp),'')
     def open_cpp(self,tp):
         system_action.open_file(path_maker.path_problem_cpp(self,tp))
-    def open_cbp(self,tp):
-        system_action.open_file(path_maker.path_problem_cbp(self,tp))
     def print_io(self):
         for test_idx in range(1,self.test_cnt+1):
             test_in=file_management.read_file(path_maker.path_io_in(self,test_idx))

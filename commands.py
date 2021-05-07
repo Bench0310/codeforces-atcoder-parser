@@ -58,8 +58,6 @@ def init():
         Command('run',[argp_id],'Run <id> on current tests'),
         Command('code',[argp_id,argp_tp],'Open .cpp of <tp>={main,bf,ch,gen} of <id>'),
         Command('codeall',[],'Open .cpp of main of all problems'),
-        Command('debug',[argp_id,argp_tp],'Open .cbp of <tp>={main,bf,ch,gen} of <id>'),
-        Command('debugall',[],'Open .cbp of main of all problems'),
         Command('io',[argp_id],'Print all input and output tests of <id>'),
         Command('add',[argp_id],'Add test to <id>'),
         Command('keep',[argp_id,argp_num],'Keep first <num> tests of <id> and delete the rest'),

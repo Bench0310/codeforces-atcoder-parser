@@ -119,11 +119,6 @@ class Contest:
                 p.open_cpp(strings.tp_main)
             for p in reversed(self.problems.values()):
                 p.open_cpp(strings.tp_main)
-        elif(command=='debug'):
-            self.problems[arg['id']].open_cbp(arg['tp'])
-        elif(command=='debugall'):
-            for p in self.problems.values():
-                p.open_cbp(strings.tp_main)
         elif(command=='io'):
             self.problems[arg['id']].print_io()
         elif(command=='add'):
