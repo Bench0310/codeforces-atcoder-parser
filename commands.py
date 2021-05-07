@@ -15,7 +15,7 @@ argc_pl=Argument('pl',arg_tp_str,None,strings.pls)
 argp_id=Argument('id',arg_tp_str,None,[])
 argp_tp=Argument('tp',arg_tp_str,None,strings.tps)
 argp_tl=Argument('tl',arg_tp_num,[1,60],None)
-argp_num=Argument('num',arg_tp_num,[0,10000],None)
+argp_num=Argument('num',arg_tp_num,[],None)
 argp_cnt=Argument('cnt',arg_tp_num,[1,10000],None)
 
 comms_contest=[]
@@ -61,13 +61,12 @@ def init():
         Command('io',[argp_id],'Print all input and output tests of <id>'),
         Command('add',[argp_id],'Add test to <id>'),
         Command('keep',[argp_id,argp_num],'Keep first <num> tests of <id> and delete the rest'),
-        Command('rm',[argp_id,argp_num],'Delete last <num> tests of <id>'),
         Command('tl',[argp_id,argp_tl],'Set TL of <id> to <tl>'),
         Command('stress',[argp_id,argp_cnt],'Stress <id> on <cnt> tests'),
         Command('check',[argp_id,argp_cnt],'Check <id> on <cnt> tests'),
         Command('runv',[argp_id],'Run <id> on current tests, and only get verdicts'),
-        Command('path',[],'Copy path[cf]/code[atc] of last used <id> to clipboard'),
-        Command('pathx',[argp_id],'Copy path[cf]/code[atc] of <id> to clipboard'),
+        Command('path',[argp_id],'Copy path of <id> to clipboard'),
+        Command('yank',[argp_id],'Copy code of <id> to clipboard'),
         Command('dbg',[argp_id,argp_tp],'Open <tp>={main,bf,ch,gen} of <id> in gdb'),
         Command('cls',[],'Clear screen'),
         Command('help',[],'Print this guide'),

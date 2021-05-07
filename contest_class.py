@@ -13,14 +13,14 @@ class Contest:
         self.path=path+[contest_id]
         self.platform=platform
         self.problems={}
-        self.last_problem_index=''
+        self.active_problem_index=''
         if(file_management.file_exists(self.path)):
             metadata=file_management.read_file(self.path+['metadata.txt'])
             problem_info=metadata.split('\n')
             for p in problem_info:
                 problem_index,problem_name,test_cnt=p.split('|')
-                if(self.last_problem_index==''):
-                    self.last_problem_index=problem_index.lower()
+                if(self.active_problem_index==''):
+                    self.active_problem_index=problem_index.lower()
                 problem_path=self.path+[contest_id+problem_index+' '+problem_name]
                 self.problems[problem_index.lower()]=Problem(problem_path,contest_id,problem_index,problem_name,int(test_cnt),True)
         elif(platform==strings.pl_cf):
@@ -31,8 +31,8 @@ class Contest:
                 quotation_index_left=contest_data_source.find(strings.problem_index_left_cf,source_index)+len(strings.problem_index_left_cf)
                 quotation_index_right=contest_data_source.find(strings.problem_index_right_cf,quotation_index_left)
                 problem_index=contest_data_source[quotation_index_left:quotation_index_right]
-                if(self.last_problem_index==''):
-                    self.last_problem_index=problem_index.lower()
+                if(self.active_problem_index==''):
+                    self.active_problem_index=problem_index.lower()
                 name_index_left=contest_data_source.find(strings.problem_name_left_cf,quotation_index_right)+len(strings.problem_name_left_cf)+len(problem_index)+2
                 name_index_right=contest_data_source.find(strings.problem_name_right_cf,name_index_left)
                 problem_name_temp=contest_data_source[name_index_left:name_index_right]
@@ -66,8 +66,8 @@ class Contest:
                 quotation_index_left=source_index+len(strings.problem_one_atc)
                 quotation_index_right=contest_data_source.find(strings.problem_index_right_atc,quotation_index_left)
                 problem_index=contest_data_source[quotation_index_left:quotation_index_right]
-                if(self.last_problem_index==''):
-                    self.last_problem_index=problem_index.lower()
+                if(self.active_problem_index==''):
+                    self.active_problem_index=problem_index.lower()
                 name_index_left=quotation_index_right+len(strings.problem_index_right_atc)
                 name_index_right=contest_data_source.find(strings.problem_name_right_atc,name_index_left)
                 problem_name_temp=contest_data_source[name_index_left:name_index_right]
@@ -93,7 +93,7 @@ class Contest:
                     self.problems[problem_index.lower()].add_test(test_in,test_out)
                     test_index=contest_data_source.find(strings.test_left_atc,test_index_right)
                 for i in range(self.problems[problem_index.lower()].test_cnt//2,0,-1):
-                    self.problems[problem_index.lower()].rm_last_test()
+                    self.problems[problem_index.lower()].rm_test_keep(-1)
                 source_index=next_source_index
         if(len(self.problems)>0):
             self.make_metadata()
@@ -105,11 +105,17 @@ class Contest:
             metadata+=p.problem_index+'|'+p.problem_name+'|'+str(p.test_cnt)+'\n'
         file_management.create_file_win(self.path+['metadata.txt'],metadata[:-1])
     def solve(self):
-        command,arg,success=prompt_handling.parse_input(strings.level_problem)
+        args,success,arg_id_pos=prompt_handling.parse_input_level_problem_prepare(self.active_problem_index)
         if(success==False):
             return True
+        if(arg_id_pos!=-1 and arg_id_pos<len(args) and args[arg_id_pos] in self.problems.keys()):
+            self.problems[args[arg_id_pos]].make_active()
+        command,arg,success=prompt_handling.parse_input_level_problem(args)
+        if(success==False):
+            self.problems[self.active_problem_index].make_active()
+            return True
         if('id' in arg):
-            self.last_problem_index=arg['id']
+            self.active_problem_index=arg['id']
         if(command=='run'):
             self.problems[arg['id']].run(0)
         elif(command=='code'):
@@ -141,15 +147,9 @@ class Contest:
         elif(command=='runv'):
             self.problems[arg['id']].run(1)
         elif(command=='path'):
-            if(self.platform==strings.pl_cf):
-                self.problems[self.last_problem_index].copy_path()
-            elif(self.platform==strings.pl_atc):
-                self.problems[self.last_problem_index].copy_main()
-        elif(command=='pathx'):
-            if(self.platform==strings.pl_cf):
-                self.problems[arg['id']].copy_path()
-            elif(self.platform==strings.pl_atc):
-                self.problems[arg['id']].copy_main()
+            self.problems[arg['id']].copy_path()
+        elif(command=='yank'):
+            self.problems[arg['id']].copy_main()
         elif(command=='dbg'):
             compile_command,gdb_command=code_maker.code_dbg(self.problems[arg['id']],arg['tp'])
             system_action.run_command(compile_command)

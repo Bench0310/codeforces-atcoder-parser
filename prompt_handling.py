@@ -25,32 +25,57 @@ def printf(message,color='white',bold=0):
 def set_color(color='white',bold=0):
     print(colors['end']+colors[color]+(colors['bold'] if bold else ''),end='')
 
-def parse_input(level):
-    args=list(filter(None,input().lower().split(' ')))
-    if(level==strings.level_problem):
-        prompt_time()
+def get_input():
+    return list(filter(None,input().lower().split(' ')))
+
+def parse_input_level_contest():
+    args=get_input()
     if(len(args)==0):
         args.append('')
-    if(level==strings.level_contest and args[0]!='' and (not args[0] in commands.commands_contest)):
+    if(args[0]!='' and (not args[0] in commands.commands_contest)):
         args=['parse']+args
-    if(level==strings.level_problem and args[0] in commands.argp_id.str_options):
-        args=['run']+args
     command=args[0]
-    if((level==strings.level_contest and (not command in commands.commands_contest)) or (level==strings.level_problem and (not command in commands.commands_problem))):
+    if(not command in commands.commands_contest):
         prompt_invalid_command(command)
         return ['',{},False]
-    if((level==strings.level_contest and commands.commands_contest[command].parse(args[1:])==False) or (level==strings.level_problem and commands.commands_problem[command].parse(args[1:])==False)):
+    if(commands.commands_contest[command].parse(args[1:])==False):
         return ['',{},False]
     arg={}
     arg_now=1
-    if(level==strings.level_contest):
-        for argument in commands.commands_contest[command].arguments:
-            arg[argument.name]=args[arg_now]
-            arg_now+=1
-    elif(level==strings.level_problem):
-        for argument in commands.commands_problem[command].arguments:
-            arg[argument.name]=args[arg_now]
-            arg_now+=1
+    for argument in commands.commands_contest[command].arguments:
+        arg[argument.name]=args[arg_now]
+        arg_now+=1
+    return [command,arg,True]
+
+def parse_input_level_problem_prepare(active_problem_index):
+    args=get_input()
+    prompt_time()
+    if(len(args)==0):
+        args.append('')
+    if(len(args)==1 and args[0] in commands.argp_id.str_options):
+        args=['run']+args
+    command=args[0]
+    if(not command in commands.commands_problem):
+        prompt_invalid_command(command)
+        return [[],False,-1]
+    arguments=commands.commands_problem[command].arguments
+    arg_id_pos=-1
+    for i,argument in enumerate(arguments):
+        if(argument.name=='id'):
+            if(len(args)-1==len(arguments)-1):
+                args.insert(i+1,active_problem_index)
+            arg_id_pos=i+1
+    return [args,True,arg_id_pos]
+
+def parse_input_level_problem(args):
+    command=args[0]
+    if(commands.commands_problem[command].parse(args[1:])==False):
+        return ['',{},False]
+    arg={}
+    arg_now=1
+    for argument in commands.commands_problem[command].arguments:
+        arg[argument.name]=args[arg_now]
+        arg_now+=1
     return [command,arg,True]
 
 def prompt_newline(num):
@@ -116,11 +141,7 @@ def prompt_io(test_idx,test_in,test_out):
 
 def prompt_help(level):
     printf(commands.help_string_zero,'blue',1)
-    help=''
-    if(level==strings.level_contest):
-        help+=commands.help_string_contest
-    elif(level==strings.level_problem):
-        help+=commands.help_string_problem
+    help=commands.help_string_contest if level==strings.level_contest else commands.help_string_problem if level==strings.level_problem else ''
     arg=0
     comm=1
     for c in help:

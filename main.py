@@ -16,7 +16,7 @@ path_offline=['C','Users','Benja','Downloads','__contest__.txt']
 
 while(True):
     prompt_handling.prompt_user(user)
-    command,arg,success=prompt_handling.parse_input(strings.level_contest)
+    command,arg,success=prompt_handling.parse_input_level_contest()
     if(success==False):
         prompt_handling.prompt_newline(1)
         continue
