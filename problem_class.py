@@ -31,7 +31,7 @@ class Problem:
             for tp in strings.tps:
                 file_management.create_file_wsl(path_maker.path_utils_err(self,tp),'')
     def make_active(self):
-        commands.argp_num.num_range=[-self.test_cnt,self.test_cnt]
+        commands.argp_num.opt_range=[-self.test_cnt,self.test_cnt]
     def open_cpp(self,tp):
         system_action.open_file(path_maker.path_problem_cpp(self,tp))
     def print_io(self):

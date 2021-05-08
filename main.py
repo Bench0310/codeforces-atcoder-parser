@@ -6,8 +6,6 @@ import strings
 import system_action
 import string_manip
 import commands
-prompt_handling.init()
-commands.init()
 
 user='Bench'
 path_cf=['C','Bench','CodeHub','Codeforces']
@@ -37,8 +35,7 @@ while(True):
                 input()
             contest=Contest(path_now,arg['id'],url,platform,(None if command=='parse' else path_offline))
             if(file_management.file_exists(path_now+[arg['id']])==True):
-                commands.argp_id.str_options=list(contest.problems)
-                commands.init()
+                commands.argp_id.options=list(contest.problems)
                 while(True):
                     prompt_handling.prompt_user_contest(user,arg['id'])
                     if(contest.solve()==False):

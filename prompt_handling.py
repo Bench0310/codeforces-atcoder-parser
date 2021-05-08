@@ -3,8 +3,7 @@ from datetime import datetime
 import commands
 import strings
 
-def init():
-    colorama.init()
+colorama.init()
 
 colors={
     'black':'\033[30m',
@@ -52,7 +51,7 @@ def parse_input_level_problem_prepare(active_problem_index):
     prompt_time()
     if(len(args)==0):
         args.append('')
-    if(len(args)==1 and args[0] in commands.argp_id.str_options):
+    if(len(args)==1 and args[0] in commands.argp_id.options):
         args=['run']+args
     command=args[0]
     if(not command in commands.commands_problem):
@@ -112,11 +111,14 @@ def prompt_platform_not_responding(platform):
 def prompt_not_an_int(name,arg):
     printf('<'+name+'>: '+'\''+arg+'\' is not an int\n','white',1)
 
-def prompt_int_not_in_range(name,arg,num_range):
-    printf('<'+name+'>: '+'\''+arg+'\' is not in range ['+str(num_range[0])+','+str(num_range[1])+']\n','white',1)
+def prompt_int_not_in_range(name,arg,opt_range):
+    printf('<'+name+'>: '+'\''+arg+'\' is not in range ['+str(opt_range[0])+','+str(opt_range[1])+']\n','white',1)
 
-def prompt_str_not_in_options(name,arg,str_options):
-    printf('<'+name+'>: '+'\''+arg+'\' is not in [\''+'\',\''.join(str_options)+'\']\n','white',1)
+def prompt_str_not_in_options(name,arg,options):
+    printf('<'+name+'>: '+'\''+arg+'\' is not in [\''+'\',\''.join(options)+'\']\n','white',1)
+
+def prompt_str_in_forbidden(name,arg):
+    printf('<'+name+'>: '+'\''+arg+'\' is forbidden\n','white',1)
 
 def prompt_wrong_num_of_args(command,args_expected,args_given):
     printf('Command \''+command+'\' expects '+str(args_expected)+' argument'+('s' if args_expected!=1 else '')+', but '+str(args_given)+' '+('was' if args_given==1 else 'were')+' given\n','white',1)

@@ -2,26 +2,32 @@ import strings
 import prompt_handling
 import commands
 
-class Argument:
-    def __init__(self,name,ctp,num_range,str_options):
+class ArgumentInt:
+    def __init__(self,name,opt_range):
         self.name=name
-        self.ctp=ctp
-        self.num_range=num_range
-        self.str_options=str_options
+        self.opt_range=opt_range
     def parse(self,arg):
-        if(self.ctp==commands.arg_tp_num):
-            if(not (arg.isdigit() or (arg[0]=='-' and arg[1:].isdigit()))):
-                prompt_handling.prompt_not_an_int(self.name,arg)
-                return False
-            if(self.num_range!=None and (not (self.num_range[0]<=int(arg) and int(arg)<=self.num_range[1]))):
-                prompt_handling.prompt_int_not_in_range(self.name,arg,self.num_range)
-                return False
-            return True
-        elif(self.ctp==commands.arg_tp_str):
-            if(self.str_options!=None and (not arg in self.str_options)):
-                prompt_handling.prompt_str_not_in_options(self.name,arg,self.str_options)
-                return False
-            return True
+        if(not (arg.isdigit() or (arg[0]=='-' and arg[1:].isdigit()))):
+            prompt_handling.prompt_not_an_int(self.name,arg)
+            return False
+        if(self.opt_range!=None and (not (self.opt_range[0]<=int(arg) and int(arg)<=self.opt_range[1]))):
+            prompt_handling.prompt_int_not_in_range(self.name,arg,self.opt_range)
+            return False
+        return True
+
+class ArgumentStr:
+    def __init__(self,name,options,forbidden):
+        self.name=name
+        self.options=options
+        self.forbidden=forbidden
+    def parse(self,arg):
+        if(self.options!=None and (not arg in self.options)):
+            prompt_handling.prompt_str_not_in_options(self.name,arg,self.options)
+            return False
+        if(self.forbidden!=None and arg in self.forbidden):
+            prompt_handling.prompt_str_in_forbidden(self.name,arg)
+            return False
+        return True
 
 class Command:
     def __init__(self,name,arguments,description):
