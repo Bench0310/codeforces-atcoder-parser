@@ -31,12 +31,21 @@ def parse_input_level_contest():
     args=get_input()
     if(len(args)==0):
         args.append('')
+<<<<<<< Updated upstream
     if(args[0]!='' and (not args[0] in commands.commands_contest)):
+=======
+    if(len(args)==1 and args[0]!='' and (not args[0] in commands.commands_contest)):
+>>>>>>> Stashed changes
         args=['parse']+args
     command=args[0]
     if(not command in commands.commands_contest):
         prompt_invalid_command(command)
         return ['',{},False]
+<<<<<<< Updated upstream
+=======
+    if(command=='cd'):
+        args=[args[0]]+([' '.join(args[1:])] if len(args)>=2 else [])
+>>>>>>> Stashed changes
     if(commands.commands_contest[command].parse(args[1:])==False):
         return ['',{},False]
     arg={}
@@ -81,15 +90,25 @@ def prompt_newline(num):
     for i in range(num):
         printf('\n')
 
-def prompt_user(user):
-    printf(user,'green',1)
+def prompt_user(user,path):
+    if(len(path)==0): printf(user,'green',1)
+    else: printf(user,'cyan',0)
     printf('/','white')
+    for folder in path:
+        printf(folder,'yellow')
+        printf('/','white')
     set_color('yellow')
 
-def prompt_user_contest(user,contest_id):
-    printf(user,'green',1)
-    printf('/','white')
-    printf(contest_id,'yellow')
+def prompt_user_contest(user,contest_id,path):
+    if(path==None): printf(user,'green',1)
+    else: printf(user,'cyan',0)
+    if(path==None):
+        printf('/','white')
+        printf(contest_id,'yellow')
+    else:
+        for folder in path:
+            printf('/','white')
+            printf(folder,'yellow')
     printf('> ','white')
     set_color('cyan',1)
 
@@ -107,6 +126,9 @@ def prompt_contest_no_problems():
 
 def prompt_platform_not_responding(platform):
     printf(('Codeforces' if platform==strings.pl_cf else 'AtCoder')+' not responding, retrying now\n','red')
+
+def prompt_invalid_path():
+    printf('Path not found\n')
 
 def prompt_not_an_int(name,arg):
     printf('<'+name+'>: '+'\''+arg+'\' is not an int\n','white',1)

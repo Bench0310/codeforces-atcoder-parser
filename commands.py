@@ -8,6 +8,10 @@ help_string_zero=''
 
 argc_id=ArgumentStr('id',None,None)
 argc_pl=ArgumentStr('pl',strings.pls,None)
+<<<<<<< Updated upstream
+=======
+argc_path=ArgumentStr('path',None,None)
+>>>>>>> Stashed changes
 
 argp_id=ArgumentStr('id',[],None)
 argp_tp=ArgumentStr('tp',strings.tps,None)
@@ -27,6 +31,10 @@ comms_contest=[
     Command('offline',[argc_id],'Parse contest <id> from local txt file'),
     Command('update',[],'Update cf+atc contest data'),
     Command('updatex',[argc_pl],'Update <pl>={cf,atc} contest data'),
+<<<<<<< Updated upstream
+=======
+    Command('cd',[argc_path],'Change directory to <path>'),
+>>>>>>> Stashed changes
     Command('cls',[],'Clear screen'),
     Command('help',[],'Print this guide'),
     Command('exit',[],'Exit parser')
