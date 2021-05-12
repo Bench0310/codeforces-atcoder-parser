@@ -2,28 +2,21 @@ import prompt_handling
 import website_handler
 from contest_class import Contest
 import file_management
-from file_management import Navigator
 import strings
 import system_action
 import string_manip
 import commands
+prompt_handling.init()
+commands.init()
 
 user='Bench'
-path=['C','Bench','CodeHub']
 path_cf=['C','Bench','CodeHub','Codeforces']
 path_atc=['C','Bench','CodeHub','AtCoder']
 path_offline=['C','Users','Benja','Downloads','__contest__.txt']
 
-Navigator.default=path
-navigator=Navigator()
-
 while(True):
-<<<<<<< Updated upstream
     prompt_handling.prompt_user(user)
-=======
-    prompt_handling.prompt_user(user,navigator.path[len(Navigator.default):])
->>>>>>> Stashed changes
-    command,arg,success=prompt_handling.parse_input_level_contest()
+    command,arg,success=prompt_handling.parse_input(strings.level_contest)
     if(success==False):
         prompt_handling.prompt_newline(1)
         continue
@@ -42,15 +35,12 @@ while(True):
                 file_management.create_file_win(path_offline,'')
                 system_action.open_file(path_offline)
                 input()
-            contest=Contest(path_now+[arg['id']],arg['id'],url,platform,(None if command=='parse' else path_offline))
+            contest=Contest(path_now,arg['id'],url,platform,(None if command=='parse' else path_offline))
             if(file_management.file_exists(path_now+[arg['id']])==True):
-<<<<<<< Updated upstream
-=======
-                navigator.path=Navigator.default.copy()
->>>>>>> Stashed changes
-                commands.argp_id.options=list(contest.problems)
+                commands.argp_id.str_options=list(contest.problems)
+                commands.init()
                 while(True):
-                    prompt_handling.prompt_user_contest(user,arg['id'],None)
+                    prompt_handling.prompt_user_contest(user,arg['id'])
                     if(contest.solve()==False):
                         break
                     prompt_handling.prompt_newline(1)
@@ -66,18 +56,6 @@ while(True):
             website_handler.get_contest_url_cf(path_cf,'-1')
         elif(arg['pl']==strings.pl_atc):
             website_handler.get_contest_url_atc(path_atc,'-1')
-    elif(command=='cd'):
-        if(navigator.cd(arg['path'])==False):
-            prompt_handling.prompt_invalid_path()
-        if(file_management.folder_is_contest(navigator.path)):
-            contest=Contest(navigator.path,'',None,None,None)
-            commands.argp_id.options=list(contest.problems)
-            while(True):
-                prompt_handling.prompt_user_contest(user,None,navigator.path[len(Navigator.default):])
-                if(contest.solve()==False):
-                    break
-                prompt_handling.prompt_newline(1)
-            navigator.path.pop()
     elif(command=='cls'):
         system_action.clear_screen()
     elif(command=='help'):
@@ -85,5 +63,3 @@ while(True):
     elif(command=='exit'):
         break
     prompt_handling.prompt_newline(1)
-
-prompt_handling.set_color()

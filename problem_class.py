@@ -5,7 +5,6 @@ import strings
 import code_maker
 import system_action
 import prompt_handling
-import commands
 
 class Problem:
     def __init__(self,path,contest_id,problem_index,problem_name,test_cnt,problem_exists):
@@ -20,6 +19,7 @@ class Problem:
             file_management.create_folder(path_maker.path_problem(self))
             for tp in strings.tps:
                 file_management.create_file_win(path_maker.path_problem_cpp(self,tp),code_maker.code_cpp(self,tp))
+                file_management.create_file_win(path_maker.path_problem_cbp(self,tp),code_maker.code_cbp(self,tp))
             #IO
             file_management.create_folder(path_maker.path_io(self))
             #Utils
@@ -30,10 +30,10 @@ class Problem:
             file_management.create_file_wsl(path_maker.path_utils_verdict(self),'')
             for tp in strings.tps:
                 file_management.create_file_wsl(path_maker.path_utils_err(self,tp),'')
-    def make_active(self):
-        commands.argp_num.opt_range=[-self.test_cnt,self.test_cnt]
     def open_cpp(self,tp):
         system_action.open_file(path_maker.path_problem_cpp(self,tp))
+    def open_cbp(self,tp):
+        system_action.open_file(path_maker.path_problem_cbp(self,tp))
     def print_io(self):
         for test_idx in range(1,self.test_cnt+1):
             test_in=file_management.read_file(path_maker.path_io_in(self,test_idx))
@@ -47,12 +47,18 @@ class Problem:
         self.add_test('\n','\n')
         system_action.open_file(path_maker.path_io_out(self,self.test_cnt))
         system_action.open_file(path_maker.path_io_in(self,self.test_cnt))
-    def rm_test_keep(self,num):
-        if(num<0): num+=self.test_cnt
-        while(self.test_cnt>num):
+    def rm_last_test(self):
+        if(self.test_cnt>0):
             file_management.delete_file(path_maker.path_io_in(self,self.test_cnt))
             file_management.delete_file(path_maker.path_io_out(self,self.test_cnt))
             self.test_cnt-=1
+    def rm_test_keep(self,num):
+        while(self.test_cnt>num):
+            self.rm_last_test()
+    def rm_test_rm(self,num):
+        cnt=min(self.test_cnt,num)
+        for _ in range(cnt):
+            self.rm_last_test()
     def set_time_limit(self,time_limit):
         self.time_limit=time_limit
     def copy_path(self):

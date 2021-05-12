@@ -3,7 +3,8 @@ from datetime import datetime
 import commands
 import strings
 
-colorama.init()
+def init():
+    colorama.init()
 
 colors={
     'black':'\033[30m',
@@ -24,91 +25,47 @@ def printf(message,color='white',bold=0):
 def set_color(color='white',bold=0):
     print(colors['end']+colors[color]+(colors['bold'] if bold else ''),end='')
 
-def get_input():
-    return list(filter(None,input().lower().split(' ')))
-
-def parse_input_level_contest():
-    args=get_input()
+def parse_input(level):
+    args=list(filter(None,input().lower().split(' ')))
+    if(level==strings.level_problem):
+        prompt_time()
     if(len(args)==0):
         args.append('')
-<<<<<<< Updated upstream
-    if(args[0]!='' and (not args[0] in commands.commands_contest)):
-=======
-    if(len(args)==1 and args[0]!='' and (not args[0] in commands.commands_contest)):
->>>>>>> Stashed changes
+    if(level==strings.level_contest and args[0]!='' and (not args[0] in commands.commands_contest)):
         args=['parse']+args
-    command=args[0]
-    if(not command in commands.commands_contest):
-        prompt_invalid_command(command)
-        return ['',{},False]
-<<<<<<< Updated upstream
-=======
-    if(command=='cd'):
-        args=[args[0]]+([' '.join(args[1:])] if len(args)>=2 else [])
->>>>>>> Stashed changes
-    if(commands.commands_contest[command].parse(args[1:])==False):
-        return ['',{},False]
-    arg={}
-    arg_now=1
-    for argument in commands.commands_contest[command].arguments:
-        arg[argument.name]=args[arg_now]
-        arg_now+=1
-    return [command,arg,True]
-
-def parse_input_level_problem_prepare(active_problem_index):
-    args=get_input()
-    prompt_time()
-    if(len(args)==0):
-        args.append('')
-    if(len(args)==1 and args[0] in commands.argp_id.options):
+    if(level==strings.level_problem and args[0] in commands.argp_id.str_options):
         args=['run']+args
     command=args[0]
-    if(not command in commands.commands_problem):
+    if((level==strings.level_contest and (not command in commands.commands_contest)) or (level==strings.level_problem and (not command in commands.commands_problem))):
         prompt_invalid_command(command)
-        return [[],False,-1]
-    arguments=commands.commands_problem[command].arguments
-    arg_id_pos=-1
-    for i,argument in enumerate(arguments):
-        if(argument.name=='id'):
-            if(len(args)-1==len(arguments)-1):
-                args.insert(i+1,active_problem_index)
-            arg_id_pos=i+1
-    return [args,True,arg_id_pos]
-
-def parse_input_level_problem(args):
-    command=args[0]
-    if(commands.commands_problem[command].parse(args[1:])==False):
+        return ['',{},False]
+    if((level==strings.level_contest and commands.commands_contest[command].parse(args[1:])==False) or (level==strings.level_problem and commands.commands_problem[command].parse(args[1:])==False)):
         return ['',{},False]
     arg={}
     arg_now=1
-    for argument in commands.commands_problem[command].arguments:
-        arg[argument.name]=args[arg_now]
-        arg_now+=1
+    if(level==strings.level_contest):
+        for argument in commands.commands_contest[command].arguments:
+            arg[argument.name]=args[arg_now]
+            arg_now+=1
+    elif(level==strings.level_problem):
+        for argument in commands.commands_problem[command].arguments:
+            arg[argument.name]=args[arg_now]
+            arg_now+=1
     return [command,arg,True]
 
 def prompt_newline(num):
     for i in range(num):
         printf('\n')
 
-def prompt_user(user,path):
-    if(len(path)==0): printf(user,'green',1)
-    else: printf(user,'cyan',0)
+def prompt_user(user):
+    printf(user,'green',1)
     printf('/','white')
-    for folder in path:
-        printf(folder,'yellow')
-        printf('/','white')
     set_color('yellow')
 
-def prompt_user_contest(user,contest_id,path):
-    if(path==None): printf(user,'green',1)
-    else: printf(user,'cyan',0)
-    if(path==None):
-        printf('/','white')
-        printf(contest_id,'yellow')
-    else:
-        for folder in path:
-            printf('/','white')
-            printf(folder,'yellow')
+def prompt_user_contest(user,contest_id):
+    printf(user,'green',1)
+    printf('/','white')
+    printf(contest_id,'yellow')
     printf('> ','white')
     set_color('cyan',1)
 
@@ -127,20 +84,14 @@ def prompt_contest_no_problems():
 def prompt_platform_not_responding(platform):
     printf(('Codeforces' if platform==strings.pl_cf else 'AtCoder')+' not responding, retrying now\n','red')
 
-def prompt_invalid_path():
-    printf('Path not found\n')
-
 def prompt_not_an_int(name,arg):
     printf('<'+name+'>: '+'\''+arg+'\' is not an int\n','white',1)
 
-def prompt_int_not_in_range(name,arg,opt_range):
-    printf('<'+name+'>: '+'\''+arg+'\' is not in range ['+str(opt_range[0])+','+str(opt_range[1])+']\n','white',1)
+def prompt_int_not_in_range(name,arg,num_range):
+    printf('<'+name+'>: '+'\''+arg+'\' is not in range ['+str(num_range[0])+','+str(num_range[1])+']\n','white',1)
 
-def prompt_str_not_in_options(name,arg,options):
-    printf('<'+name+'>: '+'\''+arg+'\' is not in [\''+'\',\''.join(options)+'\']\n','white',1)
-
-def prompt_str_in_forbidden(name,arg):
-    printf('<'+name+'>: '+'\''+arg+'\' is forbidden\n','white',1)
+def prompt_str_not_in_options(name,arg,str_options):
+    printf('<'+name+'>: '+'\''+arg+'\' is not in [\''+'\',\''.join(str_options)+'\']\n','white',1)
 
 def prompt_wrong_num_of_args(command,args_expected,args_given):
     printf('Command \''+command+'\' expects '+str(args_expected)+' argument'+('s' if args_expected!=1 else '')+', but '+str(args_given)+' '+('was' if args_given==1 else 'were')+' given\n','white',1)
@@ -165,7 +116,11 @@ def prompt_io(test_idx,test_in,test_out):
 
 def prompt_help(level):
     printf(commands.help_string_zero,'blue',1)
-    help=commands.help_string_contest if level==strings.level_contest else commands.help_string_problem if level==strings.level_problem else ''
+    help=''
+    if(level==strings.level_contest):
+        help+=commands.help_string_contest
+    elif(level==strings.level_problem):
+        help+=commands.help_string_problem
     arg=0
     comm=1
     for c in help:

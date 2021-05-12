@@ -7,6 +7,9 @@ def path_problem(self):
 def path_problem_cpp(self,tp):
     return path_problem(self)+[name_maker.name_problem_cpp(self,tp)]
 
+def path_problem_cbp(self,tp):
+    return path_problem(self)+[name_maker.name_problem_cbp(self,tp)]
+
 def path_problem_exe(self,tp):
     return path_problem(self)+[name_maker.name_problem_exe(self,tp)]
 
