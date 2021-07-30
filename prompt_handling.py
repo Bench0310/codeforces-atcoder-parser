@@ -116,11 +116,10 @@ def prompt_io(test_idx,test_in,test_out):
 
 def prompt_help(level):
     printf(commands.help_string_zero,'blue',1)
-    help=''
     if(level==strings.level_contest):
-        help+=commands.help_string_contest
+        help=commands.help_string_contest
     elif(level==strings.level_problem):
-        help+=commands.help_string_problem
+        help=commands.help_string_problem
     arg=0
     comm=1
     for c in help:
