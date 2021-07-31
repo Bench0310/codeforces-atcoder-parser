@@ -111,7 +111,7 @@ class Contest:
         if('id' in arg):
             self.last_problem_index=arg['id']
         if(command=='run'):
-            self.problems[arg['id']].run(0)
+            self.problems[arg['id']].run(False)
         elif(command=='code'):
             self.problems[arg['id']].open_cpp(arg['tp'])
         elif(command=='codeall'):
@@ -137,14 +137,14 @@ class Contest:
             self.make_metadata()
         elif(command=='tl'):
             self.problems[arg['id']].set_time_limit(int(arg['tl']))
+        if(command=='runbf'):
+            self.problems[arg['id']].run(True)
         elif(command=='stress'):
             self.problems[arg['id']].stress(int(arg['cnt']))
             self.make_metadata()
         elif(command=='check'):
             self.problems[arg['id']].check(int(arg['cnt']))
             self.make_metadata()
-        elif(command=='runv'):
-            self.problems[arg['id']].run(1)
         elif(command=='path'):
             if(self.platform==strings.pl_cf):
                 self.problems[self.last_problem_index].copy_path()

@@ -6,7 +6,7 @@ import string_manip
 def run_bash(path,args):
     command='wsl '+string_manip.path_wsl_q(path)
     for arg in args:
-        command+=' '+str(arg)
+        command+=' '+string_manip.quotify(str(arg))
     subprocess.run(command,shell=False)
 
 def open_file(path):

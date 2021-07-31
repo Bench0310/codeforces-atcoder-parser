@@ -1,5 +1,6 @@
 import file_management
 import path_maker
+import name_maker
 import string_manip
 import strings
 import code_maker
@@ -65,10 +66,32 @@ class Problem:
         system_action.copy_to_clipboard(string_manip.path_win(path_maker.path_problem_cpp(self,strings.tp_main)))
     def copy_main(self):
         system_action.copy_to_clipboard(file_management.read_file(path_maker.path_problem_cpp(self,strings.tp_main)))
-    def run(self,verdict_only):
-        system_action.run_bash(path_maker.path_utils_run(self),[self.test_cnt,self.time_limit,verdict_only])
+    def run(self,runbf):
+        system_action.run_bash(path_maker.path_utils_run(self),[
+            string_manip.path_wsl(path_maker.path_problem(self)),
+            string_manip.path_wsl(path_maker.path_io(self)),
+            string_manip.path_wsl(path_maker.path_utils(self)),
+            name_maker.name_problem_exe(self,(strings.tp_main if not runbf else strings.tp_bf)),
+            name_maker.name_io_txt(self,(strings.tp_main if not runbf else strings.tp_bf)),
+            name_maker.name_utils_err(self,(strings.tp_main if not runbf else strings.tp_bf)),
+            self.problem_index,self.test_cnt,self.time_limit,('' if not runbf else 'Bf')
+        ])
     def stress(self,stress_cnt):
-        system_action.run_bash(path_maker.path_utils_stress(self),[stress_cnt,self.time_limit])
+        system_action.run_bash(path_maker.path_utils_stress(self),[
+            string_manip.path_wsl(path_maker.path_problem(self)),
+            string_manip.path_wsl(path_maker.path_io(self)),
+            string_manip.path_wsl(path_maker.path_utils(self)),
+            name_maker.name_problem_exe(self,strings.tp_main),
+            name_maker.name_io_txt(self,strings.tp_main),
+            name_maker.name_utils_err(self,strings.tp_main),
+            name_maker.name_problem_exe(self,strings.tp_bf),
+            name_maker.name_io_txt(self,strings.tp_bf),
+            name_maker.name_utils_err(self,strings.tp_bf),
+            name_maker.name_problem_exe(self,strings.tp_gen),
+            name_maker.name_io_txt(self,strings.tp_gen),
+            name_maker.name_utils_err(self,strings.tp_gen),
+            stress_cnt,self.time_limit,name_maker.name_utils_verdict(self)
+        ])
         if(not file_management.read_file(path_maker.path_utils_verdict(self)) in ['',strings.verdict_ok]):
             test_in=file_management.read_file(path_maker.path_io_txt(self,strings.tp_gen))
             test_out=file_management.read_file(path_maker.path_io_txt(self,strings.tp_bf))
@@ -76,4 +99,18 @@ class Problem:
             if(len(test_out)==0 or test_out[-1]!='\n'): test_out+='\n'
             self.add_test(test_in,test_out)
     def check(self,check_cnt):
-        system_action.run_bash(path_maker.path_utils_check(self),[check_cnt,self.time_limit])
+        system_action.run_bash(path_maker.path_utils_check(self),[
+            string_manip.path_wsl(path_maker.path_problem(self)),
+            string_manip.path_wsl(path_maker.path_io(self)),
+            string_manip.path_wsl(path_maker.path_utils(self)),
+            name_maker.name_problem_exe(self,strings.tp_main),
+            name_maker.name_io_txt(self,strings.tp_main),
+            name_maker.name_utils_err(self,strings.tp_main),
+            name_maker.name_problem_exe(self,strings.tp_ch),
+            name_maker.name_io_txt(self,strings.tp_ch),
+            name_maker.name_utils_err(self,strings.tp_ch),
+            name_maker.name_problem_exe(self,strings.tp_gen),
+            name_maker.name_io_txt(self,strings.tp_gen),
+            name_maker.name_utils_err(self,strings.tp_gen),
+            check_cnt,self.time_limit,name_maker.name_utils_verdict(self)
+        ])
