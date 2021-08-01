@@ -140,11 +140,15 @@ class Contest:
         if(command=='runbf'):
             self.problems[arg['id']].run(True)
         elif(command=='stress'):
-            self.problems[arg['id']].stress(int(arg['cnt']))
+            self.problems[arg['id']].stress(int(arg['cnt']),False)
             self.make_metadata()
         elif(command=='check'):
-            self.problems[arg['id']].check(int(arg['cnt']))
-            self.make_metadata()
+            self.problems[arg['id']].check(int(arg['cnt']),False)
+        elif(command=='regen'):
+            if(arg['rgtp']==strings.tp_bf):
+                self.problems[arg['id']].stress(1,True)
+            elif(arg['rgtp']==strings.tp_ch):
+                self.problems[arg['id']].check(1,True)
         elif(command=='path'):
             if(self.platform==strings.pl_cf):
                 self.problems[self.last_problem_index].copy_path()

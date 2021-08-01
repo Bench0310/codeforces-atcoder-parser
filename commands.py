@@ -9,6 +9,7 @@ argp_tp=ArgumentStr('tp',strings.tps)
 argp_tl=ArgumentNum('tl',[1,10])
 argp_num=ArgumentNum('num',[0,100000])
 argp_cnt=ArgumentNum('cnt',[1,100000])
+argp_rgtp=ArgumentStr('rgtp',[strings.tp_bf,strings.tp_ch])
 
 comms_contest=[
     Command('parse',[argc_id],'Parse contest <id>'),
@@ -34,6 +35,7 @@ comms_problem=[
     Command('runbf',[argp_id],'Run bf of <id> on current tests'),
     Command('stress',[argp_id,argp_cnt],'Stress <id> on <cnt> tests'),
     Command('check',[argp_id,argp_cnt],'Check <id> on <cnt> tests'),
+    Command('regen',[argp_id,argp_rgtp],'Rerun <rgtp>={bf,ch} of <id> on previous gen'),
     Command('path',[],'Copy path[cf]/code[atc] of last used <id> to clipboard'),
     Command('pathx',[argp_id],'Copy path[cf]/code[atc] of <id> to clipboard'),
     Command('dbg',[argp_id,argp_tp],'Open <tp>={main,bf,ch,gen} of <id> in gdb'),

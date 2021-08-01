@@ -76,7 +76,7 @@ class Problem:
             name_maker.name_utils_err(self,(strings.tp_main if not runbf else strings.tp_bf)),
             self.problem_index,self.test_cnt,self.time_limit,('' if not runbf else 'Bf')
         ])
-    def stress(self,stress_cnt):
+    def stress(self,stress_cnt,regen):
         system_action.run_bash(path_maker.path_utils_stress(self),[
             string_manip.path_wsl(path_maker.path_problem(self)),
             string_manip.path_wsl(path_maker.path_io(self)),
@@ -90,15 +90,15 @@ class Problem:
             name_maker.name_problem_exe(self,strings.tp_gen),
             name_maker.name_io_txt(self,strings.tp_gen),
             name_maker.name_utils_err(self,strings.tp_gen),
-            stress_cnt,self.time_limit,name_maker.name_utils_verdict(self)
+            stress_cnt,self.time_limit,name_maker.name_utils_verdict(self),('' if not regen else 'Gen')
         ])
-        if(not file_management.read_file(path_maker.path_utils_verdict(self)) in ['',strings.verdict_ok]):
+        if(not file_management.read_file(path_maker.path_utils_verdict(self)) in ['',strings.verdict_ok] and not regen):
             test_in=file_management.read_file(path_maker.path_io_txt(self,strings.tp_gen))
             test_out=file_management.read_file(path_maker.path_io_txt(self,strings.tp_bf))
             if(len(test_in)==0 or test_in[-1]!='\n'): test_in+='\n'
             if(len(test_out)==0 or test_out[-1]!='\n'): test_out+='\n'
             self.add_test(test_in,test_out)
-    def check(self,check_cnt):
+    def check(self,check_cnt,regen):
         system_action.run_bash(path_maker.path_utils_check(self),[
             string_manip.path_wsl(path_maker.path_problem(self)),
             string_manip.path_wsl(path_maker.path_io(self)),
@@ -112,5 +112,5 @@ class Problem:
             name_maker.name_problem_exe(self,strings.tp_gen),
             name_maker.name_io_txt(self,strings.tp_gen),
             name_maker.name_utils_err(self,strings.tp_gen),
-            check_cnt,self.time_limit,name_maker.name_utils_verdict(self)
+            check_cnt,self.time_limit,name_maker.name_utils_verdict(self),('' if not regen else 'Gen')
         ])
