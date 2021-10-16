@@ -387,5 +387,5 @@ def code_check(self):
 
 def code_dbg(self,tp):
     compile_command='cd '+string_manip.path_win_q(path_maker.path_problem(self))+' && g++ -g -Wall -Wextra -Wshadow -std=c++20 -Wl,--stack,1000000000 '+string_manip.quotify(name_maker.name_problem_cpp(self,tp))+' -o '+string_manip.quotify(name_maker.name_problem_dbg(self,tp))
-    gdb_command='start cmd /c "'+'cd '+string_manip.path_win_q(path_maker.path_problem(self))+' && gdb '+'\\"'+name_maker.name_problem_dbg(self,tp)+'\\"'+'"'
+    gdb_command='start cmd /c "'+'cd '+string_manip.path_win_q(path_maker.path_problem(self))+' && gdb '+string_manip.quotify(name_maker.name_problem_dbg(self,tp))+'"'
     return [compile_command,gdb_command]
