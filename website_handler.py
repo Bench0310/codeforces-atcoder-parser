@@ -3,6 +3,7 @@ import prompt_handling
 import file_management
 import strings
 import string_manip
+from datetime import datetime
 
 def get_source(url,platform):
     r=requests.get(url)
@@ -20,16 +21,16 @@ def get_contest_url_cf(path,contest_id):
     elif(gym_data.find('> '+contest_id+'\n')!=-1):
         url='https://codeforces.com/gym/'+contest_id+'/problems'
     else:
-        prompt_handling.prompt_updating_contest_gym_data_cf()
+        prompt_handling.prompt_updating_contest_gym_data_cf(contest_data[1:contest_data.find(']')] if contest_data!='' else 'never')
         contest_data_source=get_source('https://codeforces.com/api/contest.list',strings.pl_cf)
-        contest_data=''
+        contest_data='['+datetime.now().strftime('%m/%d/%Y %H:%M:%S')+']\n'
         source_index_left=contest_data_source.find('"id":')
         while(source_index_left!=-1):
             source_index_right=contest_data_source.find(',',source_index_left)
             contest_data+='> '+contest_data_source[source_index_left+len('"id":'):source_index_right]+'\n'
             source_index_left=contest_data_source.find('"id":',source_index_left+1)
         gym_data_source=get_source('https://codeforces.com/api/contest.list?gym=true',strings.pl_cf)
-        gym_data=''
+        gym_data='['+datetime.now().strftime('%m/%d/%Y %H:%M:%S')+']\n'
         source_index_left=gym_data_source.find('"id":')
         while(source_index_left!=-1):
             source_index_right=gym_data_source.find(',',source_index_left)
@@ -49,9 +50,9 @@ def get_contest_url_atc(path,contest_id):
     if(contest_data.find('> '+contest_id.lower()+'\n')!=-1):
         url='https://atcoder.jp/contests/'+contest_id.lower()+'/tasks_print'
     else:
-        prompt_handling.prompt_updating_contest_data_atc()
+        prompt_handling.prompt_updating_contest_data_atc(contest_data[1:contest_data.find(']')] if contest_data!='' else 'never')
         contest_data_source=get_source('https://atcoder.jp/contests/',strings.pl_atc)
-        contest_data=''
+        contest_data='['+datetime.now().strftime('%m/%d/%Y %H:%M:%S')+']\n'
         contest_data_right=contest_data_source.find('Recent Contests')
         source_index=contest_data_source.find('<td >')
         while(source_index!=-1 and source_index<contest_data_right):

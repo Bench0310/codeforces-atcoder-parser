@@ -99,11 +99,11 @@ def prompt_wrong_num_of_args(command,args_expected,args_given):
 def prompt_invalid_command(command):
     printf('\''+command+'\' does not name a command\n','white',1)
 
-def prompt_updating_contest_gym_data_cf():
-    printf('Updating cf contest+gym data\n','magenta',1)
+def prompt_updating_contest_gym_data_cf(last_update):
+    printf('Updating cf contest+gym data [last update: '+last_update+']\n','magenta',1)
 
-def prompt_updating_contest_data_atc():
-    printf('Updating atc contest data\n','magenta',1)
+def prompt_updating_contest_data_atc(last_update):
+    printf('Updating atc contest data [last update: '+last_update+']\n','magenta',1)
 
 def prompt_io(test_idx,test_in,test_out):
     printf('[Test #'+str(test_idx)+']\n','white',1)
