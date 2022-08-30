@@ -49,7 +49,17 @@ class Contest:
                 while(test_index!=-1 and (test_index<next_source_index or next_source_index==-1)):
                     test_index_left=contest_data_source.find(strings.test_left_cf,test_index)+len(strings.test_left_cf)
                     test_index_right=contest_data_source.find(strings.test_right_cf,test_index_left)
-                    test_in_string=contest_data_source[test_index_left:test_index_right]
+                    test_in_tmp_string=contest_data_source[test_index_left:test_index_right]
+                    test_in_string=''
+                    if(test_in_tmp_string.find(strings.sample_test_left_one_cf)==-1):
+                        test_in_string=test_in_tmp_string
+                    else:
+                        tmp_index=test_in_tmp_string.find(strings.sample_test_left_one_cf)
+                        while(tmp_index!=-1):
+                            tmp_index_left=test_in_tmp_string.find(strings.sample_test_left_two_cf,tmp_index)+len(strings.sample_test_left_two_cf)
+                            tmp_index_right=test_in_tmp_string.find(strings.sample_test_right_cf,tmp_index_left)
+                            test_in_string+=test_in_tmp_string[tmp_index_left:tmp_index_right]+'\n'
+                            tmp_index=test_in_tmp_string.find(strings.sample_test_left_one_cf,tmp_index_right)
                     test_in=string_manip.beautify_test(test_in_string)
                     test_index_left=contest_data_source.find(strings.test_left_cf,test_index_right)+len(strings.test_left_cf)
                     test_index_right=contest_data_source.find(strings.test_right_cf,test_index_left)
