@@ -12,6 +12,9 @@ user='Bench'
 path_cf=['C','Bench','CodeHub','Codeforces']
 path_atc=['C','Bench','CodeHub','AtCoder']
 path_offline=['C','Users','Benja','Downloads','__contest__.txt']
+path_templates=['C','Bench','CodeHub','ZTemplates']
+
+commands.argp_tm.str_options=list(file_management.list_files(path_templates,'.h'))
 
 while(True):
     prompt_handling.prompt_user(user)
@@ -34,7 +37,7 @@ while(True):
                 file_management.create_file_win(path_offline,'')
                 system_action.open_file(path_offline)
                 input()
-            contest=Contest(path_now,arg['id'],url,platform,(None if command=='parse' else path_offline))
+            contest=Contest(path_now,arg['id'],url,platform,(None if command=='parse' else path_offline),path_templates)
             if(file_management.file_exists(path_now+[arg['id']])==True):
                 commands.argp_id.str_options=list(contest.problems)
                 while(True):

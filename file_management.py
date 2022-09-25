@@ -1,5 +1,6 @@
 import os
 import string_manip
+import glob
 
 def file_exists(path):
     return os.path.exists(string_manip.path_win(path))
@@ -30,3 +31,6 @@ def delete_file(path):
 def delete_empty_folder(path):
     if(file_exists(path)):
         os.rmdir(string_manip.path_win(path))
+
+def list_files(path,extension=''):
+    return [os.path.basename(t)[:len(os.path.basename(t))-len(extension)] for t in glob.glob(string_manip.path_win(path+['*'+extension]))]

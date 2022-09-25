@@ -9,11 +9,12 @@ import commands
 import code_maker
 
 class Contest:
-    def __init__(self,path,contest_id,url,platform,path_offline):
+    def __init__(self,path,contest_id,url,platform,path_offline,path_templates):
         self.path=path+[contest_id]
         self.platform=platform
         self.problems={}
         self.last_problem_index=''
+        self.path_templates=path_templates
         if(file_management.file_exists(self.path)):
             metadata=file_management.read_file(self.path+['metadata.txt'])
             problem_info=metadata.split('\n')
@@ -173,6 +174,8 @@ class Contest:
             compile_command,gdb_command=code_maker.code_dbg(self.problems[arg['id']],arg['tp'])
             system_action.run_command(compile_command)
             system_action.run_command(gdb_command)
+        elif(command=='tm'):
+            system_action.copy_to_clipboard(file_management.read_file(self.path_templates+[arg['tm']+'.h']))
         elif(command=='cls'):
             system_action.clear_screen()
         elif(command=='help'):
