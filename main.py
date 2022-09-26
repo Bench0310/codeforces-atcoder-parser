@@ -52,8 +52,6 @@ while(True):
             website_handler.get_contest_url_cf(path_cf,'-1')
         elif(arg['pl']==strings.pl_atc):
             website_handler.get_contest_url_atc(path_atc,'-1')
-    elif(command=='cls'):
-        system_action.clear_screen()
     elif(command=='help'):
         prompt_handling.prompt_help(strings.level_contest)
     elif(command=='exit'):

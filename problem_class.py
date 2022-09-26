@@ -33,8 +33,6 @@ class Problem:
                 file_management.create_file_wsl(path_maker.path_utils_err(self,tp),'')
     def open_cpp(self,tp):
         system_action.open_file(path_maker.path_problem_cpp(self,tp))
-    def open_cbp(self,tp):
-        system_action.open_file(path_maker.path_problem_cbp(self,tp))
     def print_io(self):
         for test_idx in range(1,self.test_cnt+1):
             test_in=file_management.read_file(path_maker.path_io_in(self,test_idx))
@@ -54,11 +52,9 @@ class Problem:
             file_management.delete_file(path_maker.path_io_out(self,self.test_cnt))
             self.test_cnt-=1
     def rm_test_keep(self,num):
+        num=max(num,-self.test_cnt)
+        if(num<0): num+=self.test_cnt
         while(self.test_cnt>num):
-            self.rm_last_test()
-    def rm_test_rm(self,num):
-        cnt=min(self.test_cnt,num)
-        for _ in range(cnt):
             self.rm_last_test()
     def set_time_limit(self,time_limit):
         self.time_limit=time_limit

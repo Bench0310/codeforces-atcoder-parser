@@ -15,8 +15,5 @@ def open_file(path):
 def run_command(command):
     os.system(command)
 
-def clear_screen():
-    run_command('cls')
-
 def copy_to_clipboard(content):
     pyperclip.copy(content)

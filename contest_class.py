@@ -12,7 +12,6 @@ class Contest:
     def __init__(self,path,contest_id,url,platform,user,path_offline,path_templates):
         self.path=path+[contest_id]
         self.contest_id=contest_id
-        self.platform=platform
         self.user=user
         self.problems={}
         self.last_problem_index=''
@@ -133,11 +132,6 @@ class Contest:
                 p.open_cpp(strings.tp_main)
             for p in reversed(self.problems.values()):
                 p.open_cpp(strings.tp_main)
-        elif(command=='debug'):
-            self.problems[arg['id']].open_cbp(arg['tp'])
-        elif(command=='debugall'):
-            for p in self.problems.values():
-                p.open_cbp(strings.tp_main)
         elif(command=='io'):
             self.problems[arg['id']].print_io()
         elif(command=='add'):
@@ -146,11 +140,12 @@ class Contest:
         elif(command=='keep'):
             self.problems[arg['id']].rm_test_keep(int(arg['num']))
             self.make_metadata()
-        elif(command=='rm'):
-            self.problems[arg['id']].rm_test_rm(int(arg['num']))
-            self.make_metadata()
         elif(command=='tl'):
             self.problems[arg['id']].set_time_limit(int(arg['tl']))
+        elif(command=='dbg'):
+            compile_command,gdb_command=code_maker.code_dbg(self.problems[arg['id']],arg['tp'])
+            system_action.run_command(compile_command)
+            system_action.run_command(gdb_command)
         if(command=='runbf'):
             self.problems[arg['id']].run(True)
         elif(command=='stress'):
@@ -164,23 +159,11 @@ class Contest:
             elif(arg['rgtp']==strings.tp_ch):
                 self.problems[arg['id']].check(1,True)
         elif(command=='path'):
-            if(self.platform==strings.pl_cf):
-                self.problems[self.last_problem_index].copy_path()
-            elif(self.platform==strings.pl_atc):
-                self.problems[self.last_problem_index].copy_main()
-        elif(command=='pathx'):
-            if(self.platform==strings.pl_cf):
-                self.problems[arg['id']].copy_path()
-            elif(self.platform==strings.pl_atc):
-                self.problems[arg['id']].copy_main()
-        elif(command=='dbg'):
-            compile_command,gdb_command=code_maker.code_dbg(self.problems[arg['id']],arg['tp'])
-            system_action.run_command(compile_command)
-            system_action.run_command(gdb_command)
+            self.problems[arg['id']].copy_path()
+        elif(command=='yank'):
+            self.problems[arg['id']].copy_main()
         elif(command=='tm'):
             system_action.copy_to_clipboard(file_management.read_file(self.path_templates+[arg['tm']+'.h']))
-        elif(command=='cls'):
-            system_action.clear_screen()
         elif(command=='help'):
             prompt_handling.prompt_help(strings.level_problem)
         elif(command=='exit'):
