@@ -1,10 +1,6 @@
-import colorama
 from datetime import datetime
 import commands
 import strings
-
-def init():
-    colorama.init()
 
 colors={
     'black':'\033[30m',
@@ -19,58 +15,93 @@ colors={
     'end':'\033[0m'
 }
 
-def printf(message,color='white',bold=0):
-    print(colors['end']+colors[color]+(colors['bold'] if bold else '')+message+colors['end'],end='')
+cursor={
+    'up':lambda c: f'\033[{c}A',
+    'down':lambda c: f'\033[{c}B',
+    'right':lambda c: f'\033[{c}C',
+    'left':lambda c: f'\033[{c}D',
+    'column':lambda c: f'\033[{c}G',
+    'erase_to_line_end':'\033[0K'
+}
+
+def printf(message,color='white',bold=0,flush_now=False):
+    print(colors['end']+colors[color]+(colors['bold'] if bold else '')+message+colors['end'],end='',flush=flush_now)
 
 def set_color(color='white',bold=0):
     print(colors['end']+colors[color]+(colors['bold'] if bold else ''),end='')
 
-def parse_input(level):
+def parse_input_level_contest(user):
+    greeting_length=prompt_user_greeting(user)
     args=list(filter(None,input().lower().split(' ')))
-    if(level==strings.level_problem):
-        prompt_time()
     if(len(args)==0):
-        args.append('')
-    if(level==strings.level_contest and args[0]!='' and (not args[0] in commands.commands_contest)):
+        args=['']
+    omit_command=False
+    if(len(args)==1 and args[0]!='' and not args[0] in commands.commands_contest):
         args=['parse']+args
-    if(level==strings.level_problem and args[0] in commands.argp_id.str_options):
-        args=['run']+args
+        omit_command=True
     command=args[0]
-    if((level==strings.level_contest and (not command in commands.commands_contest)) or (level==strings.level_problem and (not command in commands.commands_problem))):
+    fix_input(greeting_length,args,omit_command,[],'yellow',0,'',0,False)
+    if(not command in commands.commands_contest):
         prompt_invalid_command(command)
         return ['',{},False]
-    if((level==strings.level_contest and commands.commands_contest[command].parse(args[1:])==False) or (level==strings.level_problem and commands.commands_problem[command].parse(args[1:])==False)):
+    comm=commands.commands_contest[command]
+    if(comm.parse(args[1:])==False):
         return ['',{},False]
-    arg={}
-    arg_now=1
-    if(level==strings.level_contest):
-        for argument in commands.commands_contest[command].arguments:
-            arg[argument.name]=args[arg_now]
-            arg_now+=1
-    elif(level==strings.level_problem):
-        for argument in commands.commands_problem[command].arguments:
-            arg[argument.name]=args[arg_now]
-            arg_now+=1
+    arg=dict(zip([a.name for a in comm.arguments],args[1:]))
     return [command,arg,True]
+
+def parse_input_level_problem(user,contest_id,last_problem_index):
+    greeting_length=prompt_user_contest_greeting(user,contest_id)
+    args=list(filter(None,input().lower().split(' ')))
+    if(len(args)==0):
+        args=['']
+    omit_command=False
+    if(len(args)==1 and args[0] in commands.argp_id.str_options):
+        args=['run']+args
+        omit_command=True
+    command=args[0]
+    if(not command in commands.commands_problem):
+        fix_input(greeting_length,args,False,[],'cyan',1,'',0,True)
+        prompt_invalid_command(command)
+        return ['',{},False]
+    comm=commands.commands_problem[command]
+    hidden_args=[]
+    if(commands.argp_id in comm.arguments and len(args)-1==len(comm.arguments)-1):
+        args.insert(comm.arguments.index(commands.argp_id)+1,last_problem_index)
+        hidden_args.append(comm.arguments.index(commands.argp_id)+1)
+    fix_input(greeting_length,args,omit_command,hidden_args,'cyan',1,'cyan',0,True)
+    if(comm.parse(args[1:])==False):
+        return ['',{},False]
+    arg=dict(zip([a.name for a in comm.arguments],args[1:]))
+    return [command,arg,True]
+
+def fix_input(greeting_length,args,omit_command,hidden_args,color,bold,hidden_color,hidden_bold,add_time):
+    printf(cursor['up'](1)+cursor['right'](greeting_length)+cursor['erase_to_line_end'])
+    if(not omit_command):
+        printf(args[0]+(' ' if len(args)>1 else ''),color,bold)
+    for i in range(1,len(args)):
+        printf(args[i]+(' ' if i+1<len(args) else ''),color if not i in hidden_args else hidden_color,bold if not i in hidden_args else hidden_bold)
+    if(add_time):
+        printf(' ['+datetime.now().strftime('%H:%M:%S')+']')
+    printf(cursor['column'](1)+cursor['down'](1),flush_now=True)
 
 def prompt_newline(num):
     for i in range(num):
         printf('\n')
 
-def prompt_user(user):
+def prompt_user_greeting(user):
     printf(user,'green',1)
     printf('/','white')
     set_color('yellow')
+    return len(user)+1
 
-def prompt_user_contest(user,contest_id):
+def prompt_user_contest_greeting(user,contest_id):
     printf(user,'green',1)
     printf('/','white')
     printf(contest_id,'yellow')
     printf('> ','white')
     set_color('cyan',1)
-
-def prompt_time():
-    printf('['+datetime.now().strftime('%H:%M:%S')+']\n')
+    return len(user)+1+len(contest_id)+2
 
 def prompt_offline_command():
     printf('Link copied, press enter to continue','magenta',1)

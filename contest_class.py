@@ -9,12 +9,15 @@ import commands
 import code_maker
 
 class Contest:
-    def __init__(self,path,contest_id,url,platform,path_offline,path_templates):
+    def __init__(self,path,contest_id,url,platform,user,path_offline,path_templates):
         self.path=path+[contest_id]
+        self.contest_id=contest_id
         self.platform=platform
+        self.user=user
         self.problems={}
         self.last_problem_index=''
         self.path_templates=path_templates
+        commands.argp_tm.str_options=list(file_management.list_files(self.path_templates,'.h'))
         if(file_management.file_exists(self.path)):
             metadata=file_management.read_file(self.path+['metadata.txt'])
             problem_info=metadata.split('\n')
@@ -116,7 +119,7 @@ class Contest:
             metadata+=p.problem_index+'|'+p.problem_name+'|'+str(p.test_cnt)+'\n'
         file_management.create_file_win(self.path+['metadata.txt'],metadata[:-1])
     def solve(self):
-        command,arg,success=prompt_handling.parse_input(strings.level_problem)
+        command,arg,success=prompt_handling.parse_input_level_problem(self.user,self.contest_id,self.last_problem_index)
         if(success==False):
             return True
         if('id' in arg):
