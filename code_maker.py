@@ -3,8 +3,8 @@ import string_manip
 import name_maker
 import strings
 
-def code_cpp(self,tp):
-    if(tp==strings.tp_main or tp==strings.tp_bf):
+def code_cpp(self, tp):
+    if tp == strings.tp_main or tp == strings.tp_bf:
         return ('#include <bits/stdc++.h>\n'
                 '\n'
                 'using namespace std;\n'
@@ -17,7 +17,7 @@ def code_cpp(self,tp):
                 '    \n'
                 '    return 0;\n'
                 '}\n')
-    elif(tp==strings.tp_ch):
+    if tp == strings.tp_ch:
         return ('#include <bits/stdc++.h>\n'
                 '\n'
                 'using namespace std;\n'
@@ -41,7 +41,7 @@ def code_cpp(self,tp):
                 '    \n'
                 '    return 0;\n'
                 '}\n')
-    elif(tp==strings.tp_gen):
+    if tp == strings.tp_gen:
         return ('#include <bits/stdc++.h>\n'
                 '\n'
                 'using namespace std;\n'
@@ -64,17 +64,17 @@ def code_cpp(self,tp):
                 '    return 0;\n'
                 '}\n')
 
-def code_cbp(self,tp):
+def code_cbp(self, tp):
     return ('<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>\n'
             '<CodeBlocks_project_file>\n'
             '    <FileVersion major="1" minor="6" />\n'
             '    <Project>\n'
-            '        <Option title="'+name_maker.name_problem_cbp(self,tp)[:-4]+'" />\n'
+            '        <Option title="'+name_maker.name_problem_cbp(self, tp)[:-4]+'" />\n'
             '        <Option pch_mode="2" />\n'
             '        <Option compiler="gcc" />\n'
             '        <Build>\n'
             '            <Target title="Debug">\n'
-            '                <Option output="bin/Debug/'+name_maker.name_problem_cbp(self,tp)[:-4]+'" prefix_auto="1" extension_auto="1" />\n'
+            '                <Option output="bin/Debug/'+name_maker.name_problem_cbp(self, tp)[:-4]+'" prefix_auto="1" extension_auto="1" />\n'
             '                <Option object_output="obj/Debug/" />\n'
             '                <Option type="1" />\n'
             '                <Option compiler="gcc" />\n'
@@ -83,7 +83,7 @@ def code_cbp(self,tp):
             '                </Compiler>\n'
             '            </Target>\n'
             '            <Target title="Release">\n'
-            '                <Option output="bin/Release/'+name_maker.name_problem_cbp(self,tp)[:-4]+'" prefix_auto="1" extension_auto="1" />\n'
+            '                <Option output="bin/Release/'+name_maker.name_problem_cbp(self, tp)[:-4]+'" prefix_auto="1" extension_auto="1" />\n'
             '                <Option object_output="obj/Release/" />\n'
             '                <Option type="1" />\n'
             '                <Option compiler="gcc" />\n'
@@ -99,7 +99,7 @@ def code_cbp(self,tp):
             '            <Add option="-Wall" />\n'
             '            <Add option="-fexceptions" />\n'
             '        </Compiler>\n'
-            '        <Unit filename="'+name_maker.name_problem_cpp(self,tp)+'" />\n'
+            '        <Unit filename="'+name_maker.name_problem_cpp(self, tp)+'" />\n'
             '        <Extensions>\n'
             '            <lib_finder disable_auto="1" />\n'
             '        </Extensions>\n'
@@ -385,7 +385,7 @@ def code_check(self):
             r'    fi''\n'
             r'done''\n')
 
-def code_dbg(self,tp):
-    compile_command='cd '+string_manip.path_win_q(path_maker.path_problem(self))+' && g++ -g -Wall -Wextra -Wshadow -std=c++20 -Wl,--stack,1000000000 '+string_manip.quotify(name_maker.name_problem_cpp(self,tp))+' -o '+string_manip.quotify(name_maker.name_problem_dbg(self,tp))
-    gdb_command='start cmd /c "'+'cd '+string_manip.path_win_q(path_maker.path_problem(self))+' && gdb '+string_manip.quotify(name_maker.name_problem_dbg(self,tp))+'"'
-    return [compile_command,gdb_command]
+def code_dbg(self, tp):
+    compile_command = 'cd '+string_manip.path_win_q(path_maker.path_problem(self))+' && g++ -g -Wall -Wextra -Wshadow -std=c++20 -Wl,--stack,1000000000 '+string_manip.quotify(name_maker.name_problem_cpp(self, tp))+' -o '+string_manip.quotify(name_maker.name_problem_dbg(self, tp))
+    gdb_command = 'start cmd /c "'+'cd '+string_manip.path_win_q(path_maker.path_problem(self))+' && gdb '+string_manip.quotify(name_maker.name_problem_dbg(self, tp))+'"'
+    return [compile_command, gdb_command]
