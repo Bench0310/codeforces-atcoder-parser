@@ -19,15 +19,15 @@ class Problem:
             #Problem
             file_management.create_folder(path_maker.path_problem(self))
             for tp in strings.tps:
-                file_management.create_file_win(path_maker.path_problem_cpp(self, tp), code_maker.code_cpp(self, tp))
+                file_management.create_file_win(path_maker.path_problem_cpp(self, tp), code_maker.code_cpp(tp))
                 file_management.create_file_win(path_maker.path_problem_cbp(self, tp), code_maker.code_cbp(self, tp))
             #IO
             file_management.create_folder(path_maker.path_io(self))
             #Utils
             file_management.create_folder(path_maker.path_utils(self))
-            file_management.create_file_wsl(path_maker.path_utils_run(self), code_maker.code_run(self))
-            file_management.create_file_wsl(path_maker.path_utils_stress(self), code_maker.code_stress(self))
-            file_management.create_file_wsl(path_maker.path_utils_check(self), code_maker.code_check(self))
+            file_management.create_file_wsl(path_maker.path_utils_run(self), code_maker.code_run())
+            file_management.create_file_wsl(path_maker.path_utils_stress(self), code_maker.code_stress())
+            file_management.create_file_wsl(path_maker.path_utils_check(self), code_maker.code_check())
             file_management.create_file_wsl(path_maker.path_utils_verdict(self), '')
             for tp in strings.tps:
                 file_management.create_file_wsl(path_maker.path_utils_err(self, tp), '')

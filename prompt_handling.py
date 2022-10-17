@@ -86,7 +86,7 @@ def fix_input(greeting_length, args, omit_command, hidden_args, color, bold, hid
     printf(cursor['column'](1)+cursor['down'](1), flush_now=True)
 
 def prompt_newline(num):
-    for i in range(num):
+    for _ in range(num):
         printf('\n')
 
 def prompt_user_greeting(user):
@@ -148,12 +148,12 @@ def prompt_io(test_idx, test_in, test_out):
 def prompt_help(level):
     printf(commands.help_string_zero, 'blue', 1)
     if level == strings.level_contest:
-        help = commands.help_string_contest
+        help_string = commands.help_string_contest
     elif level == strings.level_problem:
-        help = commands.help_string_problem
+        help_string = commands.help_string_problem
     arg = 0
     comm = 1
-    for c in help:
+    for c in help_string:
         if c == '<': arg = 1
         if c == '|': comm = 0
         if arg == 1:

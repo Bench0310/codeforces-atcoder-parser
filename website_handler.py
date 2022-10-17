@@ -2,7 +2,6 @@ import requests
 import prompt_handling
 import file_management
 import strings
-import string_manip
 from datetime import datetime
 
 def get_source(url, platform):

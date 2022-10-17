@@ -49,16 +49,16 @@ help_width = 22
 def build_help_string(comms, optional_comms):
     help_string = ''
     for command in comms:
-        help = ''
+        command_help_string = ''
         if command.name in optional_comms:
-            help += '['+command.name+']'
+            command_help_string += '['+command.name+']'
         else:
-            help += command.name
+            command_help_string += command.name
         for argument in command.arguments:
-            help += ' <'+argument.name+'>'
-        help += ' '*(help_width-len(help))
-        help += '| '+command.description
-        help_string += help+'\n'
+            command_help_string += ' <'+argument.name+'>'
+        command_help_string += ' '*(help_width-len(command_help_string))
+        command_help_string += '| '+command.description
+        help_string += command_help_string+'\n'
     return help_string
 
 help_string_zero = 'Command'+' '*(help_width-len('Command'))+'| Description\n'

@@ -3,7 +3,7 @@ import string_manip
 import name_maker
 import strings
 
-def code_cpp(self, tp):
+def code_cpp(tp):
     if tp == strings.tp_main or tp == strings.tp_bf:
         return ('#include <bits/stdc++.h>\n'
                 '\n'
@@ -106,7 +106,7 @@ def code_cbp(self, tp):
             '    </Project>\n'
             '</CodeBlocks_project_file>\n')
 
-def code_run(self):
+def code_run():
     return (r'path_code=${1}''\n'
             r'path_io=${2}''\n'
             r'path_utils=${3}''\n'
@@ -157,7 +157,7 @@ def code_run(self):
             r'    fi''\n'
             r'done''\n')
 
-def code_stress(self):
+def code_stress():
     return (r'path_code=${1}''\n'
             r'path_io=${2}''\n'
             r'path_utils=${3}''\n'
@@ -271,7 +271,7 @@ def code_stress(self):
             r'    fi''\n'
             r'done''\n')
 
-def code_check(self):
+def code_check():
     return (r'path_code=${1}''\n'
             r'path_io=${2}''\n'
             r'path_utils=${3}''\n'

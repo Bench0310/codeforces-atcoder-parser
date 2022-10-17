@@ -9,12 +9,12 @@ def create_folder(path):
     os.mkdir(string_manip.path_win(path))
 
 def create_file_win(path, content):
-    f = open(string_manip.path_win(path), 'w')
+    f = open(string_manip.path_win(path), 'w', encoding='utf8')
     f.write(content)
     f.close()
 
 def create_file_wsl(path, content):
-    f = open(string_manip.path_win(path), 'w', newline='\n')
+    f = open(string_manip.path_win(path), 'w', encoding='utf8', newline='\n')
     f.write(content)
     f.close()
 

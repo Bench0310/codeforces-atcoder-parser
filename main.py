@@ -4,7 +4,6 @@ from contest_class import Contest
 import file_management
 import strings
 import system_action
-import string_manip
 import commands
 
 user = 'Bench'
