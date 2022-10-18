@@ -1,3 +1,5 @@
+"""Extends the Problem class with path generation."""
+
 import name_maker
 
 #Problem

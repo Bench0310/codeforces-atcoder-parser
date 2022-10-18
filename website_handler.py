@@ -1,3 +1,5 @@
+"""Provides functions that fetch data from websites."""
+
 import requests
 import prompt_handling
 import file_management

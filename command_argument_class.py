@@ -1,3 +1,5 @@
+"""Implements the Argument and Command classes."""
+
 import prompt_handling
 
 class ArgumentNum:

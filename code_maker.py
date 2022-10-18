@@ -1,9 +1,11 @@
+"""Extends the Problem class with code templates."""
+
 import path_maker
 import string_manip
 import name_maker
 import strings
 
-def code_cpp(tp):
+def code_cpp(self, tp):
     if tp == strings.tp_main or tp == strings.tp_bf:
         return ('#include <bits/stdc++.h>\n'
                 '\n'
@@ -106,7 +108,7 @@ def code_cbp(self, tp):
             '    </Project>\n'
             '</CodeBlocks_project_file>\n')
 
-def code_run():
+def code_run(self):
     return (r'path_code=${1}''\n'
             r'path_io=${2}''\n'
             r'path_utils=${3}''\n'
@@ -157,7 +159,7 @@ def code_run():
             r'    fi''\n'
             r'done''\n')
 
-def code_stress():
+def code_stress(self):
     return (r'path_code=${1}''\n'
             r'path_io=${2}''\n'
             r'path_utils=${3}''\n'
@@ -271,7 +273,7 @@ def code_stress():
             r'    fi''\n'
             r'done''\n')
 
-def code_check():
+def code_check(self):
     return (r'path_code=${1}''\n'
             r'path_io=${2}''\n'
             r'path_utils=${3}''\n'

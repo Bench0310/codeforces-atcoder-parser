@@ -1,3 +1,5 @@
+"""Provides functions for managing files."""
+
 import os
 import string_manip
 import glob

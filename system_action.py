@@ -1,3 +1,5 @@
+"""Provides functions for OS interaction."""
+
 import subprocess
 import os
 import pyperclip

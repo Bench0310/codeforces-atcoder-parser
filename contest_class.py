@@ -1,3 +1,5 @@
+"""Implements the Contest class."""
+
 import file_management
 import prompt_handling
 import string_manip

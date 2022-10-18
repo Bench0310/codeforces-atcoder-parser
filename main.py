@@ -1,3 +1,5 @@
+"""Sets the paths and handles user interaction."""
+
 import prompt_handling
 import website_handler
 from contest_class import Contest

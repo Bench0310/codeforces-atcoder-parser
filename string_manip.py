@@ -1,3 +1,5 @@
+"""Provides functions for string manipulations."""
+
 import strings
 
 def quotify(s):

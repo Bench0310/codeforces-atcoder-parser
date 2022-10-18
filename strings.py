@@ -1,3 +1,5 @@
+"""Defines string constants."""
+
 tp_main = 'main'
 tp_bf = 'bf'
 tp_ch = 'ch'

@@ -1,3 +1,5 @@
+"""Extends the Problem class with name generation for paths."""
+
 import strings
 
 #Problem

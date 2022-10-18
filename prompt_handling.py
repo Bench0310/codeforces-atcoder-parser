@@ -1,3 +1,5 @@
+"""Handles all input and output functions."""
+
 from datetime import datetime
 import commands
 import strings

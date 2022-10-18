@@ -1,3 +1,5 @@
+"""Defines arguments and commands and provides help strings."""
+
 from command_argument_class import Command, ArgumentNum, ArgumentStr
 import strings
 
