@@ -45,7 +45,8 @@ class Contest:
                 for c in problem_name_temp:
                     if c in strings.allowed_chars:
                         problem_name += c
-                if problem_name == '' or problem_name.isspace(): problem_name = 'noname'
+                if problem_name == '' or problem_name.isspace():
+                    problem_name = 'noname'
                 problem_name = ' '.join(problem_name.split())
                 file_management.create_folder(self.path+[contest_id+problem_index+' '+problem_name])
                 self.problems[problem_index.lower()] = Problem(self.path+[contest_id+problem_index+' '+problem_name], contest_id, problem_index, problem_name, 0, False)
@@ -65,11 +66,11 @@ class Contest:
                             tmp_index_right = test_in_tmp_string.find(strings.sample_test_right_cf, tmp_index_left)
                             test_in_string += test_in_tmp_string[tmp_index_left:tmp_index_right]+'\n'
                             tmp_index = test_in_tmp_string.find(strings.sample_test_left_one_cf, tmp_index_right)
-                    test_in = string_manip.beautify_test(test_in_string)
+                    test_in = string_manip.normalize_test(test_in_string)
                     test_index_left = contest_data_source.find(strings.test_left_cf, test_index_right)+len(strings.test_left_cf)
                     test_index_right = contest_data_source.find(strings.test_right_cf, test_index_left)
                     test_out_string = contest_data_source[test_index_left:test_index_right]
-                    test_out = string_manip.beautify_test(test_out_string)
+                    test_out = string_manip.normalize_test(test_out_string)
                     self.problems[problem_index.lower()].add_test(test_in, test_out)
                     test_index = contest_data_source.find(strings.test_left_cf, test_index_right)
                 source_index = next_source_index
@@ -90,7 +91,8 @@ class Contest:
                 for c in problem_name_temp:
                     if c in strings.allowed_chars:
                         problem_name += c
-                if problem_name == '' or problem_name.isspace(): problem_name = 'noname'
+                if problem_name == '' or problem_name.isspace():
+                    problem_name = 'noname'
                 problem_name = ' '.join(problem_name.split())
                 file_management.create_folder(self.path+[contest_id+problem_index+' '+problem_name])
                 self.problems[problem_index.lower()] = Problem(self.path+[contest_id+problem_index+' '+problem_name], contest_id, problem_index, problem_name, 0, False)
@@ -100,11 +102,11 @@ class Contest:
                     test_index_left = contest_data_source.find(strings.test_left_atc, test_index)+len(strings.test_left_atc)
                     test_index_right = contest_data_source.find(strings.test_right_atc, test_index_left)
                     test_in_string = contest_data_source[test_index_left:test_index_right]
-                    test_in = string_manip.beautify_test(test_in_string)
+                    test_in = string_manip.normalize_test(test_in_string)
                     test_index_left = contest_data_source.find(strings.test_left_atc, test_index_right)+len(strings.test_left_atc)
                     test_index_right = contest_data_source.find(strings.test_right_atc, test_index_left)
                     test_out_string = contest_data_source[test_index_left:test_index_right]
-                    test_out = string_manip.beautify_test(test_out_string)
+                    test_out = string_manip.normalize_test(test_out_string)
                     self.problems[problem_index.lower()].add_test(test_in, test_out)
                     test_index = contest_data_source.find(strings.test_left_atc, test_index_right)
                 for _ in range(self.problems[problem_index.lower()].test_cnt//2):

@@ -42,6 +42,8 @@ class Problem:
             prompt_handling.prompt_io(test_idx, test_in, test_out)
     def add_test(self, test_in, test_out):
         self.test_cnt += 1
+        test_in = string_manip.beautify_test(test_in)
+        test_out = string_manip.beautify_test(test_out)
         file_management.create_file_wsl(path_maker.path_io_in(self, self.test_cnt), test_in)
         file_management.create_file_wsl(path_maker.path_io_out(self, self.test_cnt), test_out)
     def add_test_manually(self):
@@ -55,7 +57,8 @@ class Problem:
             self.test_cnt -= 1
     def rm_test_keep(self, num):
         num = max(num, -self.test_cnt)
-        if num < 0: num += self.test_cnt
+        if num < 0:
+            num += self.test_cnt
         while self.test_cnt > num:
             self.rm_last_test()
     def set_time_limit(self, time_limit):
@@ -93,8 +96,6 @@ class Problem:
         if not file_management.read_file(path_maker.path_utils_verdict(self)) in ['', strings.verdict_ok] and not regen:
             test_in = file_management.read_file(path_maker.path_io_txt(self, strings.tp_gen))
             test_out = file_management.read_file(path_maker.path_io_txt(self, strings.tp_bf))
-            if len(test_in) == 0 or test_in[-1] != '\n': test_in += '\n'
-            if len(test_out) == 0 or test_out[-1] != '\n': test_out += '\n'
             self.add_test(test_in, test_out)
     def check(self, check_cnt, regen):
         system_action.run_bash(path_maker.path_utils_check(self), [

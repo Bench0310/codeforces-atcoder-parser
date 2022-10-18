@@ -1,10 +1,10 @@
 """Provides functions that fetch data from websites."""
 
+from datetime import datetime
 import requests
 import prompt_handling
 import file_management
 import strings
-from datetime import datetime
 
 def get_source(url, platform):
     r = requests.get(url)

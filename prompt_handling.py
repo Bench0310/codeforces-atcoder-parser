@@ -3,6 +3,7 @@
 from datetime import datetime
 import commands
 import strings
+import string_manip
 
 colors = {
     'black': '\033[30m',
@@ -141,11 +142,9 @@ def prompt_updating_contest_data_atc(last_update):
 def prompt_io(test_idx, test_in, test_out):
     printf('[Test #'+str(test_idx)+']\n', 'white', 1)
     printf('Input\n', 'blue', 1)
-    printf(test_in)
-    if len(test_in) == 0 or test_in[-1] != '\n': printf('\n')
+    printf(string_manip.beautify_test(test_in))
     printf('Output\n', 'blue', 1)
-    printf(test_out)
-    if len(test_out) == 0 or test_out[-1] != '\n': printf('\n')
+    printf(string_manip.beautify_test(test_out))
 
 def prompt_help(level):
     printf(commands.help_string_zero, 'blue', 1)

@@ -6,7 +6,7 @@ import name_maker
 import strings
 
 def code_cpp(self, tp):
-    if tp == strings.tp_main or tp == strings.tp_bf:
+    if tp in (strings.tp_main, strings.tp_bf):
         return ('#include <bits/stdc++.h>\n'
                 '\n'
                 'using namespace std;\n'

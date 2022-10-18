@@ -1,8 +1,8 @@
 """Provides functions for managing files."""
 
 import os
-import string_manip
 import glob
+import string_manip
 
 def file_exists(path):
     return os.path.exists(string_manip.path_win(path))
@@ -11,19 +11,16 @@ def create_folder(path):
     os.mkdir(string_manip.path_win(path))
 
 def create_file_win(path, content):
-    f = open(string_manip.path_win(path), 'w', encoding='utf8')
-    f.write(content)
-    f.close()
+    with open(string_manip.path_win(path), 'w', encoding='utf8') as f:
+        f.write(content)
 
 def create_file_wsl(path, content):
-    f = open(string_manip.path_win(path), 'w', encoding='utf8', newline='\n')
-    f.write(content)
-    f.close()
+    with open(string_manip.path_win(path), 'w', encoding='utf8', newline='\n') as f:
+        f.write(content)
 
 def read_file(path):
-    f = open(string_manip.path_win(path), 'r', encoding='utf8')
-    temp = f.read()
-    f.close()
+    with open(string_manip.path_win(path), 'r', encoding='utf8') as f:
+        temp = f.read()
     return temp
 
 def delete_file(path):
