@@ -6,6 +6,7 @@ import name_maker
 import strings
 
 def code_cpp(self, tp):
+    """Provides C++ file templates."""
     if tp in (strings.tp_main, strings.tp_bf):
         return ('#include <bits/stdc++.h>\n'
                 '\n'
@@ -67,6 +68,7 @@ def code_cpp(self, tp):
                 '}\n')
 
 def code_cbp(self, tp):
+    """Provides CBP file templates."""
     return ('<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>\n'
             '<CodeBlocks_project_file>\n'
             '    <FileVersion major="1" minor="6" />\n'
@@ -109,6 +111,7 @@ def code_cbp(self, tp):
             '</CodeBlocks_project_file>\n')
 
 def code_run(self):
+    """Provides the run script."""
     return (r'path_code=${1}''\n'
             r'path_io=${2}''\n'
             r'path_utils=${3}''\n'
@@ -160,6 +163,7 @@ def code_run(self):
             r'done''\n')
 
 def code_stress(self):
+    """Provides the stress script."""
     return (r'path_code=${1}''\n'
             r'path_io=${2}''\n'
             r'path_utils=${3}''\n'
@@ -274,6 +278,7 @@ def code_stress(self):
             r'done''\n')
 
 def code_check(self):
+    """Provides the check script."""
     return (r'path_code=${1}''\n'
             r'path_io=${2}''\n'
             r'path_utils=${3}''\n'

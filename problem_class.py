@@ -10,7 +10,9 @@ import system_action
 import prompt_handling
 
 class Problem:
+    """Implements a problem class."""
     def __init__(self, path, contest_id, problem_index, problem_name, test_cnt, problem_exists):
+        """Initializes Problem with problem data and creates the files."""
         self.path = path
         self.contest_id = contest_id
         self.problem_index = problem_index
@@ -33,41 +35,61 @@ class Problem:
             file_management.create_file_wsl(path_maker.path_utils_verdict(self), '')
             for tp in strings.tps:
                 file_management.create_file_wsl(path_maker.path_utils_err(self, tp), '')
+
     def open_cpp(self, tp):
+        """Opens the .cpp file of given type."""
         system_action.open_file(path_maker.path_problem_cpp(self, tp))
+
     def print_io(self):
+        """Prints all input & output files."""
         for test_idx in range(1, self.test_cnt+1):
             test_in = file_management.read_file(path_maker.path_io_in(self, test_idx))
             test_out = file_management.read_file(path_maker.path_io_out(self, test_idx))
             prompt_handling.prompt_io(test_idx, test_in, test_out)
+
     def add_test(self, test_in, test_out):
+        """Adds a testcase."""
         self.test_cnt += 1
         test_in = string_manip.beautify_test(test_in)
         test_out = string_manip.beautify_test(test_out)
         file_management.create_file_wsl(path_maker.path_io_in(self, self.test_cnt), test_in)
         file_management.create_file_wsl(path_maker.path_io_out(self, self.test_cnt), test_out)
+
     def add_test_manually(self):
+        """Adds a testcase by opening new input & output files."""
         self.add_test('\n', '\n')
         system_action.open_file(path_maker.path_io_out(self, self.test_cnt))
         system_action.open_file(path_maker.path_io_in(self, self.test_cnt))
+
     def rm_last_test(self):
+        """Removes the last testcase if it exists."""
         if self.test_cnt > 0:
             file_management.delete_file(path_maker.path_io_in(self, self.test_cnt))
             file_management.delete_file(path_maker.path_io_out(self, self.test_cnt))
             self.test_cnt -= 1
+
     def rm_test_keep(self, num):
+        """Keeps a given number of testcases."""
         num = max(num, -self.test_cnt)
         if num < 0:
             num += self.test_cnt
         while self.test_cnt > num:
             self.rm_last_test()
+
     def set_time_limit(self, time_limit):
+        """Sets a new time limit."""
         self.time_limit = time_limit
+
     def copy_path(self):
+        """Copies the path of the solution file to the clipboard."""
         system_action.copy_to_clipboard(string_manip.path_win(path_maker.path_problem_cpp(self, strings.tp_main)))
+
     def copy_main(self):
+        """Copies the contents of the solution file to the clipboard."""
         system_action.copy_to_clipboard(file_management.read_file(path_maker.path_problem_cpp(self, strings.tp_main)))
+
     def run(self, runbf):
+        """Runs the solution on the testcases."""
         system_action.run_bash(path_maker.path_utils_run(self), [
             string_manip.path_wsl(path_maker.path_problem(self)),
             string_manip.path_wsl(path_maker.path_io(self)),
@@ -77,7 +99,9 @@ class Problem:
             name_maker.name_utils_err(self, (strings.tp_main if not runbf else strings.tp_bf)),
             self.problem_index, self.test_cnt, self.time_limit, ('' if not runbf else 'Bf')
         ])
+
     def stress(self, stress_cnt, regen):
+        """Stresstests the solution with a bruteforce one."""
         system_action.run_bash(path_maker.path_utils_stress(self), [
             string_manip.path_wsl(path_maker.path_problem(self)),
             string_manip.path_wsl(path_maker.path_io(self)),
@@ -97,7 +121,9 @@ class Problem:
             test_in = file_management.read_file(path_maker.path_io_txt(self, strings.tp_gen))
             test_out = file_management.read_file(path_maker.path_io_txt(self, strings.tp_bf))
             self.add_test(test_in, test_out)
+
     def check(self, check_cnt, regen):
+        """Stresstests the solution with a checker."""
         system_action.run_bash(path_maker.path_utils_check(self), [
             string_manip.path_wsl(path_maker.path_problem(self)),
             string_manip.path_wsl(path_maker.path_io(self)),

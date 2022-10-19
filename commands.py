@@ -49,6 +49,7 @@ commands_problem = dict(zip([command.name for command in comms_problem], comms_p
 help_width = 22
 
 def build_help_string(comms, optional_comms):
+    """Builds the help string."""
     help_string = ''
     for command in comms:
         command_help_string = ''

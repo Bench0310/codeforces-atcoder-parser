@@ -11,7 +11,9 @@ import commands
 import code_maker
 
 class Contest:
+    """Implements a contest class."""
     def __init__(self, path, contest_id, url, platform, user, path_offline, path_templates):
+        """Initializes Contest with contest data and prepares IO."""
         self.path = path+[contest_id]
         self.contest_id = contest_id
         self.user = user
@@ -116,12 +118,16 @@ class Contest:
             self.make_metadata()
         else:
             file_management.delete_empty_folder(self.path)
+
     def make_metadata(self):
+        """Creates a metadata file for the contest."""
         metadata = ''
         for p in self.problems.values():
             metadata += p.problem_index+'|'+p.problem_name+'|'+str(p.test_cnt)+'\n'
         file_management.create_file_win(self.path+['metadata.txt'], metadata[:-1])
+
     def solve(self):
+        """Handles the contest functionality."""
         command, arg, success = prompt_handling.parse_input_level_problem(self.user, self.contest_id, self.last_problem_index)
         if not success:
             return True

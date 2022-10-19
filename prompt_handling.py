@@ -28,12 +28,15 @@ cursor = {
 }
 
 def printf(message, color='white', bold=0, flush_now=False):
+    """Implements a basic print() override for colors."""
     print(colors['end']+colors[color]+(colors['bold'] if bold else '')+message+colors['end'], end='', flush=flush_now)
 
 def set_color(color='white', bold=0):
+    """Sets text color."""
     print(colors['end']+colors[color]+(colors['bold'] if bold else ''), end='')
 
 def parse_input_level_contest(user):
+    """Parses input at the contest level."""
     greeting_length = prompt_user_greeting(user)
     args = list(filter(None, input().lower().split(' ')))
     if len(args) == 0:
@@ -54,6 +57,7 @@ def parse_input_level_contest(user):
     return [command, arg, True]
 
 def parse_input_level_problem(user, contest_id, last_problem_index):
+    """Parses input at the problem level."""
     greeting_length = prompt_user_contest_greeting(user, contest_id)
     args = list(filter(None, input().lower().split(' ')))
     if len(args) == 0:
@@ -79,6 +83,7 @@ def parse_input_level_problem(user, contest_id, last_problem_index):
     return [command, arg, True]
 
 def fix_input(greeting_length, args, omit_command, hidden_args, color, bold, hidden_color, hidden_bold, add_time):
+    """Fixes user's input and adds hidden arguments were they not present."""
     printf(cursor['up'](1)+cursor['right'](greeting_length)+cursor['erase_to_line_end'])
     if not omit_command:
         printf(args[0]+(' ' if len(args) > 1 else ''), color, bold)
@@ -89,16 +94,19 @@ def fix_input(greeting_length, args, omit_command, hidden_args, color, bold, hid
     printf(cursor['column'](1)+cursor['down'](1), flush_now=True)
 
 def prompt_newline(num):
+    """Prints a given number of newlines."""
     for _ in range(num):
         printf('\n')
 
 def prompt_user_greeting(user):
+    """Greets the user at the contest level."""
     printf(user, 'green', 1)
     printf('/', 'white')
     set_color('yellow')
     return len(user)+1
 
 def prompt_user_contest_greeting(user, contest_id):
+    """Greets the user at the problem level."""
     printf(user, 'green', 1)
     printf('/', 'white')
     printf(contest_id, 'yellow')
@@ -107,39 +115,51 @@ def prompt_user_contest_greeting(user, contest_id):
     return len(user)+1+len(contest_id)+2
 
 def prompt_offline_command():
+    """Prompts the offline command waiting for source."""
     printf('Link copied, press enter to continue', 'magenta', 1)
 
 def prompt_contest_not_found():
+    """Prompts the contest was not found."""
     printf('Contest not found\n', 'red')
 
 def prompt_contest_no_problems():
+    """Prompts the contest has no problems/has not yet started."""
     printf('Contest has no problems\n', 'red')
 
 def prompt_platform_not_responding(platform):
+    """Prompts the platform isn't responding."""
     printf(('Codeforces' if platform == strings.pl_cf else 'AtCoder')+' not responding, retrying now\n', 'red')
 
 def prompt_not_an_int(name, arg):
+    """Prompts the provided argument in not an integer."""
     printf('<'+name+'>: '+'\''+arg+'\' is not an int\n', 'white', 1)
 
 def prompt_int_not_in_range(name, arg, num_range):
+    """Prompts the provided integer argument is not in the required range."""
     printf('<'+name+'>: '+'\''+arg+'\' is not in range ['+str(num_range[0])+','+str(num_range[1])+']\n', 'white', 1)
 
 def prompt_str_not_in_options(name, arg, str_options):
+    """Prompts the provided string argument is not among the options."""
     printf('<'+name+'>: '+'\''+arg+'\' is not in [\''+'\',\''.join(str_options)+'\']\n', 'white', 1)
 
 def prompt_wrong_num_of_args(command, args_expected, args_given):
+    """Prompts the wrong number of arguments was provided."""
     printf('Command \''+command+'\' expects '+str(args_expected)+' argument'+('s' if args_expected != 1 else '')+', but '+str(args_given)+' '+('was' if args_given == 1 else 'were')+' given\n', 'white', 1)
 
 def prompt_invalid_command(command):
+    """Prompts the provided command is not valid."""
     printf('\''+command+'\' does not name a command\n', 'white', 1)
 
 def prompt_updating_contest_gym_data_cf(last_update):
+    """Prompts the CF's contest data is being updated."""
     printf('Updating cf contest+gym data [last update: '+last_update+']\n', 'magenta', 1)
 
 def prompt_updating_contest_data_atc(last_update):
+    """Prompts the ATC's contest data is being updated."""
     printf('Updating atc contest data [last update: '+last_update+']\n', 'magenta', 1)
 
 def prompt_io(test_idx, test_in, test_out):
+    """Prompts the input & output files."""
     printf('[Test #'+str(test_idx)+']\n', 'white', 1)
     printf('Input\n', 'blue', 1)
     printf(string_manip.beautify_test(test_in))
@@ -147,6 +167,7 @@ def prompt_io(test_idx, test_in, test_out):
     printf(string_manip.beautify_test(test_out))
 
 def prompt_help(level):
+    """Prompts the help string at the given level."""
     printf(commands.help_string_zero, 'blue', 1)
     if level == strings.level_contest:
         help_string = commands.help_string_contest

@@ -7,6 +7,7 @@ import file_management
 import strings
 
 def get_source(url, platform):
+    """Gets raw html of a website."""
     r = requests.get(url)
     while r.status_code >= 500:
         prompt_handling.prompt_platform_not_responding(platform)
@@ -14,6 +15,7 @@ def get_source(url, platform):
     return r.text
 
 def get_contest_url_cf(path, contest_id):
+    """Generates CF's contest url and handles CF's contest data."""
     contest_data = (file_management.read_file(path+['contest_data.txt']) if file_management.file_exists(path+['contest_data.txt']) else '')
     gym_data = (file_management.read_file(path+['gym_data.txt']) if file_management.file_exists(path+['gym_data.txt']) else '')
     url = ''
@@ -46,6 +48,7 @@ def get_contest_url_cf(path, contest_id):
     return url
 
 def get_contest_url_atc(path, contest_id):
+    """Generates ATC's contest url and handles ATC's contest data."""
     contest_data = (file_management.read_file(path+['contest_data.txt']) if file_management.file_exists(path+['contest_data.txt']) else '')
     url = ''
     if contest_data.find('> '+contest_id.lower()+'\n') != -1:
