@@ -4,7 +4,6 @@ import prompt_handling
 
 class ArgumentNum:
     """Implements an integer argument class."""
-
     def __init__(self, name, num_range):
         """Initializes ArgumentNum with the name and the valid range."""
         self.name = name
@@ -23,7 +22,6 @@ class ArgumentNum:
 
 class ArgumentStr:
     """Implements a string argument class."""
-
     def __init__(self, name, str_options):
         """Initializes ArgumentStr with the name and the valid options."""
         self.name = name
@@ -39,7 +37,6 @@ class ArgumentStr:
 
 class Command:
     """Implements a command class."""
-
     def __init__(self, name, arguments, description):
         """Initializes Command with the name, arguments, and description."""
         self.name = name
